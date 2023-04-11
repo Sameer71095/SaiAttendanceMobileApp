@@ -1,21 +1,48 @@
 class AttendanceResponseEntity {
   bool? isSuccess;
   String? errorMessage;
-  String? data;
+  Data? data;
 
   AttendanceResponseEntity({this.isSuccess, this.errorMessage, this.data});
 
   AttendanceResponseEntity.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
     errorMessage = json['errorMessage'];
-    data = json['data'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['isSuccess'] = this.isSuccess;
     data['errorMessage'] = this.errorMessage;
-    data['data'] = this.data;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
+  int? employeeID;
+  String? name;
+  String? email;
+  int? isCheckedOut;
+
+  Data({this.employeeID, this.name, this.email, this.isCheckedOut});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    employeeID = json['EmployeeID'];
+    name = json['Name'];
+    email = json['Email'];
+    isCheckedOut = json['IsCheckedOut'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['EmployeeID'] = this.employeeID;
+    data['Name'] = this.name;
+    data['Email'] = this.email;
+    data['IsCheckedOut'] = this.isCheckedOut;
     return data;
   }
 }

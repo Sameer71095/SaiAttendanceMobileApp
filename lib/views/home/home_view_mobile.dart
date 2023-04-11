@@ -6,7 +6,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:sai_attendance/utils/Constants.dart';
 import 'package:sai_attendance/viewmodels/home_viewmodel.dart';
+import 'package:sai_attendance/widgets/AttendanceWidget/AttendanceTile.dart';
 import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
 import 'package:sai_attendance/widgets/base_model_widget.dart';
 
@@ -41,7 +43,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
               child: Padding(
                 padding:
                 const EdgeInsets.only(top: 40.0, left: 80.0, right: 20.0),
-                child: _customAppBar(),),),
+                child: _customAppBar(model),),),
             Container(
               color: HexColor('484848'),
               height: MediaQuery.of(context).size.height,
@@ -158,7 +160,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
     );
   }
 
-  Widget _customAppBar() {
+  Widget _customAppBar(HomeViewModel model) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,7 +172,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   color: Colors.black, fontFamily: "Sofia", fontSize: 17.0),
               children: [
                 TextSpan(
-                  text: "Muhammad Sameer",
+                  text: constants.loginData.name,
                   style: TextStyle(
                     color: HexColor('f47320'),
                     fontWeight: FontWeight.bold,
@@ -239,18 +241,18 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
 
                         ),
                         const SizedBox(height: 16.0),
-                        const Text(
-                          'Checked in at 9:00 AM' ,
-                          style: TextStyle(
+                         Text(
+                          'Shift Starts at ${constants.loginData.shiftStartTime}' ,
+                          style: const TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 16,
                               fontFamily: "Sofia"),
 
                         ),
                         const SizedBox(height: 5.0),
-                        const Text(
-                          'Shift ends at 6:00 PM' ,
-                          style: TextStyle(
+                         Text(
+                          'Shift ends at ${constants.loginData.shiftEndTime}' ,
+                          style: const TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 16,
                               fontFamily: "Sofia"),
@@ -260,9 +262,19 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                     ),
                     Column(
                       children: <Widget>[
-                        const Text(
-                          'Current Status',
-                          style: TextStyle(fontSize: 16.0),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                            /*TextSpan(
+                                text: 'Status:\n',
+                                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                              ),*/
+                              TextSpan(
+                                text: constants.loginData.isCheckedout! ? "Checked-out" : "Checked-In",
+                                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 16.0),
                         model.isLoading
@@ -309,7 +321,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                 color: HexColor('484948'),
                               ),
                               child: const Center(
-                                child: AutoSizeText("Check-In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                child: AutoSizeText("Tap", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                               ),
                             ),),),
 
@@ -330,88 +342,79 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   fontFamily: "Sofia"),
             ),
           ),
-          _buildList(model),
+
+          Expanded(
+            child: _buildList(model),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildList(HomeViewModel model) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      itemCount: model.attendanceList.length,
-      padding: const EdgeInsets.only(
-        left: 40,
-        bottom: 16,
-        right: 5,
-        top: 20,
-      ),
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () {
-
-          },
-          child: Container(
-            padding: const EdgeInsets.only(left: 8, top: 10.0, bottom: 10.0),
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF5FBD84).withOpacity(0.1),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                /*   Image(
-                  width: 80.0,
-                  height: 80.0,
-                  image: NetworkImage(model.attendanceList[index].imgPath!),
-                ),
-                SizedBox(width: 5),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${foodHealtyList[index].name}",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: "Sofia",
-                          fontWeight: FontWeight.w700),
-                    ),
-                    Container(
-                      width: 150.0,
-                      child: Text(
-                        "Spesial menu from foodie apps",
-                        style: TextStyle(
-                            fontFamily: "Sofia",
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black38),
-                        overflow: TextOverflow.fade,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Text(
-                      "\$${foodHealtyList[index].price!.toInt()}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF5FBD84),
-                        fontFamily: "Sofia",
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                )*/
-              ],
-            ),
-          ),
-        );
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification scrollInfo) {
+        if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+          // model.loadMore(); // Function to load more data when the list reaches the end
+        }
+        return true;
       },
+      child: RefreshIndicator(
+        onRefresh: model.onRefresh,
+        child: ValueListenableBuilder<bool>(
+          valueListenable: model.dataLoaded,
+          builder: (BuildContext context, bool dataLoaded, Widget? child) {
+            if (!dataLoaded) {
+              model.loadData();
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: model.attendanceList.data!.length,
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  bottom: 16,
+                  right: 5,
+                  top: 20,
+                ),
+                itemBuilder: (context, index) {
+                  final attendance = model.attendanceList.data![index];
+                  return InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 8, top: 10.0, bottom: 10.0),
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF5FBD84).withOpacity(0.1),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          bottomLeft: Radius.circular(12),
+                        ),
+                      ),
+                      child: AttendanceTile(
+                        name: attendance.employeeName!,
+                        date: attendance.checkedDate!,
+                        totalHours: attendance.totalHours!, // Update this value based on your data calculation
+                        timeEntries: attendance.checked
+                            !.map((e) => {
+                          e.isCheckedout: e.checkedTime!,
+                       /*   'out': e.isCheckedout ? 'checked out' : null,*/
+                        })
+                            .toList(),
+                      ),
+                    ),
+
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ),
     );
   }
+
 
 }
 

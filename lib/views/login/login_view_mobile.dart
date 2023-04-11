@@ -119,11 +119,19 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               controller: model.passwordController,
+                              obscureText: !model.passwordVisible,
                               decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Password",
-
-                                  hintStyle: TextStyle(color: Colors.grey[400])
+                                border: InputBorder.none,
+                                hintText: "Password",
+                                hintStyle: TextStyle(color: Colors.grey[400]),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    model.passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                   model.onPasswordVisibility();
+                                  },
+                                ),
                               ),
                             ),
                           )

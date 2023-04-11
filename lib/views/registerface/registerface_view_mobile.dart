@@ -3,15 +3,17 @@
 
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sai_attendance/viewmodels/registerface_viewmodel.dart';
 import 'package:sai_attendance/views/registerface/registerface_view.dart';
 import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
 import 'package:sai_attendance/widgets/base_model_widget.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:image/image.dart' as img;
 
-import 'package:face_camera/face_camera.dart';
 import 'package:flutter_svg/svg.dart';
 
 
@@ -21,37 +23,61 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
   @override
   Widget build(BuildContext context, RegisterFaceViewModel model) {
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
+    return  Scaffold(
+      appBar: AppBar(title: Text('Register Face')),
+      body: Stack(
         children: [
-          Expanded(
-            child: SmartFaceCamera(
-                autoCapture: false,
-                defaultCameraLens: CameraLens.front,
-                onCapture: (File? image) {
-                  model.onCaptureClick(image);
-                  _showPopup(model, context);
-                },
-                imageResolution: ImageResolution.high, // Change the imageResolution to high or low
-                onFaceDetected: (Face? face) {
-                  // Show popup and rebuild the UI after 2 seconds
+          FutureBuilder<void>(
+            future: model.initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return CameraPreview(model.controller);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.camera, size: 60, color: Colors.white),
+                  onPressed: () async {
+                    try {
+                      await model.initializeControllerFuture;
 
-                  // Do something
-                },
-                messageBuilder: (context, face) {
-                  if (face == null) {
-                    return _message('Place your face in the camera');
+                      final image = await model.controller.takePicture();
+
+                      // Get the temporary directory to store the captured image
+                      File imageFile = await model.GenerateOptimizedFile(image);
+                      model.onCaptureClick(imageFile);
+                      _showPopup(model, context);
+                      // You can display the image using the file path
+                      print('Image saved at: ${imageFile.path}');
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                ),
+/*
+                IconButton(
+                  icon: Icon(Icons.switch_camera, size: 36, color: Colors.white),
+                  onPressed: (){
+                    model.switchCamera();
                   }
-                  if (!face.wellPositioned) {
-                    return _message(model.directions[model.currentStep]);
-                  }
-                  return const SizedBox.shrink();
-                }),
+                ),*/
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+
 
   Widget _message(String msg) => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 15),

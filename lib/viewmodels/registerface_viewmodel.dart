@@ -1,22 +1,46 @@
 
 
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:dio/src/multipart_file.dart';
-import 'package:face_camera/face_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sai_attendance/api/dioClient.dart';
+import 'package:sai_attendance/main.dart';
 import 'package:sai_attendance/utils/Debouncer.dart';
 import 'package:sai_attendance/views/home/home_view.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:image/image.dart' as img;
 
 class RegisterFaceViewModel extends ChangeNotifier {
   String title = 'default';
 
+  late CameraController controller;
+  late Future<void> initializeControllerFuture;
+
+  int currentCameraIndex = 0;
   OverlayEntry? overlayEntry;
   late BuildContext context;
   void initialise(BuildContext contexts) {
     context=contexts;
+    currentCameraIndex = cameras.indexWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+    if (currentCameraIndex == -1) {
+      currentCameraIndex = 0; // Default to the first camera if a front camera is not available
+    }
+    initializeCamera(currentCameraIndex);
     notifyListeners();
+  }
+  void initializeCamera(int cameraIndex) {
+
+    controller = CameraController(cameras[cameraIndex], ResolutionPreset.medium, imageFormatGroup: ImageFormatGroup.jpeg);
+    initializeControllerFuture = controller.initialize();
+    notifyListeners();
+  }
+  void switchCamera() {
+    currentCameraIndex = currentCameraIndex == cameras.indexWhere((camera) => camera.lensDirection == CameraLensDirection.front) ? cameras.indexWhere((camera) => camera.lensDirection == CameraLensDirection.back) : cameras.indexWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+    controller.dispose();
+    initializeCamera(currentCameraIndex);
   }
   List<File?> capturedImages = [];
   int currentStep = 0;
@@ -39,7 +63,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
       capturedImages.add(image);
       currentStep++;
       if(currentStep>3){
-        storage.read(key: 'EmployeeId').then((value) {
+        storage.read(key: 'EmployeeId').then((value) async {
           String? employeeId=value;
           if (employeeId == null) {
             print("Error: EmployeeId is null");
@@ -49,7 +73,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
           overlayEntry = _buildLoadingOverlay(context);
           Overlay.of(context).insert(overlayEntry!);
           try{
-            client.RegisterEmployeeImages(employeeId,capturedImages).then((response) {
+            clientPython.RegisterEmployeeImages(employeeId,capturedImages).then((response) {
               if(response.status==200) {
                 Navigator.pushReplacement(
                   context,
@@ -73,8 +97,12 @@ class RegisterFaceViewModel extends ChangeNotifier {
                 // Show error message to user
               }
             });
-          } catch (e) {
-            print("Error calling API: $e");
+          } catch (exception, stackTrace) {
+            await Sentry.captureException(
+              exception,
+              stackTrace: stackTrace,
+            );
+            print("Error calling API: $exception");
             // Show error message to user
           } finally {
             overlayEntry?.remove();
@@ -90,6 +118,22 @@ class RegisterFaceViewModel extends ChangeNotifier {
     // notifyListeners();
   }
 
+  Future<File> GenerateOptimizedFile(XFile image) async {
+    final bytes = await image.readAsBytes();
+    final decodedImage = img.decodeImage(bytes);
+    final normalizedImage = img.copyResize(decodedImage!, width: 224);
+    final grayscaleImage = img.grayscale(normalizedImage);
+    final normalizedBytes = img.encodeJpg(grayscaleImage);
+
+    // Save the normalized image
+    final tempDir = await getTemporaryDirectory();
+    final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final File imageFile = File('${tempDir.path}/$fileName.jpg');
+    await imageFile.writeAsBytes(normalizedBytes);
+    // Save the captured image to the file
+   // await imageFile.writeAsBytes(await image.readAsBytes());
+    return imageFile;
+  }
 /* void onFaceDetected(bool isFaceDetected) {
     faceDetected=isFaceDetected;
     notifyListeners();

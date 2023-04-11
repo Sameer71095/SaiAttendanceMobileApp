@@ -2,7 +2,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:sai_attendance/utils/Constants.dart';
 import 'package:sai_attendance/views/login/login_view.dart';
+import 'package:sai_attendance/views/registerface/registerface_view.dart';
+
+import '../../api/secureCacheManager.dart';
 
 class drawerProfileScreen extends StatefulWidget {
   drawerProfileScreen({Key? key}) : super(key: key);
@@ -12,6 +16,12 @@ class drawerProfileScreen extends StatefulWidget {
 }
 
 class _drawerProfileScreenState extends State<drawerProfileScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +50,15 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const <Widget>[
-                          Text("Muhammad Sameer",
-                              style: TextStyle(
-                                  fontFamily: "Sofia",
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: 19.0)),
-                          Text("Email: m.sameer@sai-group.ae",
-                              style: TextStyle(
+                        children:  <Widget>[
+                          Text(constants.loginData.name!,
+                            style: const TextStyle(
+                                fontFamily: "Sofia",
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: 19.0),),
+                          Text("Email: ${constants.loginData.email}",
+                              style: const TextStyle(
                                   fontFamily: "Sofia",
                                   fontWeight: FontWeight.w300,
                                   color: Colors.white,
@@ -118,7 +128,28 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
                             child: _listText("My Bag", Icons.shopping_basket)),*/
                         _listText("Notification", Icons.notifications),
                         _listText("Settings", Icons.settings),
-                        InkWell(onTap: (){  // Navigate to home screen
+                        InkWell(onTap: () async {  // Navigate to home screen
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration: const Duration(milliseconds: 300),
+                              pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                return SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(-1.0, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(animation),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                          child: _listText("Re-Register Face", Icons.exit_to_app),
+                        ),
+                        InkWell(onTap: () async {  // Navigate to home screen
+                          await storage.deleteAll(); // Delete all existing keys and values
                           Navigator.pushReplacement(
                             context,
                             PageRouteBuilder(
@@ -136,7 +167,8 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
                             ),
                           );},
                           child: _listText("Logout", Icons.exit_to_app),
-                        ),],
+                        )
+                        ,],
                     ),
                   ),
                 ),
@@ -147,39 +179,40 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
       ),
     );
   }
-
-  Widget _listText(String _text, IconData _iconData) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 30.0),
-      child: Row(
-        children: <Widget>[
-          Container(
-            height: 45.0,
-            width: 45.0,
-            decoration: BoxDecoration(
-              color: Colors.black12.withOpacity(0.03),
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-            ),
-            child: Center(
-              child: Icon(
-                _iconData,
-                color: Colors.black38,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20.0,
-          ),
-          Text(
-            _text,
-            style: TextStyle(
-                fontFamily: "Sofia",
-                fontWeight: FontWeight.w600,
-                color: Colors.black87.withOpacity(0.6),
-                fontSize: 16.0),
-          )
-        ],
-      ),
-    );
-  }
 }
+
+Widget _listText(String _text, IconData _iconData) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 30.0),
+    child: Row(
+      children: <Widget>[
+        Container(
+          height: 45.0,
+          width: 45.0,
+          decoration: BoxDecoration(
+            color: Colors.black12.withOpacity(0.03),
+            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          ),
+          child: Center(
+            child: Icon(
+              _iconData,
+              color: Colors.black38,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 20.0,
+        ),
+        Text(
+          _text,
+          style: TextStyle(
+              fontFamily: "Sofia",
+              fontWeight: FontWeight.w600,
+              color: Colors.black87.withOpacity(0.6),
+              fontSize: 16.0),
+        )
+      ],
+    ),
+  );
+}
+

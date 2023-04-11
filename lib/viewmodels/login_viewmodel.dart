@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sai_attendance/entities/login_entity/login_request_entity.dart';
+import 'package:sai_attendance/utils/Constants.dart';
 import 'package:sai_attendance/views/home/home_view.dart';
 import 'package:sai_attendance/views/registerface/registerface_view.dart';
 
@@ -17,6 +18,8 @@ class LoginViewModel extends ChangeNotifier {
 
   late BuildContext context;
 
+  bool passwordVisible = false;
+
 // Create storage
   final storage = FlutterSecureStorage();
 
@@ -25,15 +28,32 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-   void loginClicked() {
-     emailController.text='sameer71095@gmail.com';
-     passwordController.text='1234567';
+  void onPasswordVisibility() {
+    passwordVisible=!passwordVisible;
+    notifyListeners();
+  }
+  void loginClicked() {
+    // emailController.text='sameer71095@gmail.com';
+    // passwordController.text='123456';
      client.LoginEmployee(LoginRequestEntity(email:emailController.text,password: passwordController.text )).then((response) async {
        // Navigate to home screen
       if(response.isSuccess==true) {
-        await storage.write(key: 'EmployeeId', value:response.data!.employeeID.toString());
+        await storage.deleteAll(); // Delete all existing keys and values
+        await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
         await storage.write(key: 'Token', value:response.data!.token.toString());
+      /*  await storage.write(key: 'Name', value:response.data!.name.toString());
+        await storage.write(key: 'Email', value:response.data!.email.toString());
+        await storage.write(key: 'CheckInLatitude', value:response.data!.latitude.toString());
+        await storage.write(key: 'CheckInLongitude', value:response.data!.longitude.toString());
+        await storage.write(key: 'Radius', value:response.data!.radius.toString());
+        await storage.write(key: 'IsImagesRegistered', value:response.data!.isImagesRegistered.toString());
+        await storage.write(key: 'IsCheckedout', value:response.data!.isCheckedout.toString());
+        await storage.write(key: 'IsLocationBound', value:response.data!.isLocationBound.toString());
+        await storage.write(key: 'IsFaceRecognitionEnabled', value:response.data!.isFaceRecognitionEnabled.toString());
+        await storage.write(key: 'LoginData', value:response.data!.toJson().toString());*/
         await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()) );
+
+        await constants.init();
         if(response.data!.isImagesRegistered==true){
 
           Navigator.pushReplacement(
