@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sai_attendance/datamodels/drawer_item_data.dart';
-import 'package:sai_attendance/responsive/orientation_layout.dart';
-import 'package:sai_attendance/responsive/screen_type_layout.dart';
+import 'package:ClockSpotter/datamodels/drawer_item_data.dart';
+import 'package:ClockSpotter/responsive/orientation_layout.dart';
+import 'package:ClockSpotter/responsive/screen_type_layout.dart';
 
 import 'drawer_option_mobile.dart';
 import 'drawer_option_tablet.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/responsive/orientation_layout.dart';
-import 'package:sai_attendance/responsive/screen_type_layout.dart';
-import 'package:sai_attendance/viewmodels/registerface_viewmodel.dart';
-import 'package:sai_attendance/views/registerface/registerface_view_mobile.dart';
-import 'package:sai_attendance/widgets/base_widget.dart';
+import 'package:ClockSpotter/responsive/orientation_layout.dart';
+import 'package:ClockSpotter/responsive/screen_type_layout.dart';
+import 'package:ClockSpotter/viewmodels/registerface_viewmodel.dart';
+import 'package:ClockSpotter/views/registerface/registerface_view_mobile.dart';
+import 'package:ClockSpotter/widgets/base_widget.dart';
 
 
 class RegisterFaceView extends StatelessWidget {

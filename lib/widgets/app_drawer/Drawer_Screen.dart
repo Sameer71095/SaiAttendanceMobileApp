@@ -2,9 +2,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:sai_attendance/utils/Constants.dart';
-import 'package:sai_attendance/views/login/login_view.dart';
-import 'package:sai_attendance/views/registerface/registerface_view.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/views/login/login_view.dart';
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 
 import '../../api/secureCacheManager.dart';
 

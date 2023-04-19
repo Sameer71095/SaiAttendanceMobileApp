@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/utils/ui_utils.dart';
-import 'package:sai_attendance/responsive/sizing_information.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/responsive/sizing_information.dart';
 
 class ResponsiveBuilder extends StatelessWidget {
   final Widget Function(

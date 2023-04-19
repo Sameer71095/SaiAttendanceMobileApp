@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/responsive/orientation_layout.dart';
-import 'package:sai_attendance/responsive/screen_type_layout.dart';
-import 'package:sai_attendance/viewmodels/splash_viewmodel.dart';
-import 'package:sai_attendance/views/splash/splash_view_mobile.dart';
-import 'package:sai_attendance/views/splash/splash_view_tablet.dart';
-import 'package:sai_attendance/widgets/base_widget.dart';
+import 'package:ClockSpotter/responsive/orientation_layout.dart';
+import 'package:ClockSpotter/responsive/screen_type_layout.dart';
+import 'package:ClockSpotter/viewmodels/splash_viewmodel.dart';
+import 'package:ClockSpotter/views/splash/splash_view_mobile.dart';
+import 'package:ClockSpotter/views/splash/splash_view_tablet.dart';
+import 'package:ClockSpotter/widgets/base_widget.dart';
 
 
 class SplashView extends StatelessWidget {

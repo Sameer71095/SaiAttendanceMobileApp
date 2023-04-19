@@ -6,10 +6,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sai_attendance/viewmodels/registerface_viewmodel.dart';
-import 'package:sai_attendance/views/registerface/registerface_view.dart';
-import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
-import 'package:sai_attendance/widgets/base_model_widget.dart';
+import 'package:ClockSpotter/viewmodels/registerface_viewmodel.dart';
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
+import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
+import 'package:ClockSpotter/widgets/base_model_widget.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
@@ -23,56 +23,81 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
   @override
   Widget build(BuildContext context, RegisterFaceViewModel model) {
     double height = MediaQuery.of(context).size.height;
-    return  Scaffold(
-      appBar: AppBar(title: Text('Register Face')),
+    return Scaffold(
       body: Stack(
         children: [
           FutureBuilder<void>(
             future: model.initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return CameraPreview(model.controller);
+                return Center(
+                  child:   ClipOval(
+                    child: CameraPreview(model.controller),
+                  ),);
               } else {
                 return Center(child: CircularProgressIndicator());
               }
             },
           ),
+
           Positioned(
-            bottom: 0,
+            top: (height * 0.05) / 2,
+            left: (height * 0.05) / 2,
+            child: SafeArea(
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.brown,
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: height * 0.05,
             left: 0,
             right: 0,
-            child: Row(
+            child:  model.isLoading? Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  icon: Icon(Icons.camera, size: 60, color: Colors.white),
+                FloatingActionButton(
+                  onPressed: () async {
+                  },
+                  backgroundColor: Colors.brown,
+                  child: const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                ),
+              ],
+            ):Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FloatingActionButton(
                   onPressed: () async {
                     try {
+                      model.isLoading = true;
+                      model.notifyListeners();
                       await model.initializeControllerFuture;
-
                       final image = await model.controller.takePicture();
-
-                      // Get the temporary directory to store the captured image
                       File imageFile = await model.GenerateOptimizedFile(image);
                       model.onCaptureClick(imageFile);
-                      _showPopup(model, context);
-                      // You can display the image using the file path
                       print('Image saved at: ${imageFile.path}');
                     } catch (e) {
                       print(e);
                     }
                   },
+                  child: Icon(Icons.camera, size: 30, color: Colors.white),
+                  backgroundColor: Colors.brown,
                 ),
-/*
-                IconButton(
-                  icon: Icon(Icons.switch_camera, size: 36, color: Colors.white),
-                  onPressed: (){
-                    model.switchCamera();
-                  }
-                ),*/
               ],
             ),
           ),
+
         ],
       ),
     );

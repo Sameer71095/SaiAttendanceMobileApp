@@ -31,7 +31,7 @@ class Data {
   int? employeeId;
   String? employeeName;
   String? checkedDate;
-  double? totalHours;
+  String? totalHours;
   List<Checked>? checked;
 
   Data(
@@ -45,7 +45,7 @@ class Data {
     employeeId = json['employeeId'];
     employeeName = json['employeeName'];
     checkedDate = json['checkedDate'];
-    totalHours = json['totalHours'];
+    totalHours = json['totalHours'].toString();
     if (json['checked'] != null) {
       checked = <Checked>[];
       json['checked'].forEach((v) {
@@ -59,7 +59,7 @@ class Data {
     data['employeeId'] = this.employeeId;
     data['employeeName'] = this.employeeName;
     data['checkedDate'] = this.checkedDate;
-    data['totalHours'] = this.totalHours;
+    data['totalHours'] = this.totalHours.toString();
     if (this.checked != null) {
       data['checked'] = this.checked!.map((v) => v.toJson()).toList();
     }

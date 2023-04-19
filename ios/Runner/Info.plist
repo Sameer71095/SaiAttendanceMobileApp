@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>sai_attendance</string>
+	<string>ClockSpotter</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -28,6 +28,16 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Our app uses location to ensure employees are within the allowed check-in and check-out locations and to provide location-based attendance services.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Our app needs to access location at all times, even when not running, to provide accurate attendance tracking and ensure employees are within the allowed check-in and check-out locations.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Our app needs to access location at all times, even when not running, to provide accurate attendance tracking and ensure employees are within the allowed check-in and check-out locations.</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Our app uses the camera to capture employees face images for identity verification during check-in and check-out processes, ensuring accurate attendance tracking.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Our app requires access to the microphone to provide an option for voice-activated check-in and check-out, offering a hands-free experience and improving accessibility for users.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

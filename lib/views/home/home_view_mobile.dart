@@ -6,11 +6,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-import 'package:sai_attendance/utils/Constants.dart';
-import 'package:sai_attendance/viewmodels/home_viewmodel.dart';
-import 'package:sai_attendance/widgets/AttendanceWidget/AttendanceTile.dart';
-import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
-import 'package:sai_attendance/widgets/base_model_widget.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/viewmodels/home_viewmodel.dart';
+import 'package:ClockSpotter/widgets/AttendanceWidget/AttendanceTile.dart';
+import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
+import 'package:ClockSpotter/widgets/base_model_widget.dart';
 
 import '../../utils/Home_Clipper.dart';
 import '../../widgets/app_drawer/Drawer_Screen.dart';
@@ -270,7 +270,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                 style: TextStyle(fontSize: 16.0, color: Colors.black),
                               ),*/
                               TextSpan(
-                                text: constants.loginData.isCheckedout! ? "Checked-out" : "Checked-In",
+                                text: constants.loginData.isCheckedout ?? false ? "Checked-out" : "Checked-In",
                                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                             ],
@@ -355,12 +355,13 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-          // model.loadMore(); // Function to load more data when the list reaches the end
+         //  model.loadMore(); // Function to load more data when the list reaches the end
         }
         return true;
       },
       child: RefreshIndicator(
         onRefresh: model.onRefresh,
+        color:  Colors.brown,
         child: ValueListenableBuilder<bool>(
           valueListenable: model.dataLoaded,
           builder: (BuildContext context, bool dataLoaded, Widget? child) {

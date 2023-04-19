@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/responsive/orientation_layout.dart';
-import 'package:sai_attendance/responsive/screen_type_layout.dart';
-import 'package:sai_attendance/widgets/app_drawer/app_drawer_mobile.dart';
-import 'package:sai_attendance/widgets/drawer_option/drawer_option.dart';
+import 'package:ClockSpotter/responsive/orientation_layout.dart';
+import 'package:ClockSpotter/responsive/screen_type_layout.dart';
+import 'package:ClockSpotter/widgets/app_drawer/app_drawer_mobile.dart';
+import 'package:ClockSpotter/widgets/drawer_option/drawer_option.dart';
 
 import 'app_drawer_tablet.dart';
 

@@ -1,10 +1,11 @@
+
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'package:sai_attendance/utils/Constants.dart';
-import 'package:sai_attendance/utils/ui_utils.dart';
-import 'package:sai_attendance/views/splash/splash_view.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/views/splash/splash_view.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 List<CameraDescription> cameras=<CameraDescription>[];

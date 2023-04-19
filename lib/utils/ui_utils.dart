@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:location/location.dart';
-import 'package:sai_attendance/enums/device_screen_type.dart';
+import 'package:ClockSpotter/enums/device_screen_type.dart';
 
 import '../api/secureCacheManager.dart';
 import 'package:flutter/material.dart';

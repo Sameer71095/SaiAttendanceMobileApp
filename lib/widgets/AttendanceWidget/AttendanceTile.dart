@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 class AttendanceTile extends StatelessWidget {
   final String name;
   final String date;
-  final double totalHours;
+  final String totalHours;
   final List<Map<bool?, String>> timeEntries;
 
   const AttendanceTile({
@@ -29,14 +29,14 @@ class AttendanceTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text(date, style: TextStyle(fontSize: 16)),
+                  Text(name, style: TextStyle(fontSize: 16)),
+                  Text(date, style:TextStyle(fontSize: 16, fontWeight: FontWeight.bold) ),
                   RichText(
                     text: TextSpan(
                       style: TextStyle(fontSize: 16, color: Colors.black),
                       children: [
-                        TextSpan(text: 'hours: '),
-                        TextSpan(text: '${totalHours.toStringAsFixed(1)}', style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(text: 'Hours: '),
+                        TextSpan(text: totalHours.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),

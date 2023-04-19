@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/datamodels/drawer_item_data.dart';
-import 'package:sai_attendance/widgets/base_model_widget.dart';
+import 'package:ClockSpotter/datamodels/drawer_item_data.dart';
+import 'package:ClockSpotter/widgets/base_model_widget.dart';
 
 class DrawerOptionMobilePortrait extends BaseModelWidget<DrawerItemData> {
   @override
@@ -14,7 +14,7 @@ class DrawerOptionMobilePortrait extends BaseModelWidget<DrawerItemData> {
             data.iconData,
             size: 25,
           ),
-          SizedBox(
+          const SizedBox(
             width: 25,
           ),
           Text(

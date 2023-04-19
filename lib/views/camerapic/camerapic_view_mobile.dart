@@ -6,12 +6,11 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sai_attendance/viewmodels/camerapic_viewmodel.dart';
-import 'package:sai_attendance/views/camerapic/camerapic_view.dart';
-import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
-import 'package:sai_attendance/widgets/base_model_widget.dart';
+import 'package:ClockSpotter/viewmodels/camerapic_viewmodel.dart';
+import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
+import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
+import 'package:ClockSpotter/widgets/base_model_widget.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,23 +31,16 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
             future: model.initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return OverflowBox(
-                  minHeight: MediaQuery.of(context).size.height,
-                  maxHeight: MediaQuery.of(context).size.height,
-                  child: Transform.scale(
-                    scale: MediaQuery.of(context).size.height /
-                        (MediaQuery.of(context).size.width / model.controller.value.aspectRatio)/3,
-                    child: AspectRatio(
-                      aspectRatio: model.controller.value.aspectRatio,
-                      child: CameraPreview(model.controller),
-                    ),
-                  ),
-                );
+                return Center(
+                    child:   ClipOval(
+                           child: CameraPreview(model.controller),
+                        ),);
               } else {
                 return Center(child: CircularProgressIndicator());
               }
             },
           ),
+
           Positioned(
             top: (height * 0.05) / 2,
             left: (height * 0.05) / 2,
@@ -71,12 +63,27 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
             bottom: height * 0.05,
             left: 0,
             right: 0,
-            child: Row(
+            child:  model.isLoading? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FloatingActionButton(
+                  onPressed: () async {
+                  },
+                  backgroundColor: Colors.brown,
+                  child: const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                ),
+              ],
+            ):Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
                   onPressed: () async {
                     try {
+
+                      model.isLoading = true;
+                      model.notifyListeners();
                       await model.initializeControllerFuture;
                       final image = await model.controller.takePicture();
                       File imageFile = await model.GenerateOptimizedFile(image);
@@ -92,6 +99,7 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
               ],
             ),
           ),
+
         ],
       ),
     );

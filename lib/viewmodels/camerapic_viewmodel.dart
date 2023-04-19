@@ -7,18 +7,18 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sai_attendance/api/secureCacheManager.dart';
-import 'package:sai_attendance/main.dart';
-import 'package:sai_attendance/utils/Constants.dart';
-import 'package:sai_attendance/utils/ui_utils.dart';
-import 'package:sai_attendance/views/home/home_view.dart';
-import 'package:sai_attendance/views/login/login_view.dart';
+import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/main.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
+import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:image/image.dart' as img;
 
 
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import '../api/dioClient.dart';
+import '../api/dio_client.dart';
 
 class CameraPicViewModel extends ChangeNotifier {
 
@@ -27,6 +27,7 @@ class CameraPicViewModel extends ChangeNotifier {
   String userName="Loading";
   int retryCount = 0;
 
+  bool isLoading = false;
 
   late CameraController controller;
   late Future<void> initializeControllerFuture;
@@ -65,7 +66,7 @@ class CameraPicViewModel extends ChangeNotifier {
     try {
 
       LocationData _locationData = await location.getLocation();
-      showToast('clicked', duration: 1);
+    //  showToast('clicked', duration: 1);
       // Pass the preprocessed image to the recognition algorithm
       final results = await clientPython.CheckInCheckOut(_locationData.latitude!, _locationData.longitude!,image);
 
@@ -87,6 +88,8 @@ class CameraPicViewModel extends ChangeNotifier {
         }
         // userName = results.data!.name.toString();
       } catch (exception) {
+        isLoading = false;
+        notifyListeners();
         showToast('Unable to detect $exception', duration: 10);
       }
 
@@ -94,8 +97,12 @@ class CameraPicViewModel extends ChangeNotifier {
       Navigator.pop(context, 'refresh');
       notifyListeners();
     } catch (e) {
+      isLoading = false;
+      notifyListeners();
       showToast('Unable to detect $e', duration: 10);
     }
+    isLoading = false;
+    notifyListeners();
   }
   String? errorMessage;
   Future<void> handleCameraError(String message) async {
@@ -133,6 +140,7 @@ class CameraPicViewModel extends ChangeNotifier {
   }
 
   Future<File> GenerateOptimizedFile(XFile image) async {
+
     final bytes = await image.readAsBytes();
     final decodedImage = img.decodeImage(bytes);
     final normalizedImage = img.copyResize(decodedImage!, width: 224);

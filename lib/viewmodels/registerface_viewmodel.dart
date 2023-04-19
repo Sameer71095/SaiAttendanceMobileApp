@@ -6,16 +6,17 @@ import 'package:dio/src/multipart_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sai_attendance/api/dioClient.dart';
-import 'package:sai_attendance/main.dart';
-import 'package:sai_attendance/utils/Debouncer.dart';
-import 'package:sai_attendance/views/home/home_view.dart';
+import 'package:ClockSpotter/api/dio_client.dart';
+import 'package:ClockSpotter/main.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:image/image.dart' as img;
 
 class RegisterFaceViewModel extends ChangeNotifier {
   String title = 'default';
 
+  bool isLoading = false;
   late CameraController controller;
   late Future<void> initializeControllerFuture;
 
@@ -50,7 +51,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
     'Turn your head a little to the right',
     'Turn your head a little to the left',
     'Tilt your head a little up',
-   // 'Tilt your head a little down',
+    // 'Tilt your head a little down',
   ];
 
   final storage = const FlutterSecureStorage();
@@ -58,6 +59,10 @@ class RegisterFaceViewModel extends ChangeNotifier {
     try{
       if (image == null) {
         print("Error capturing image: Image is null");
+
+        showToast("Error capturing image");
+        isLoading = false;
+        notifyListeners();
         return;
       }
       capturedImages.add(image);
@@ -67,6 +72,9 @@ class RegisterFaceViewModel extends ChangeNotifier {
           String? employeeId=value;
           if (employeeId == null) {
             print("Error: EmployeeId is null");
+            showToast("Please Login Again");
+            isLoading = false;
+            notifyListeners();
             return;
           }
           // Show loading indicator
@@ -93,18 +101,28 @@ class RegisterFaceViewModel extends ChangeNotifier {
                   ),
                 );
               }  else {
+
+                showToast("Server Error, please try again later");
+                isLoading = false;
                 print("Error: API returned status ${response.status}");
+                notifyListeners();
                 // Show error message to user
               }
             });
           } catch (exception, stackTrace) {
+
+            showToast("Error on registering image, please contact support");
+            isLoading = false;
             await Sentry.captureException(
               exception,
               stackTrace: stackTrace,
             );
             print("Error calling API: $exception");
+            notifyListeners();
             // Show error message to user
           } finally {
+
+            isLoading = false;
             overlayEntry?.remove();
             overlayEntry = null;
             notifyListeners();
@@ -112,9 +130,19 @@ class RegisterFaceViewModel extends ChangeNotifier {
         });
         /* String employeeId='1';*/
       }
+      else{
+        isLoading = false;
+        notifyListeners();
+      }
     } catch (e) {
-      print("Error capturing image: $e");
+
+
+      showToast("Error capturing image");
+      isLoading = false;
+      notifyListeners();
     }
+
+
     // notifyListeners();
   }
 
@@ -131,7 +159,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
     final File imageFile = File('${tempDir.path}/$fileName.jpg');
     await imageFile.writeAsBytes(normalizedBytes);
     // Save the captured image to the file
-   // await imageFile.writeAsBytes(await image.readAsBytes());
+    // await imageFile.writeAsBytes(await image.readAsBytes());
     return imageFile;
   }
 /* void onFaceDetected(bool isFaceDetected) {

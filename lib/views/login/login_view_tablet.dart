@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
+import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 
 class LoginViewTablet extends StatelessWidget {
   const LoginViewTablet({Key? key}) : super(key: key);

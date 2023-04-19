@@ -1,17 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dio/dio.dart' hide Headers;
-import 'package:flutter/cupertino.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_history_request_entity.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_history_response_entity.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_request_entity.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_response_entity.dart';
-import 'package:sai_attendance/entities/login_entity/login_request_entity.dart';
-import 'package:sai_attendance/entities/login_entity/login_response_entity.dart';
-
-import '../entities/recognize_entity/registerface_response_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
+import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
+import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 
 part 'restClient.g.dart';
 

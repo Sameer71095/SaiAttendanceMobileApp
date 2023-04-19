@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:sai_attendance/api/restClient.dart';
-import 'package:sai_attendance/api/restClientPython.dart';
+import 'package:ClockSpotter/api/restClient.dart';
+import 'package:ClockSpotter/api/restClientPython.dart';
 
 final dio = Dio(); // Provide a dio instance/ config your dio headers globally
 final client = RestClient(dio);

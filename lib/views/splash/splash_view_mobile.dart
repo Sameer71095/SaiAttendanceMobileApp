@@ -2,10 +2,10 @@
 /// portrait and landscape
 
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/viewmodels/splash_viewmodel.dart';
-import 'package:sai_attendance/views/splash/splash_view.dart';
-import 'package:sai_attendance/widgets/app_drawer/app_drawer.dart';
-import 'package:sai_attendance/widgets/base_model_widget.dart';
+import 'package:ClockSpotter/viewmodels/splash_viewmodel.dart';
+import 'package:ClockSpotter/views/splash/splash_view.dart';
+import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
+import 'package:ClockSpotter/widgets/base_model_widget.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';

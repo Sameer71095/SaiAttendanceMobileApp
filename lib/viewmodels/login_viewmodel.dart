@@ -4,12 +4,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sai_attendance/entities/login_entity/login_request_entity.dart';
-import 'package:sai_attendance/utils/Constants.dart';
-import 'package:sai_attendance/views/home/home_view.dart';
-import 'package:sai_attendance/views/registerface/registerface_view.dart';
+import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 
-import '../api/dioClient.dart';
+import '../api/dio_client.dart';
 
 class LoginViewModel extends ChangeNotifier {
   String title = 'default';

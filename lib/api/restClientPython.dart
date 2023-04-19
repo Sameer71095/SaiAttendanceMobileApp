@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_request_entity.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_response_entity.dart';
-import 'package:sai_attendance/entities/login_entity/login_response_entity.dart';
-import 'package:sai_attendance/entities/recognize_entity/recognize_response_entity.dart';
-import 'package:sai_attendance/entities/recognize_entity/registerface_response_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
+import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
+import 'package:ClockSpotter/entities/recognize_entity/recognize_response_entity.dart';
+import 'package:ClockSpotter/entities/recognize_entity/registerface_response_entity.dart';
 
 part 'restClientPython.g.dart';
 

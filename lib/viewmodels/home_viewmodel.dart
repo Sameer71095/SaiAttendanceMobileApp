@@ -3,15 +3,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sai_attendance/api/dioClient.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_history_request_entity.dart';
-import 'package:sai_attendance/entities/attendance_entity/attendance_history_response_entity.dart' as AttendanceHistoryResponse;
-import 'package:sai_attendance/entities/attendance_entity/attendance_request_entity.dart';
-import 'package:sai_attendance/entities/login_entity/login_response_entity.dart';
-import 'package:sai_attendance/utils/Constants.dart';
-import 'package:sai_attendance/utils/ui_utils.dart';
-import 'package:sai_attendance/views/camerapermission/camerapermission_view.dart';
-import 'package:sai_attendance/views/camerapic/camerapic_view.dart';
+import 'package:ClockSpotter/api/dio_client.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart' as AttendanceHistoryResponse;
+import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
+import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/views/camerapermission/camerapermission_view.dart';
+import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
 
 import 'package:location/location.dart' as Location;
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -25,9 +25,15 @@ class HomeViewModel extends ChangeNotifier {
   bool isCheckedIn = false;
   String employeeName="";
   bool isLoading = false;
+  int currentMonth=1;
+  int currentYear=2023;
   Future<void> initialise(BuildContext contexts) async {
     context=contexts;
     title = 'initialised';
+    DateTime now = DateTime.now();
+    currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
+    currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
+
     employeeName=constants.loginData.name!;
    // employeeName=  (await  storage.read(key: 'Name'))!;
     notifyListeners();
@@ -140,9 +146,15 @@ class HomeViewModel extends ChangeNotifier {
 
   void _refreshData() {
     // Update the necessary variables here
+
+    DateTime now = DateTime.now();
+    currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
+    currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
     loadData();
     notifyListeners();
   }
+
+
 
   Future<bool> isWithin5Meters(double? targetLatitude,double? targetLongitude,int? radius ) async {
 /*    double targetLatitude = 25.161327204419532;
@@ -194,13 +206,14 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<void> onRefresh() async {
-    return Future.value();
+
+    return loadData();
   }
 
   ValueNotifier<bool> dataLoaded = ValueNotifier(false);
   Future<void> loadData() async {
     // Call the API and store the data in attendanceList
-    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(employeeId: constants.loginData.employeeId, monthId: 4));
+    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(employeeId: constants.loginData.employeeId, monthId: currentMonth));
     dataLoaded.value = true; // Indicate that the data has been loaded
     notifyListeners();
   }

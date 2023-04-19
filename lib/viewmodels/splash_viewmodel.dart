@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/views/home/home_view.dart';
-import 'package:sai_attendance/views/login/login_view.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
+import 'package:ClockSpotter/views/login/login_view.dart';
 
 import '../api/secureCacheManager.dart';
 

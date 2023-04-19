@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sai_attendance/datamodels/drawer_item_data.dart';
+import 'package:ClockSpotter/datamodels/drawer_item_data.dart';
 
 class DrawerOptionTabletPortrait extends StatelessWidget {
   @override

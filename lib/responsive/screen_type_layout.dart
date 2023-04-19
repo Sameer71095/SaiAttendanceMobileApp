@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sai_attendance/enums/device_screen_type.dart';
-import 'package:sai_attendance/responsive/responsive_builder.dart';
+import 'package:ClockSpotter/enums/device_screen_type.dart';
+import 'package:ClockSpotter/responsive/responsive_builder.dart';
 
 class ScreenTypeLayout extends StatelessWidget {
   final Widget mobile;

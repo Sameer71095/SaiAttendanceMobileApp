@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:sai_attendance/api/secureCacheManager.dart';
-import 'package:sai_attendance/entities/login_entity/login_response_entity.dart';
+import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 
 class Constants {
   static final Constants _instance = Constants._internal();
