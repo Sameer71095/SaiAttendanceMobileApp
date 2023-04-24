@@ -8,7 +8,7 @@
 PRODUCT_NAME = sai_attendance
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.sai.saiAttendance
+PRODUCT_BUNDLE_IDENTIFIER = com.rushtech360.clockspotter
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.sai. All rights reserved.
