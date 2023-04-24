@@ -105,10 +105,10 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 200.0),
+              padding: const EdgeInsets.only(top: 200.0),
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30.0),
                         topRight: Radius.circular(30.0)),
@@ -126,8 +126,8 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
                                       LoginView()));
                             },
                             child: _listText("My Bag", Icons.shopping_basket)),*/
-                        _listText("Notification", Icons.notifications),
-                        _listText("Settings", Icons.settings),
+                       /* _listText("Notification", Icons.notifications),
+                        _listText("Settings", Icons.settings),*/
                         InkWell(onTap: () async {  // Navigate to home screen
                           Navigator.pushReplacement(
                             context,

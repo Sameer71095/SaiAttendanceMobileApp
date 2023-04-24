@@ -20,7 +20,7 @@ class DrawerOptionMobilePortrait extends BaseModelWidget<DrawerItemData> {
           Text(
             data.title,
             style: TextStyle(fontSize: 21),
-          )
+          ),
         ],
       ),
     );
