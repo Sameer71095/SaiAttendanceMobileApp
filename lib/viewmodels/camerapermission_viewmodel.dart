@@ -15,6 +15,7 @@ class CameraPermissionViewModel extends ChangeNotifier {
   }
 
   void requestCameraPermission() async {
+
     final PermissionStatus cameraPermissionStatus = await Permission.camera.request();
     if (cameraPermissionStatus == PermissionStatus.granted) {
 
@@ -34,8 +35,65 @@ class CameraPermissionViewModel extends ChangeNotifier {
           },
         ),
       );
+    }else if (cameraPermissionStatus.isDenied) {
+      // Permission denied, inform the user or handle the situation
+
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 300),
+          pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(-1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        ),
+      );
+    } else if (cameraPermissionStatus.isPermanentlyDenied) {
+      // The user denied the permission and selected "Don't Ask Again"
+      // You can open the app settings to let the user enable the permission manually
+      openAppSettings();
+
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 300),
+          pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(-1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        ),
+      );
     } else {
       // permission not granted, show a message or navigate to a customized page for permission
+
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 300),
+          pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(-1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        ),
+      );
     }
   }
 }
