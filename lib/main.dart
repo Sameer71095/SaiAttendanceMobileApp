@@ -13,7 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
  // await FaceCamera.initialize();
 
-  cameras = await availableCameras();
+  try {
+    cameras = await availableCameras();
+  } on Exception catch (e) {
+    // TODO
+  }
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;

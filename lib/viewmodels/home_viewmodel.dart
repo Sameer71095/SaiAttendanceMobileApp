@@ -97,7 +97,8 @@ class HomeViewModel extends ChangeNotifier {
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 300),
-            pageBuilder: (context, animation, secondaryAnimation) => CameraPermissionView(),
+            //pageBuilder: (context, animation, secondaryAnimation) => CameraPermissionView(),
+            pageBuilder: (context, animation, secondaryAnimation) => CameraPicView(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               return SlideTransition(
                 position: Tween<Offset>(
