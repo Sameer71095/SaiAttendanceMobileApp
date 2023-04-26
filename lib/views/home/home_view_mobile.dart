@@ -188,11 +188,11 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
             height: 50.0,
             width: 50.0,
             decoration: const BoxDecoration(
-                image: DecorationImage(
+              /*  image: DecorationImage(
                     image: CachedNetworkImageProvider(
                       "https://media.licdn.com/dms/image/C5603AQFs8d7ns-mD2g/profile-displayphoto-shrink_400_400/0/1605026303861?e=1683763200&v=beta&t=_ngBHfnnyWfAJbrvL9MsdlG3VR7c48YsHaiSg0043Ww",
                     ),
-                    fit: BoxFit.cover),
+                    fit: BoxFit.cover),*/
                 borderRadius: BorderRadius.all(Radius.circular(150.0))),
           ),
         ],

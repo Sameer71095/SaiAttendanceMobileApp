@@ -39,6 +39,36 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
               }
             },
           ),
+          // Add the following Column widget
+          Column(
+            children: [
+              SizedBox(height:  (height * 0.05) * 1.3),
+              Center(
+                child: Text(
+                  'Register Your Face',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            /*  SizedBox(height: 8),
+              Center(
+                child: Text(
+                  'We need 4 images to register your face:',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),*/
+              SizedBox(height: 8),
+              Center(
+                child: Text(
+                  model.directions[model.currentStep],
+                  style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
 
           Positioned(
             top: (height * 0.05) / 2,

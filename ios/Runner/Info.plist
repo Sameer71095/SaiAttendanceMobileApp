@@ -28,6 +28,15 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Our app uses location to ensure employees are within the allowed check-in and check-out locations and to provide location-based attendance services.</string>
     <key>NSLocationAlwaysUsageDescription</key>

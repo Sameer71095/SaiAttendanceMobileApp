@@ -1,7 +1,6 @@
-
-
 import 'dart:convert';
 
+import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
@@ -32,7 +31,26 @@ class LoginViewModel extends ChangeNotifier {
     passwordVisible=!passwordVisible;
     notifyListeners();
   }
+
+  bool _isValidEmail(String email) {
+    final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegex.hasMatch(email);
+  }
+
+  bool _isValidPassword(String password) {
+    return password.length >= 6; // You can add more validation rules if needed
+  }
+
   void loginClicked() {
+    if (!_isValidEmail(emailController.text)) {
+      showToast("Please enter a valid email address.");
+      return;
+    }
+
+    if (!_isValidPassword(passwordController.text)) {
+      showToast("Please enter a valid password with at least 6 characters.");
+      return;
+    }
     // emailController.text='sameer71095@gmail.com';
     // passwordController.text='123456';
      client.LoginEmployee(LoginRequestEntity(email:emailController.text,password: passwordController.text )).then((response) async {
@@ -93,7 +111,14 @@ class LoginViewModel extends ChangeNotifier {
             ),
           );
         }
+      }else {
+        // Display error message
+        showToast("Invalid login credentials. Please try again.");
+        notifyListeners();
       }
+       notifyListeners();
+     }).catchError((error) {
+       showToast("An error occurred. Please try again.");
        notifyListeners();
      });
 

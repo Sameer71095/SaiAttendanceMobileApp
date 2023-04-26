@@ -51,7 +51,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
     'Turn your head a little to the right',
     'Turn your head a little to the left',
     'Tilt your head a little up',
-    // 'Tilt your head a little down',
+    'Tilt your head a little down',
   ];
 
   final storage = const FlutterSecureStorage();
@@ -67,7 +67,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
       }
       capturedImages.add(image);
       currentStep++;
-      if(currentStep>3){
+      if(currentStep>2){
         storage.read(key: 'EmployeeId').then((value) async {
           String? employeeId=value;
           if (employeeId == null) {
@@ -176,7 +176,7 @@ class RegisterFaceViewModel extends ChangeNotifier {
               color: Colors.black.withOpacity(0.8),
             ),
           ),
-          Center(
+          const Center(
             child: CircularProgressIndicator(),
           ),
         ],
