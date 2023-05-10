@@ -211,10 +211,10 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
             height: 130.0,
             width: MediaQuery.of(model.context).size.width-15,
             margin: const EdgeInsets.only(
-              top: 20,
-              bottom: 20,
-              left: 10,
-              right: 10
+                top: 20,
+                bottom: 20,
+                left: 10,
+                right: 10
 
             ),
             padding: const EdgeInsets.only(
@@ -226,109 +226,109 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
               ),
             ),
             child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
 
-                        Text(
-                          DateFormat('dd MMM yyyy').format(DateTime.now()),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              fontFamily: "Sofia"),
+                    Text(
+                      DateFormat('dd MMM yyyy').format(DateTime.now()),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontFamily: "Sofia"),
 
-                        ),
-                        const SizedBox(height: 16.0),
-                         Text(
-                          'Shift Starts at ${constants.loginData.shiftStartTime}' ,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                              fontFamily: "Sofia"),
-
-                        ),
-                        const SizedBox(height: 5.0),
-                         Text(
-                          'Shift ends at ${constants.loginData.shiftEndTime}' ,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                              fontFamily: "Sofia"),
-
-                        ),
-                      ],
                     ),
-                    Column(
-                      children: <Widget>[
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                            /*TextSpan(
-                                text: 'Status:\n',
-                                style: TextStyle(fontSize: 16.0, color: Colors.black),
-                              ),*/
-                              TextSpan(
-                                text: constants.loginData.isCheckedout ?? false ? "Checked-out" : "Checked-In",
-                                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 16.0),
-                        model.isLoading
-                            ? const CircularProgressIndicator()
-                            : model.isCheckedIn
-                            ? GestureDetector(
-                          onTap: () {
-                            // Handle container click
-                       //     model.loginClicked();
-                          },
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              color: HexColor('#f56624'),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child:   Container(
-                              width: 100,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: HexColor('484948'),
-                              ),
-                              child: const Center(
-                                child: AutoSizeText("Check-Out", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                              ),
-                            ),),)
+                    const SizedBox(height: 16.0),
+                    Text(
+                      'Shift Starts at ${constants.loginData.shiftStartTime}' ,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          fontFamily: "Sofia"),
 
-                  :  GestureDetector(
-                          onTap: () {
-                            // Handle container click
-                       //     model.loginClicked();
-                            model.onCheckInClicked();
-                          },
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              color: HexColor('#f56624'),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child:   Container(
-                              width: 100,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: HexColor('484948'),
-                              ),
-                              child: const Center(
-                                child: AutoSizeText("Tap", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                              ),
-                            ),),),
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      'Shift ends at ${constants.loginData.shiftEndTime}' ,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          fontFamily: "Sofia"),
 
-                      ],
                     ),
                   ],
                 ),
+                Column(
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          /*TextSpan(
+                                text: 'Status:\n',
+                                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                              ),*/
+                          TextSpan(
+                            text: constants.loginData.isCheckedout ?? false ? "Checked-out" : "Checked-In",
+                            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    model.isLoading
+                        ? const CircularProgressIndicator()
+                        : model.isCheckedIn
+                        ? GestureDetector(
+                      onTap: () {
+                        // Handle container click
+                        //     model.loginClicked();
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: HexColor('#f56624'),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child:   Container(
+                          width: 100,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: HexColor('484948'),
+                          ),
+                          child: const Center(
+                            child: AutoSizeText("Check-Out", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                          ),
+                        ),),)
+
+                        :  GestureDetector(
+                      onTap: () {
+                        // Handle container click
+                        //     model.loginClicked();
+                        model.onCheckInClicked();
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: HexColor('#f56624'),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child:   Container(
+                          width: 100,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: HexColor('484948'),
+                          ),
+                          child: const Center(
+                            child: AutoSizeText("Tap", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                          ),
+                        ),),),
+
+                  ],
+                ),
+              ],
+            ),
 
           ),
           ),
@@ -355,7 +355,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-         //  model.loadMore(); // Function to load more data when the list reaches the end
+          //  model.loadMore(); // Function to load more data when the list reaches the end
         }
         return true;
       },
@@ -398,9 +398,9 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                         date: attendance.checkedDate!,
                         totalHours: attendance.totalHours!, // Update this value based on your data calculation
                         timeEntries: attendance.checked
-                            !.map((e) => {
+                        !.map((e) => {
                           e.isCheckedout: e.checkedTime!,
-                       /*   'out': e.isCheckedout ? 'checked out' : null,*/
+                          /*   'out': e.isCheckedout ? 'checked out' : null,*/
                         })
                             .toList(),
                       ),

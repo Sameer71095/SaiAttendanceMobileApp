@@ -1,4 +1,5 @@
 
+import 'package:ClockSpotter/utils/Custom_Theme.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/splash/splash_view.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 List<CameraDescription> cameras=<CameraDescription>[];
 void main() async {
@@ -77,12 +79,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+    return  NeumorphicApp(
+      debugShowCheckedModeBanner: false,
+      title: 'ClockSpotter',
+      themeMode: ThemeMode.light,
+      theme: customNeumorphicTheme,
+      home: SplashView(),
+    );
+/*    return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SAI Attendance',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashView());
+        home: SplashView());*/
   }
 }

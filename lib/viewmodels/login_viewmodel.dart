@@ -42,10 +42,10 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void loginClicked() {
-    if (!_isValidEmail(emailController.text)) {
+  /*  if (!_isValidEmail(emailController.text)) {
       showToast("Please enter a valid email address.");
       return;
-    }
+    }*/
 
     if (!_isValidPassword(passwordController.text)) {
       showToast("Please enter a valid password with at least 6 characters.");
