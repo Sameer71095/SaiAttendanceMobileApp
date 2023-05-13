@@ -1,5 +1,6 @@
 
 import 'package:ClockSpotter/utils/Custom_Theme.dart';
+import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
       title: 'ClockSpotter',
       themeMode: ThemeMode.light,
       theme: customNeumorphicTheme,
-      home: SplashView(),
+      home: LoginView(),
     );
 /*    return MaterialApp(
         debugShowCheckedModeBanner: false,
