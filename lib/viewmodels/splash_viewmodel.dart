@@ -27,12 +27,12 @@ class SplashViewModel extends ChangeNotifier {
   }
 
   void navigateToLogin() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 0), () {
       // Navigate to home screen
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 400),
+          transitionDuration: const Duration(milliseconds: 00),
           pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SlideTransition(
@@ -48,12 +48,12 @@ class SplashViewModel extends ChangeNotifier {
     });
   }
   void navigateToHome() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 0), () {
       // Navigate to home screen
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 400),
+          transitionDuration: const Duration(milliseconds: 00),
           pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SlideTransition(

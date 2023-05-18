@@ -9,7 +9,7 @@ import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/splash/splash_view.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+//import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 List<CameraDescription> cameras=<CameraDescription>[];
 void main() async {
@@ -81,19 +81,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return  NeumorphicApp(
+/*    return  NeumorphicApp(
       debugShowCheckedModeBanner: false,
       title: 'ClockSpotter',
       themeMode: ThemeMode.light,
       theme: customNeumorphicTheme,
-      home: LoginView(),
-    );
-/*    return MaterialApp(
+      home: SplashView(),
+    );*/
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'SAI Attendance',
+        title: 'SAI ClockSpotter',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashView());*/
+        home: SplashView());
   }
 }

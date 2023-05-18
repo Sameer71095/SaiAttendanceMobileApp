@@ -139,22 +139,35 @@ class HomeViewModel extends ChangeNotifier {
       ),
     );
 
-    if (result != null) {
+   // if (result != null) {
       // Refresh your data here
       _refreshData();
-    }
+    //}
   }
 
-  void _refreshData() {
+
+  Future<void> _refreshData() async {
     // Update the necessary variables here
 
     DateTime now = DateTime.now();
     currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
     currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
-    loadData();
+
+    // You should handle any errors that might occur during data loading
+    try {
+      loadData();
+    } catch (e) {
+      // Handle the error appropriately
+      print('Failed to load data: $e');
+
+      await Sentry.captureException(
+        e,
+        stackTrace: e.toString(),
+      );
+    }
+
     notifyListeners();
   }
-
 
 
   Future<bool> isWithin5Meters(double? targetLatitude,double? targetLongitude,int? radius ) async {

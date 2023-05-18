@@ -114,7 +114,7 @@ class LoginViewModel extends ChangeNotifier {
       }else {
         // Display error message
         showToast("Invalid login credentials. Please try again.");
-        notifyListeners();
+
       }
        notifyListeners();
      }).catchError((error) {

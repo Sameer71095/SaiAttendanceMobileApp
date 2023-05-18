@@ -26,7 +26,7 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
+        //brightness: Brightness.dark,
         elevation: 0.0,
         backgroundColor: HexColor('484848'),
         iconTheme: IconThemeData(color: Colors.white),
