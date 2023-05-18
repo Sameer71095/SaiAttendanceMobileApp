@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     );*/
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'SAI ClockSpotter',
+        title: 'ClockSpotter',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
