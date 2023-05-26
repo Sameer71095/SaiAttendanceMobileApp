@@ -65,6 +65,23 @@ class CameraPicViewModel extends ChangeNotifier {
 
     try {
 
+   /*   // Capture a sequence of frames
+      List<XFile> frameSequence = await captureFrameSequence();
+
+      // Analyze the sequence for liveness
+      bool isLive = await analyzeSequenceForLiveness(frameSequence);
+
+      // If the liveness check fails, handle it
+      if (!isLive) {
+        handleFailedLivenessCheck();
+        return;
+      }
+
+      // If the liveness check passes, send the data to the server
+      XFile? image = selectImageFromSequence(frameSequence);*/
+
+
+
       LocationData _locationData = await location.getLocation();
     //  showToast('clicked', duration: 1);
       // Pass the preprocessed image to the recognition algorithm
@@ -166,4 +183,50 @@ class CameraPicViewModel extends ChangeNotifier {
     return filePath;
   }*/
 
+
+ /* Future<bool> analyzeSequenceForLiveness(List<XFile> frameSequence) async {
+    const int MIN_BLINKS = 2;
+    const int MIN_HEAD_MOVEMENTS = 2;
+
+    int blinkCount = 0;
+    int headMovementCount = 0;
+
+    // Load your machine learning models
+    var blinkDetector = await loadBlinkDetectorModel();
+    var headMovementDetector = await loadHeadMovementDetectorModel();
+    var textureAnalyzer = await loadTextureAnalyzerModel();
+
+    // Analyze each frame in the sequence
+    for (var frame in frameSequence) {
+      // Preprocess the frame for the model
+      var processedFrame = await preprocessFrameForModel(frame);
+
+      // Pass the processed frame through the models concurrently
+      var results = await Future.wait([
+        blinkDetector.predict(processedFrame),
+        headMovementDetector.predict(processedFrame),
+        textureAnalyzer.analyze(processedFrame),
+      ]);
+
+      // If a blink was detected, increment the blink count
+      if (results[0]) {
+        blinkCount++;
+      }
+
+      // If a head movement was detected, increment the head movement count
+      if (results[1]) {
+        headMovementCount++;
+      }
+
+      // If the texture is inconsistent, return false early
+      if (!results[2]) {
+        return false;
+      }
+    }
+
+    // If a certain number of blinks were detected, and the head moved a certain number of times,
+    // consider it a live person
+    return blinkCount > MIN_BLINKS && headMovementCount > MIN_HEAD_MOVEMENTS;
+  }
+*/
 }

@@ -1,5 +1,6 @@
 
 
+import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
@@ -48,6 +49,7 @@ class SplashViewModel extends ChangeNotifier {
     });
   }
   void navigateToHome() {
+    constants.init();
     Future.delayed(const Duration(seconds: 0), () {
       // Navigate to home screen
       Navigator.pushReplacement(

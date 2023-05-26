@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
@@ -35,16 +36,58 @@ class HomeViewModel extends ChangeNotifier {
     currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
 
     employeeName=constants.loginData.name!;
-   // employeeName=  (await  storage.read(key: 'Name'))!;
+    // employeeName=  (await  storage.read(key: 'Name'))!;
     notifyListeners();
-  //  loadData();
+   // getUpdate();
+    //  loadData();
 
   }
 
   int counter = 0;
-  void updateTitle() {
-    counter++;
-    title = '$counter';
+  void getUpdate() {
+
+    client.GetUpdateEmployee().then((response) async {
+      if(response.isSuccess==true) {
+        await storage.deleteAll(); // Delete all existing keys and values
+        await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
+        await storage.write(key: 'Token', value:response.data!.token.toString());
+        await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
+
+        await constants.init();
+
+        showToast("Update Called",duration: 1);
+        if(response.data!.isImagesRegistered==true){
+
+        }else{
+
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              transitionDuration: const Duration(milliseconds: 200),
+              pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
+              transitionsBuilder: (context, animation, secondaryAnimation,
+                  child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+            ),
+          );
+        }
+      }else {
+        // Display error message
+        showToast("Invalid login credentials. Please try again.");
+
+      }
+      notifyListeners();
+    }).catchError((error) {
+      showToast("An error occurred. Please try again.");
+      notifyListeners();
+    });
     notifyListeners();
   }
 
@@ -76,7 +119,7 @@ class HomeViewModel extends ChangeNotifier {
           var val = Data.fromJson(
               json.decode(loginDataValue) as Map<String, dynamic>);
           if (val.isLocationBound!) {
-            isWithin5Meters(val.latitude, val.longitude, val.radius).then((
+            isWithinMeters(val.locations).then((
                 iswithin) {
               if (iswithin) {
 
@@ -139,9 +182,9 @@ class HomeViewModel extends ChangeNotifier {
       ),
     );
 
-   // if (result != null) {
-      // Refresh your data here
-      _refreshData();
+    // if (result != null) {
+    // Refresh your data here
+    _refreshData();
     //}
   }
 
@@ -170,10 +213,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
 
-  Future<bool> isWithin5Meters(double? targetLatitude,double? targetLongitude,int? radius ) async {
-/*    double targetLatitude = 25.161327204419532;
-    double targetLongitude = 55.20950915143249;
-    const double radius = 5.0;*/
+  Future<bool> isWithinMeters(List<SiteLocations>? locations) async {
 
     Location.Location location = new Location.Location();
     bool _serviceEnabled;
@@ -187,19 +227,18 @@ class HomeViewModel extends ChangeNotifier {
       }
     }
 
-    /* _permissionGranted = (await location.hasPermission()) as PermissionStatus;
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = (await location.requestPermission()) as PermissionStatus;
-      if (_permissionGranted != PermissionStatus.granted) {
-        return false;
-      }
-    }*/
 
     Location.LocationData _locationData = await location.getLocation();
-    double distance = calculateDistance(
-        _locationData.latitude!, _locationData.longitude!, targetLatitude!, targetLongitude!);
+    for (SiteLocations targetLocation in locations!) {
+      double distance = calculateDistance(
+          _locationData.latitude!, _locationData.longitude!, targetLocation.latitude!, targetLocation.longitude!);
 
-    return distance <= radius!;
+      if (distance <= targetLocation.radius!) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   double calculateDistance(double lat1, double lon1, double lat2, double lon2) {

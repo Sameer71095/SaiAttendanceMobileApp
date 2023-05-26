@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/api/secureCacheManager.dart';
 import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:dio/dio.dart';
 
 class Constants {
   static final Constants _instance = Constants._internal();
@@ -12,13 +15,22 @@ class Constants {
   Future<void> init() async {
     try {
       String? loginDataValue = await storage.read(key: 'loginResponse');
+
       if (loginDataValue != null && loginDataValue.isNotEmpty) {
         loginData = Data.fromJson(
             json.decode(loginDataValue) as Map<String, dynamic>);
+        dio.interceptors.add(
+          InterceptorsWrapper(
+            onRequest: (options, handler) {
+              options.headers['Authorization'] = 'Bearer ${loginData.token}';
+              return handler.next(options);
+            },
+          ),
+        );
       }
     } catch (e) {
       // Handle the error, e.g., log the error message or show an error dialog
-      print('Error reading LoginData from storage: $e');
+      showToast('Error reading LoginData from storage: $e');
     }
   }
 }

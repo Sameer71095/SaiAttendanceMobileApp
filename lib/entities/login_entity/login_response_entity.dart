@@ -40,6 +40,7 @@ class Data {
   String? checkedTime;
   String? shiftStartTime;
   String? shiftEndTime;
+  List<SiteLocations>? locations;
 
   Data(
       {this.employeeId,
@@ -58,7 +59,8 @@ class Data {
         this.checkedDate,
         this.checkedTime,
         this.shiftStartTime,
-        this.shiftEndTime});
+        this.shiftEndTime,
+        this.locations});
 
   Data.fromJson(Map<String, dynamic> json) {
     employeeId = json['employeeId'];
@@ -78,6 +80,12 @@ class Data {
     checkedTime = json['checkedTime'];
     shiftStartTime = json['shiftStartTime'];
     shiftEndTime = json['shiftEndTime'];
+    if (json['locations'] != null) {
+      locations = [];
+      json['locations'].forEach((v) {
+        locations!.add(new SiteLocations.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -99,6 +107,41 @@ class Data {
     data['checkedTime'] = this.checkedTime;
     data['shiftStartTime'] = this.shiftStartTime;
     data['shiftEndTime'] = this.shiftEndTime;
+    if (this.locations != null) {
+      data['locations'] = this.locations!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
+
+class SiteLocations {
+  int? locationId;
+  String? name;
+  String? description;
+  double? latitude;
+  double? longitude;
+  int? radius;
+
+  SiteLocations({this.locationId, this.name, this.description, this.latitude, this.longitude, this.radius});
+
+  SiteLocations.fromJson(Map<String, dynamic> json) {
+    locationId = json['locationId'];
+    name = json['name'];
+    description = json['description'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    radius = json['radius'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['locationId'] = this.locationId;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
+    data['radius'] = this.radius;
+    return data;
+  }
+}
+

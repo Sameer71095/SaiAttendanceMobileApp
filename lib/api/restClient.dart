@@ -26,6 +26,11 @@ abstract class RestClient {
   @POST("/employee/login")
   Future<LoginResponseEntity> LoginEmployee(@Body()  LoginRequestEntity loginRequestEntity);
 
+
+  @Headers(<String, String>{"Content-Type": "application/json"})
+  @POST("/employee/getupdate")
+  Future<LoginResponseEntity> GetUpdateEmployee();
+
   @Headers(<String, String>{"Content-Type": "application/json"})
   @POST("/attendance/getAttendanceHistory")
   Future<AttendanceHistoryResponse> GetAttendanceHistory(@Body()  AttendanceHistoryRequest attendanceHistoryRequest);
