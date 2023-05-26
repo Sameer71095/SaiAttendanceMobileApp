@@ -119,7 +119,7 @@ class HomeViewModel extends ChangeNotifier {
           var val = Data.fromJson(
               json.decode(loginDataValue) as Map<String, dynamic>);
           if (val.isLocationBound!) {
-            isWithinMeters(val.locations).then((
+            helper.isWithinMeters(val.locations).then((
                 iswithin) {
               if (iswithin) {
 
@@ -210,52 +210,6 @@ class HomeViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
-  }
-
-
-  Future<bool> isWithinMeters(List<SiteLocations>? locations) async {
-
-    Location.Location location = new Location.Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return false;
-      }
-    }
-
-
-    Location.LocationData _locationData = await location.getLocation();
-    for (SiteLocations targetLocation in locations!) {
-      double distance = calculateDistance(
-          _locationData.latitude!, _locationData.longitude!, targetLocation.latitude!, targetLocation.longitude!);
-
-      if (distance <= targetLocation.radius!) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    const double earthRadius = 6371.0; // Radius of Earth in kilometers
-    double dLat = _degreesToRadians(lat2 - lat1);
-    double dLon = _degreesToRadians(lon2 - lon1);
-
-    double a = sin(dLat / 2) * sin(dLat / 2) +
-        cos(_degreesToRadians(lat1)) * cos(_degreesToRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-    double distance = earthRadius * c * 1000; // Convert to meters
-    return distance;
-  }
-
-  double _degreesToRadians(double degrees) {
-    return degrees * pi / 180;
   }
 
   Future<void> onRefresh() async {

@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -19,6 +20,7 @@ import 'package:image/image.dart' as img;
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../api/dio_client.dart';
+import '../entities/login_entity/login_response_entity.dart' as Login;
 
 class CameraPicViewModel extends ChangeNotifier {
 
@@ -81,45 +83,69 @@ class CameraPicViewModel extends ChangeNotifier {
       XFile? image = selectImageFromSequence(frameSequence);*/
 
 
-
+      AttendanceResponseEntity results= AttendanceResponseEntity();
       LocationData _locationData = await location.getLocation();
-    //  showToast('clicked', duration: 1);
-      // Pass the preprocessed image to the recognition algorithm
-      final results = await clientPython.CheckInCheckOut(_locationData.latitude!, _locationData.longitude!,image);
 
-      try {
-        if(results.data!.isCheckedOut == 1){
-          userName = '${results.data!.name} Checked-Out';
-          if(results.data?.employeeID==constants.loginData.employeeId) {
-            constants.loginData.isCheckedout=true;
-            await storage.write(key: 'loginResponse',
-                value: jsonEncode(constants.loginData.toJson()));
-          }
+      String? loginDataValue = await storage.read(key: 'loginResponse');
+      if (loginDataValue != null) {
+        var val = Login.Data.fromJson(
+            json.decode(loginDataValue) as Map<String, dynamic>);
+        if (val.isLocationBound!) {
+          helper.isWithinMeters(val.locations).then((iswithin) async {
+            if (iswithin) {
+               results = await clientPython.CheckInCheckOut(
+                  _locationData.latitude!, _locationData.longitude!, image);
+          await     afterClickedUIUpdate(results);
+            } else {
+              showToast(
+                  'Please come to the allocated location ${val.location}');
+            }
+          });
         }else{
-          userName = '${results.data!.name} Checked-In';
-          if(results.data?.employeeID==constants.loginData.employeeId) {
-            constants.loginData.isCheckedout=false;
-            await storage.write(key: 'loginResponse',
-                value: jsonEncode(constants.loginData.toJson()));
-          }
+
+           results = await clientPython.CheckInCheckOut(
+              _locationData.latitude!, _locationData.longitude!, image);
+           await afterClickedUIUpdate(results);
         }
-        // userName = results.data!.name.toString();
-      } catch (exception) {
-        isLoading = false;
-        notifyListeners();
-        showToast('Unable to detect $exception', duration: 10);
+      }
+    } catch (e) {
+      isLoading = false;
+      showToast('Unable to detect $e', duration: 3);
+    }
+
+    notifyListeners();
+  }
+  Future<void> afterClickedUIUpdate(AttendanceResponseEntity results) async {
+
+    try {
+      if(results.data!.isCheckedOut == 1){
+        userName = '${results.data!.name} Checked-Out';
+        if(results.data?.employeeID==constants.loginData.employeeId) {
+          constants.loginData.isCheckedout=true;
+          await storage.write(key: 'loginResponse',
+              value: jsonEncode(constants.loginData.toJson()));
+        }
+      }else{
+        userName = '${results.data!.name} Checked-In';
+        if(results.data?.employeeID==constants.loginData.employeeId) {
+          constants.loginData.isCheckedout=false;
+          await storage.write(key: 'loginResponse',
+              value: jsonEncode(constants.loginData.toJson()));
+        }
       }
 
       showToast(userName, duration: 10);
+      isLoading = false;
       Navigator.pop(context, 'refresh');
-      notifyListeners();
-    } catch (e) {
+      // userName = results.data!.name.toString();
+    } catch (exception) {
       isLoading = false;
       notifyListeners();
-      showToast('Unable to detect $e', duration: 10);
+      showToast('Unable to detect $exception', duration: 3);
     }
-    isLoading = false;
+
     notifyListeners();
+
   }
   String? errorMessage;
   Future<void> handleCameraError(String message) async {
