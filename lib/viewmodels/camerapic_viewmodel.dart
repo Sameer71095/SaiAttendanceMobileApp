@@ -86,7 +86,7 @@ class CameraPicViewModel extends ChangeNotifier {
       AttendanceResponseEntity results= AttendanceResponseEntity();
       LocationData _locationData = await location.getLocation();
 
-   /*   String? loginDataValue = await storage.read(key: 'loginResponse');
+      String? loginDataValue = await storage.read(key: 'loginResponse');
       if (loginDataValue != null) {
         var val = Login.Data.fromJson(
             json.decode(loginDataValue) as Map<String, dynamic>);
@@ -111,12 +111,7 @@ class CameraPicViewModel extends ChangeNotifier {
 
            isLoading = false;
         }
-      }*/
-
-//temp to not check location
-      results = await clientPython.CheckInCheckOut(
-          _locationData.latitude!, _locationData.longitude!, image);
-      await     afterClickedUIUpdate(results);
+      }
     } catch (e) {
       isLoading = false;
       showToast('Unable to detect $e', duration: 3);
