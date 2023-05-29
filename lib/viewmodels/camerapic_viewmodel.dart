@@ -62,12 +62,13 @@ class CameraPicViewModel extends ChangeNotifier {
     capturedImage = null;
     notifyListeners();
   }
+
   void onCaptureClick(File? image) async {
     capturedImage = image;
 
     try {
 
-   /*   // Capture a sequence of frames
+      /*   // Capture a sequence of frames
       List<XFile> frameSequence = await captureFrameSequence();
 
       // Analyze the sequence for liveness
@@ -93,9 +94,9 @@ class CameraPicViewModel extends ChangeNotifier {
         if (val.isLocationBound!) {
           helper.isWithinMeters(val.locations).then((iswithin) async {
             if (iswithin) {
-               results = await clientPython.CheckInCheckOut(
+              results = await clientPython.CheckInCheckOut(
                   _locationData.latitude!, _locationData.longitude!, image);
-          await     afterClickedUIUpdate(results);
+              await     afterClickedUIUpdate(results);
             } else {
               showToast(
                   'Please come to the allocated location ${val.location}');
@@ -105,11 +106,11 @@ class CameraPicViewModel extends ChangeNotifier {
           });
         }else{
 
-           results = await clientPython.CheckInCheckOut(
+          results = await clientPython.CheckInCheckOut(
               _locationData.latitude!, _locationData.longitude!, image);
-           await afterClickedUIUpdate(results);
+          await afterClickedUIUpdate(results);
 
-           isLoading = false;
+          isLoading = false;
         }
       }
     } catch (e) {
@@ -119,38 +120,137 @@ class CameraPicViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
-  Future<void> afterClickedUIUpdate(AttendanceResponseEntity results) async {
 
+  Future<void> afterClickedUIUpdate(AttendanceResponseEntity results) async {
     try {
-      if(results.data!.isCheckedOut == 1){
-        userName = '${results.data!.name} Checked-Out';
-        if(results.data?.employeeID==constants.loginData.employeeId) {
-          constants.loginData.isCheckedout=true;
-          await storage.write(key: 'loginResponse',
-              value: jsonEncode(constants.loginData.toJson()));
-        }
-      }else{
-        userName = '${results.data!.name} Checked-In';
-        if(results.data?.employeeID==constants.loginData.employeeId) {
-          constants.loginData.isCheckedout=false;
-          await storage.write(key: 'loginResponse',
-              value: jsonEncode(constants.loginData.toJson()));
+      List<String> checkedInEmployees = [];
+      List<String> checkedOutEmployees = [];
+      if (results.data!.isEmpty) {
+        showToast('No employees detected', duration: 10);
+      } else {
+        for (var result in results.data!) {
+          if (result.isCheckedOut == 1) {
+            userName = '${result.name} Checked-Out';
+            checkedOutEmployees.add(result.name!); // add to checkedOut list
+          } else {
+            userName = '${result.name} Checked-In';
+            checkedInEmployees.add(result.name!); // add to checkedIn list
+          }
+          showToast(userName, duration: 10);
         }
       }
-
-      showToast(userName, duration: 10);
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        showCheckedInOutPopup(context, checkedInEmployees, checkedOutEmployees);
+      });
       isLoading = false;
-      Navigator.pop(context, 'refresh');
-      // userName = results.data!.name.toString();
+      notifyListeners();
     } catch (exception) {
       isLoading = false;
       notifyListeners();
       showToast('Unable to detect $exception', duration: 3);
     }
-
-    notifyListeners();
-
   }
+
+  void showCheckedInOutPopup(BuildContext context, List<String> checkedInEmployees, List<String> checkedOutEmployees) {
+    try {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Container(
+                  width: constraints.maxWidth/1.2,
+                  height: constraints.maxHeight/1.5,
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                     Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          /*Text('Checked-INs and Checked-Outs', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
+                         */ IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  const Padding(
+                                    padding: EdgeInsets.only(bottom: 10),
+                                    child: Text('Checked-INs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: ListView.separated(
+                                        physics: BouncingScrollPhysics(),
+                                        padding: EdgeInsets.all(8.0),
+                                        itemCount: checkedInEmployees.length,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return Text(checkedInEmployees[index], style: TextStyle(fontSize: 16));
+                                        },
+                                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            VerticalDivider(color: Colors.blueGrey, width: 1),
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  const Padding(
+                                    padding: EdgeInsets.only(bottom: 10),
+                                    child: Text('Checked-Outs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: ListView.separated(
+                                        physics: BouncingScrollPhysics(),
+                                        padding: EdgeInsets.all(8.0),
+                                        itemCount: checkedOutEmployees.length,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return Text(checkedOutEmployees[index], style: TextStyle(fontSize: 16));
+                                        },
+                                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ).then((val) {
+        Navigator.pop(context, 'refresh');
+      });
+    } catch (e) {
+      print('Error showing dialog: $e');
+    }
+  }
+
+
   String? errorMessage;
   Future<void> handleCameraError(String message) async {
     errorMessage = message;
@@ -214,7 +314,7 @@ class CameraPicViewModel extends ChangeNotifier {
   }*/
 
 
- /* Future<bool> analyzeSequenceForLiveness(List<XFile> frameSequence) async {
+/* Future<bool> analyzeSequenceForLiveness(List<XFile> frameSequence) async {
     const int MIN_BLINKS = 2;
     const int MIN_HEAD_MOVEMENTS = 2;
 

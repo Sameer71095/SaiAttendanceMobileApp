@@ -16,6 +16,7 @@ import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
 
 import 'package:location/location.dart' as Location;
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:show_update_dialog/show_update_dialog.dart';
 
 import '../api/secureCacheManager.dart';
 
@@ -38,56 +39,181 @@ class HomeViewModel extends ChangeNotifier {
     employeeName=constants.loginData.name!;
     // employeeName=  (await  storage.read(key: 'Name'))!;
     notifyListeners();
-   // getUpdate();
+    getUpdate();
+
+    verifyVersion();
+
     //  loadData();
 
   }
 
-  int counter = 0;
-  void getUpdate() {
+  verifyVersion() async {
 
-    client.GetUpdateEmployee().then((response) async {
-      if(response.isSuccess==true) {
-        await storage.deleteAll(); // Delete all existing keys and values
-        await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
-        await storage.write(key: 'Token', value:response.data!.token.toString());
-        await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
 
-        await constants.init();
+    try {
+      final versionCheck = ShowUpdateDialog(iOSId: 'com.rushtech360.clockspotter', androidId: 'com.rushtech360.clockspotter', iOSAppStoreCountry: 'AE');
 
-        showToast("Update Called",duration: 1);
-        if(response.data!.isImagesRegistered==true){
+      final VersionModel vs = await versionCheck.fetchVersionInfo();
 
-        }else{
+      print('localVersion: ${vs.localVersion}');
+      print('appStoreLink: ${vs.appStoreLink}');
+      print('storeVersion: ${vs.storeVersion}');
+      print('releaseNotes: ${vs.releaseNotes}');
 
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              transitionDuration: const Duration(milliseconds: 200),
-              pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
-              transitionsBuilder: (context, animation, secondaryAnimation,
-                  child) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(1.0, 0.0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              },
+      int typeDemo = 1; // 0 simples, 1 custom dialog, 2 override
+
+      switch (typeDemo) {
+        case 0:
+          versionCheck.showSimplesDialog(context);
+          break;
+        case 1:
+          versionCheck.showCustomDialogUpdate(
+            context: context,
+            versionStatus: vs,
+            buttonText: "Update",
+            buttonColor: Colors.green,
+            forceUpdate: true,
+            title: 'ClockSpotter',
+            bodyoverride: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.update,
+                      size: 150,
+                      color: Colors.green,
+                    ),
+                  ],
+                ),
+                Text(
+                  "Please update your app",
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                ),
+                Text(
+                  "Local version: ${vs.localVersion}",
+                  style: TextStyle(fontSize: 17),
+                ),
+                Text(
+                  "Store version: ${vs.storeVersion}",
+                  style: TextStyle(fontSize: 17),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  "${vs.releaseNotes}",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
             ),
           );
-        }
-      }else {
-        // Display error message
-        showToast("Invalid login credentials. Please try again.");
-
+          break;
+        case 2:
+          var _releaseNotes = vs.releaseNotes!.replaceAll("<br>", "\n");
+          versionCheck.showCustomDialogUpdate(
+            context: context,
+            versionStatus: vs,
+            buttonText: "Update",
+            buttonColor: Colors.green,
+            bodyoverride: Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.update,
+                        size: 150,
+                        color: Colors.green,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "Please update your app",
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                  ),
+                  Text(
+                    "Local version: ${vs.localVersion}",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  Text(
+                    "Store version: ${vs.storeVersion}",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    "${_releaseNotes}",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+          );
+          break;
+        default:
       }
-      notifyListeners();
-    }).catchError((error) {
-      showToast("An error occurred. Please try again.");
-      notifyListeners();
-    });
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+    }
+    notifyListeners();
+  }
+  int counter = 0;
+  Future<void> getUpdate() async {
+
+    try {
+      client.GetUpdateEmployee().then((response) async {
+        if(response.isSuccess==true) {
+          await storage.deleteAll(); // Delete all existing keys and values
+          await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
+          await storage.write(key: 'Token', value:response.data!.token.toString());
+          await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
+
+          await constants.init();
+
+       //   showToast("Update Called",duration: 1);
+          if(response.data!.isImagesRegistered==true){
+
+          }else{
+
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 200),
+                pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
+                transitionsBuilder: (context, animation, secondaryAnimation,
+                    child) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          }
+        }else {
+          // Display error message
+         // showToast("Invalid login credentials. Please try again.");
+
+        }
+        notifyListeners();
+      }).catchError((error) {
+       // showToast("An error occurred. Please try again.");
+        notifyListeners();
+      });
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+    }
     notifyListeners();
   }
 

@@ -60,10 +60,8 @@ class LoginViewModel extends ChangeNotifier {
         await storage.deleteAll(); // Delete all existing keys and values
         await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
         await storage.write(key: 'Token', value:response.data!.token.toString());
-        await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()) );
-
+        await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
         await constants.init();
-
         if(response.data!.isImagesRegistered==true){
 
           Navigator.pushReplacement(
@@ -84,7 +82,6 @@ class LoginViewModel extends ChangeNotifier {
             ),
           );
         }else{
-
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
@@ -110,7 +107,7 @@ class LoginViewModel extends ChangeNotifier {
       }
        notifyListeners();
      }).catchError((error) {
-       showToast("An error occurred. Please try again.");
+     //  showToast("An error occurred. Please try again.");
        notifyListeners();
      });
 

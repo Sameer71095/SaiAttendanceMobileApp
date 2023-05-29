@@ -1,14 +1,19 @@
 class AttendanceResponseEntity {
   bool? isSuccess;
   String? errorMessage;
-  Data? data;
+  List<Data>? data;
 
   AttendanceResponseEntity({this.isSuccess, this.errorMessage, this.data});
 
   AttendanceResponseEntity.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
     errorMessage = json['errorMessage'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = [];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -16,11 +21,12 @@ class AttendanceResponseEntity {
     data['isSuccess'] = this.isSuccess;
     data['errorMessage'] = this.errorMessage;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
+
 
 class Data {
   int? employeeID;
