@@ -995,7 +995,7 @@ packages:
   show_update_dialog:
     dependency: "direct main"
     description:
-      path: "../show_update_dialog-main"
+      path: show_update_dialog-main
       relative: true
     source: path
     version: "1.0.10"
