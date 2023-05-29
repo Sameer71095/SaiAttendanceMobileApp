@@ -995,10 +995,9 @@ packages:
   show_update_dialog:
     dependency: "direct main"
     description:
-      name: show_update_dialog
-      sha256: "8fda9da746c44a9dcc611600e484a06c7e606811028bd61c1941334ebab76c9f"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../show_update_dialog-main"
+      relative: true
+    source: path
     version: "1.0.10"
   sky_engine:
     dependency: transitive

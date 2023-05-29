@@ -50,7 +50,8 @@ dependencies:
   image: ^4.0.17
   fluttertoast: ^8.2.2
   sentry_flutter: ^7.6.2
-  show_update_dialog: ^1.0.10
+  show_update_dialog:
+    path: ../show_update_dialog-main
 
   #device_preview: ^1.1.0
   #math_expressions: ^2.3.1
