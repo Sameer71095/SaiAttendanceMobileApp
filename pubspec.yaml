@@ -50,6 +50,7 @@ dependencies:
   image: ^4.0.17
   fluttertoast: ^8.2.2
   sentry_flutter: ^7.6.2
+  package_info_plus: ^4.0.1
   show_update_dialog:
     path: ./show_update_dialog-main
 
