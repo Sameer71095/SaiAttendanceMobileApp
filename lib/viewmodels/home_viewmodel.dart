@@ -48,8 +48,6 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   verifyVersion() async {
-
-
     try {
       final versionCheck = ShowUpdateDialog(iOSId: 'com.rushtech360.clockspotter', androidId: 'com.rushtech360.clockspotter', iOSAppStoreCountry: 'AE');
 
@@ -244,7 +242,7 @@ class HomeViewModel extends ChangeNotifier {
         if (loginDataValue != null) {
           var val = Data.fromJson(
               json.decode(loginDataValue) as Map<String, dynamic>);
-          if (val.isLocationBound!) {
+          if (val.isLocationBound == true) {
             helper.isWithinMeters(val.locations).then((
                 iswithin) {
               if (iswithin) {
@@ -256,6 +254,9 @@ class HomeViewModel extends ChangeNotifier {
                     'Please come to the allocated location ${val.location}');
               }
             });
+          }else{
+
+            takeToCameraPicView();
           }
         }else{
 

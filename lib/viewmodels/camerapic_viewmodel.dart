@@ -105,11 +105,9 @@ class CameraPicViewModel extends ChangeNotifier {
             }
           });
         }else{
-
           results = await clientPython.CheckInCheckOut(
               _locationData.latitude!, _locationData.longitude!, image);
           await afterClickedUIUpdate(results);
-
           isLoading = false;
         }
       }
