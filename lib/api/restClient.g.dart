@@ -25,8 +25,7 @@ class _RestClient implements RestClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.fields.add(MapEntry(
       'attendanceRequestEntity',
@@ -54,8 +53,7 @@ class _RestClient implements RestClient {
   Future<LoginResponseEntity> LoginEmployee(loginRequestEntity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginRequestEntity.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -63,7 +61,6 @@ class _RestClient implements RestClient {
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -77,18 +74,17 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<LoginResponseEntity> GetUpdateEmployee() async {
+  Future<LoginResponseEntity> GetUpdateEmployee(employeeId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
-    _headers.removeWhere((k, v) => v == null);
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<LoginResponseEntity>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -106,8 +102,7 @@ class _RestClient implements RestClient {
       attendanceHistoryRequest) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(attendanceHistoryRequest.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -115,7 +110,6 @@ class _RestClient implements RestClient {
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -125,6 +119,53 @@ class _RestClient implements RestClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AttendanceHistoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DefaultResponseEntity<String>> requestVacation(vacationRequest) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(vacationRequest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DefaultResponseEntity<String>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/vacation/requestvacation',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DefaultResponseEntity<String>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<VacationTypeResponseEntity> getvacationtypes() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<VacationTypeResponseEntity>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/vacation/getvacationtypes',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VacationTypeResponseEntity.fromJson(_result.data!);
     return value;
   }
 

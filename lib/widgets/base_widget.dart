@@ -10,7 +10,10 @@ class BaseWidget<T extends ChangeNotifier> extends StatefulWidget {
     required this.child,
     required this.onModelReady,
     required this.viewModel,
-  }) : super(key: key);
+  })  : assert(child != null),
+        assert(onModelReady != null),
+        assert(viewModel != null),
+        super(key: key);
 
   @override
   _BaseWidgetState<T> createState() => _BaseWidgetState<T>();
@@ -18,20 +21,79 @@ class BaseWidget<T extends ChangeNotifier> extends StatefulWidget {
 
 class _BaseWidgetState<T extends ChangeNotifier> extends State<BaseWidget<T>> {
   late T _model;
+  bool _isMounted = false;
+  bool _isError = false;
+  String _errorMessage = '';
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _model = widget.viewModel;
+    _isMounted = true;
+    _isLoading = true;
+    runModelReady();
+  }
 
-    widget.onModelReady(_model);
+  void runModelReady() async {
+    try {
+      await widget.onModelReady(_model);
+      if (_isMounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (_isMounted) {
+        setState(() {
+          _isLoading = false;
+          _isError = true;
+          _errorMessage = e.toString();
+        });
+      }
+      print('Error in onModelReady: $e');
+      // TODO: Report the error to your error reporting service in a non-blocking way.
+    }
+  }
+
+  @override
+  void dispose() {
+    _isMounted = false;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => _model,
-      child: widget.child,
-    );
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (_isError) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'An error occurred: $_errorMessage',
+              style: const TextStyle(color: Colors.red, fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: runModelReady,
+              child: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                onPrimary: Colors.white,
+                onSurface: Colors.grey,
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return ChangeNotifierProvider(
+        create: (context) => _model,
+        child: widget.child,
+      );
+    }
   }
 }

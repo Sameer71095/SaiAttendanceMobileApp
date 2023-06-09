@@ -8,6 +8,7 @@ import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/views/splash/splash_view.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 List<CameraDescription> cameras=<CameraDescription>[];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,12 +94,32 @@ class MyApp extends StatelessWidget {
       theme: customNeumorphicTheme,
       home: SplashView(),
     );*/
-    return MaterialApp(
+/*    return  MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'ClockSpotter',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         home: SplashView());
+    */
+
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context , child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'ClockSpotter',
+          // You can use the library anywhere in the app even in theme
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          //  textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+          ),
+          home: child,
+        );
+      },
+      child:  SplashView(),
+    );
   }
 }

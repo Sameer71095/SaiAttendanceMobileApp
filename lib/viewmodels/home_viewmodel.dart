@@ -164,7 +164,7 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> getUpdate() async {
 
     try {
-      client.GetUpdateEmployee().then((response) async {
+      client.GetUpdateEmployee(constants.loginData.employeeId).then((response) async {
         if(response.isSuccess==true) {
           await storage.deleteAll(); // Delete all existing keys and values
           await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());

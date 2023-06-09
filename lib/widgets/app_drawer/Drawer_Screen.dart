@@ -1,4 +1,5 @@
 
+import 'package:ClockSpotter/views/leaveRequest/leaverequest_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -133,6 +134,26 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
                             context,
                             PageRouteBuilder(
                               transitionDuration: const Duration(milliseconds: 300),
+                              pageBuilder: (context, animation, secondaryAnimation) => LeaveRequestView(),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                return SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(-1.0, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(animation),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                          child: _listText("Leave Request", Icons.leave_bags_at_home),
+                        ),
+                        InkWell(onTap: () async {  // Navigate to home screen
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration: const Duration(milliseconds: 300),
                               pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
                               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                 return SlideTransition(
@@ -146,7 +167,7 @@ class _drawerProfileScreenState extends State<drawerProfileScreen> {
                             ),
                           );
                         },
-                          child: _listText("Re-Register Face", Icons.exit_to_app),
+                          child: _listText("Re-Register Face", Icons.face),
                         ),
                         InkWell(onTap: () async {  // Navigate to home screen
                           await storage.deleteAll(); // Delete all existing keys and values
