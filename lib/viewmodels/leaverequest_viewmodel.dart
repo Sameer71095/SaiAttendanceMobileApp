@@ -1,14 +1,7 @@
-
-
-import 'dart:io';
-
-import 'package:ClockSpotter/api/MultipartFileWrapper.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
-import 'package:ClockSpotter/entities/vacation_entity/vacation_request_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import '../api/secureCacheManager.dart';
 import 'package:dio/dio.dart';
@@ -64,10 +57,8 @@ class LeaveRequestViewModel extends ChangeNotifier {
 
   Future<void> pickDocument() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
     document = pickedFile;
     notifyListeners();
-
   }
   Future<void> onClickVacationRequest() async {
     // Call the API and store the data in attendanceList
@@ -75,40 +66,15 @@ class LeaveRequestViewModel extends ChangeNotifier {
       // Handle error when no document is selected or no vacation type is selected
       return;
     }
-
-    MultipartFile file = await MultipartFile.fromFile(
-        document!.path,
-        filename: document!.name
-    );
-
- /*  var request=VacationRequestEntity(
-      employeeId: constants.loginData.employeeId, // your employee ID
-      startDate: startDate!,
-      endDate: endDate!,
-      reason: reasonController.text,
-      vacationTypeId: selectedVacationType!.vacationTypeId, // your vacation type ID
-      document: file,
-      isPaid: isPaid,
-      location: locationController.text,
-    );
-  print(request.toJson());*/
-    FormData formData = FormData.fromMap({
+    var formData = FormData.fromMap({
       "employeeId": constants.loginData.employeeId,
       "startDate": startDate!.toIso8601String(),
       "endDate": endDate!.toIso8601String(),
       "reason": reasonController.text,
       "vacationTypeId": selectedVacationType!.vacationTypeId,
-      "isPaid": isPaid,
-      "location": locationController.text,
       "document": await MultipartFile.fromFile(document!.path, filename: document!.name),
     });
-
-  /*  MultipartFile files = await MultipartFile.fromFile(
-        document!.path,
-        filename: document!.name
-    );
-    MultipartFileWrapper fileWrapper = MultipartFileWrapper(files);*/
-    /*var response = await client.requestVacation(formData);*/
+    var response = await client.requestVacation(formData);
     notifyListeners();
     Navigator.pop(context);
   }

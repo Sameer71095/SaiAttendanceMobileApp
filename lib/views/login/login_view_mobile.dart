@@ -7,12 +7,14 @@ import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
+import 'dart:math';
 import 'dart:async';
 import 'package:flutter_svg/svg.dart';
 
 
 class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context, LoginViewModel model) {
@@ -129,12 +131,12 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                                     model.passwordVisible ? Icons.visibility : Icons.visibility_off,
                                   ),
                                   onPressed: () {
-                                   model.onPasswordVisibility();
+                                    model.onPasswordVisibility();
                                   },
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -159,6 +161,30 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                             child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                           ),
                         ),),),
+
+                    const SizedBox(height: 20,), // You can adjust the space between Login and Register button
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to register page or handle container click
+                        //     model.registerClicked();
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(color: HexColor('484948')), // Let's make the Register button with border only
+                        ),
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white, // Let's make the Register button with white background
+                          ),
+                          child:  Center(
+                            child: Text("Register", style: TextStyle(color: HexColor('484948'), fontWeight: FontWeight.bold),),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 70,),
                     //  const Text("Forgot Password?", style: TextStyle(color: Color.fromRGBO(143, 148, 251, 1)),),
                   ],
@@ -191,9 +217,11 @@ class LoginMobileLandscape extends BaseModelWidget<LoginViewModel> {
                 style: const TextStyle(fontSize: 35),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
+
+

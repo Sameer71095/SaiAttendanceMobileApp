@@ -12,7 +12,6 @@ import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entit
 import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
 import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
 import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
-/*import 'package:dio_retry_plus/dio_retry_plus.dart';*/
 part 'restClient.g.dart';
 
 //@RestApi(baseUrl: 'http://10.39.1.117:8020/api')
@@ -21,13 +20,12 @@ abstract class RestClient {
 
   factory RestClient(Dio dio, {String? baseUrl}) {
     dio
-      ..options = BaseOptions(receiveTimeout: Duration(seconds: 300), connectTimeout: Duration(seconds: 300))
+      ..options = BaseOptions(receiveTimeout: Duration(seconds: 30000), connectTimeout: Duration(seconds: 30000))
       ..interceptors.addAll([
         InterceptorsWrapper(
           onRequest: (options, handler) {
             // Do something before request is sent
             options.headers.addAll(<String, String>{"Content-Type": "application/json"});
-
             print(options);
             return handler.next(options); // continue
           },
@@ -70,9 +68,13 @@ abstract class RestClient {
   @POST("/attendance/getAttendanceHistory")
   Future<AttendanceHistoryResponse> GetAttendanceHistory(@Body()  AttendanceHistoryRequest attendanceHistoryRequest);
 
+/*
   @POST("/vacation/requestvacation")
   Future<DefaultResponseEntity<String>> requestVacation(@Body() VacationRequestEntity vacationRequest);
+*/
 
+  @POST("/vacation/requestvacation")
+  Future<DefaultResponseEntity<String>> requestVacation(@Body() FormData vacationRequest);
 /*
   @Headers(<String, String>{"Content-Type": "multipart/form-data"})
   @POST("/vacation/requestvacation")
