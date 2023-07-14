@@ -4,6 +4,7 @@ import 'package:ClockSpotter/api/secureCacheManager.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/Registeration/register_view.dart';
 import 'package:ClockSpotter/views/forgot%20password/forgot_password.dart';
+import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
@@ -14,7 +15,7 @@ import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 
 import '../api/dio_client.dart';
 
-class LoginViewModel extends ChangeNotifier {
+class ForgotViewModel extends ChangeNotifier {
   String title = 'default';
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -49,17 +50,18 @@ class LoginViewModel extends ChangeNotifier {
   bool _isValidPassword(String password) {
     return password.length >= 6; // You can add more validation rules if needed
   }
-  void forgotClicked() {
+  void backClicked() {
     /*  if (!_isValidEmail(emailController.text)) {
       showToast("Please enter a valid email address.");
       return;
     }*/
- Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotView()));
+    Navigator.pop(context);
+
     // Navigator.pushReplacement(
     //   context,
     //   PageRouteBuilder(
     //     transitionDuration: const Duration(milliseconds: 200),
-    //     pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
+    //     pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
     //     transitionsBuilder: (context, animation, secondaryAnimation,
     //         child) {
     //       return SlideTransition(
@@ -72,6 +74,31 @@ class LoginViewModel extends ChangeNotifier {
     //     },
     //   ),
     // );
+
+  }
+  void forgotClicked() {
+    /*  if (!_isValidEmail(emailController.text)) {
+      showToast("Please enter a valid email address.");
+      return;
+    }*/
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
   }
   void RegisterClicked() {
 
@@ -95,7 +122,7 @@ class LoginViewModel extends ChangeNotifier {
 
   }
   void loginClicked() {
-  /*  if (!_isValidEmail(emailController.text)) {
+    /*  if (!_isValidEmail(emailController.text)) {
       showToast("Please enter a valid email address.");
       return;
     }*/
@@ -106,8 +133,8 @@ class LoginViewModel extends ChangeNotifier {
     }
     // emailController.text='sameer71095@gmail.com';
     // passwordController.text='123456';
-     client.LoginEmployee(LoginRequestEntity(email:emailController.text,password: passwordController.text )).then((response) async {
-       // Navigate to home screen
+    client.LoginEmployee(LoginRequestEntity(email:emailController.text,password: passwordController.text )).then((response) async {
+      // Navigate to home screen
       if(response.isSuccess==true) {
         await storage.deleteAll(); // Delete all existing keys and values
         await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
@@ -157,11 +184,11 @@ class LoginViewModel extends ChangeNotifier {
         showToast("Invalid login credentials. Please try again.");
 
       }
-       notifyListeners();
-     }).catchError((error) {
-     //  showToast("An error occurred. Please try again.");
-       notifyListeners();
-     });
+      notifyListeners();
+    }).catchError((error) {
+      //  showToast("An error occurred. Please try again.");
+      notifyListeners();
+    });
 
   }
 }

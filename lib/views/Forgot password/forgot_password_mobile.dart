@@ -2,20 +2,19 @@
 /// portrait and landscape
 
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
-import 'dart:math';
-import 'dart:async';
-import 'package:flutter_svg/svg.dart';
 
-class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
+
+import '../../viewmodels/forgot_viewmodel.dart';
+
+class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  Widget build(BuildContext context, LoginViewModel model) {
+  Widget build(BuildContext context, ForgotViewModel model) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -23,7 +22,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
       body: Stack(
         children: [
           Container(
-            height: height * 0.49,
+            height: height * 0.44,
             decoration: BoxDecoration(
                 color: Colors.blue.shade700,
                 borderRadius: BorderRadius.only(
@@ -36,31 +35,48 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
             child: Stack(
               children: [
                 Positioned(
-                    top: 253,
+                    top: 220,
                     right: 30,
                     child: Image.asset(
                       'assets/images/login/1b.png',
-                      width: 270,
+                      width: 300,
                     )),
                 Positioned(
-                    top: 73,
-                    left: 20,
+                    top: 40,
+                    left: 10,
                     child: Container(
                         child: Image.asset(
-                      'assets/images/login/loginElement.png',
+                      'assets/images/login/forgotElement.png',
                       width: 300,
-                          height: 340,
                     ))),
                 Positioned(
-                    top: 35,
-                    left: 40,
+                  top: 410,
+                  left:20,
+
+                  child: Container(
                     child: Text(
-                      'Welcome Back',
+                      'Forgot \nPassword ?',
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold),
-                    )),
+                        color: Colors.blue.shade900,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 15,
+                  child: GestureDetector(
+                    onTap: (){
+                      model.backClicked();
+                    },
+                    child: Container(
+                      child: Icon(Icons.arrow_back_ios,color: Colors.white,)
+
+                    ),
+                  ),
+                ),
+
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -69,105 +85,29 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                       child: Column(
                         children: [
                           TextField(
-                            controller: model.emailController,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 16), // Adjust the padding as needed
+                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16), // Adjust the padding as needed
 
                               filled: true,
                               fillColor: Colors.grey.shade300,
-                              hintText: 'Username',
+                              hintText: 'Email',
                               hintStyle: TextStyle(
                                 color: Colors.grey,
                               ),
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: Colors.grey,
-                              ),
+                              prefixIcon: Icon(Icons.alternate_email,color: Colors.grey,),
                               border: OutlineInputBorder(
+
                                 borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide.none,
+                                borderSide: BorderSide.none
+
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
-                          TextField(
-                            obscureText: model.passwordVisible,
-                            controller: model.passwordController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 16), // Adjust the padding as needed
+                          SizedBox(height: 20),
 
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'Password',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.grey,
-                              ),
-                              suffixIcon: IconButton(
-                                color: Colors.grey,
-                                icon: Icon(
 
-                                  model.passwordVisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                                onPressed: () {
-                                  model.onPasswordVisibility();
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: model.rememberpassword,
-                                    onChanged: (bool? value1) {
-                                      model.onCheckBox(value1!);
-                                    },
-                                    activeColor: Colors.blue,
-                                  ),
-                                  Text(
-                                    'Remember Password',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 10,),
-                              InkWell(
-                                onTap: (){
-                                  model.forgotClicked();
-                                },
-                                child: Text(
-                                  'Forgot Password',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
                           GestureDetector(
                             onTap: () {
-                              model.loginClicked();
                               // Perform login action
                             },
                             child: Container(
@@ -179,7 +119,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Login',
+                                  'Submit',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -192,25 +132,8 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't have an account? ",style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),),
-                        InkWell(
-                          onTap: (){
-                            model.RegisterClicked();
-                          },
-                          child: Text('Sign Up',style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),),
-                        ),
-                      ],
-                    )
+                    SizedBox(height: 30,),
+
 
                   ],
                 )
