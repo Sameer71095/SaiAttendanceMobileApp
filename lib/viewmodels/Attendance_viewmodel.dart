@@ -20,7 +20,8 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 
 import '../api/secureCacheManager.dart';
 
-class HomeViewModel extends ChangeNotifier {
+class AttendanceViewModel extends ChangeNotifier {
+
 
 
   String title = 'default';

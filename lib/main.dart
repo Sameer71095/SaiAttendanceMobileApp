@@ -70,7 +70,8 @@ void main() async {
         options.environment = kReleaseMode ? 'production' : 'debug';
         options.release = 'AttendanceSystem@1.0.0'; // Replace with your app's name and version
       },
-      appRunner: () => runApp(MyApp()),
+      appRunner: () => runApp(MyApp(),
+           ),
     );
     // runApp(MyApp());
   }  catch (exception, stackTrace) {

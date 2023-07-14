@@ -1,17 +1,10 @@
-/// Contains the widgets that will be used for Mobile layout of home,
-/// portrait and landscape
-
 import 'package:ClockSpotter/viewmodels/register_viewmodel.dart';
 import 'package:ClockSpotter/views/Registeration/register_view.dart';
-import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
-import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
-import 'dart:math';
-import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -20,6 +13,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
   Widget build(BuildContext context, RegisterViewModel model) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -34,37 +28,37 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Stack(
               children: [
+                // Positioned(
+                //   top: height * 0.176,
+                //   right: width * 0.29,
+                //   child: Image.asset(
+                //     'assets/images/login/1b.png',
+                //     width: width * 0.50,
+                //   ),
+                // ),
                 Positioned(
-                  top: 155,
-                  right: 60,
-                  child: Image.asset(
-                    'assets/images/login/1b.png',
-                    width: 200,
-                  ),
-                ),
-                Positioned(
-                  top: 5,
-                  left: 20,
+                  top: height * 0.02,
+                  left: width * 0.1,
                   child: Container(
                     child: Image.asset(
                       'assets/images/login/loginElement.png',
-                      height: 270,
-                      width: 300,
+                      width: width * 0.8,
+                      height: height * 0.30,
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 260,
-                  left: 20,
+                  top: height * 0.38,
+                  left: width * 0.06,
                   child: Container(
                     child: Text(
                       'Sign Up',
                       style: TextStyle(
                         color: Colors.blue.shade900,
-                        fontSize: 28,
+                        fontSize: width * 0.09,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -78,9 +72,9 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                       TextField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 16), // Adjust the padding as needed
-
+                            vertical: height * 0.014,
+                            horizontal: width * 0.04,
+                          ),
                           filled: true,
                           fillColor: Colors.grey.shade300,
                           hintText: 'Username',
@@ -97,13 +91,13 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: height * 0.014),
                       TextField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 16), // Adjust the padding as needed
-
+                            vertical: height * 0.014,
+                            horizontal: width * 0.04,
+                          ),
                           filled: true,
                           fillColor: Colors.grey.shade300,
                           hintText: 'Email',
@@ -120,13 +114,13 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: height * 0.014),
                       TextField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 16), // Adjust the padding as needed
-
+                            vertical: height * 0.014,
+                            horizontal: width * 0.04,
+                          ),
                           filled: true,
                           fillColor: Colors.grey.shade300,
                           hintText: 'Mobile Number',
@@ -143,13 +137,13 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: height * 0.014),
                       TextField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 16), // Adjust the padding as needed
-
+                            vertical: height * 0.014,
+                            horizontal: width * 0.04,
+                          ),
                           filled: true,
                           fillColor: Colors.grey.shade300,
                           hintText: 'Company Name',
@@ -166,15 +160,15 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: height * 0.014),
                       TextField(
                         obscureText: model.passwordVisible,
                         controller: model.passwordController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 16), // Adjust the padding as needed
-
+                            vertical: height * 0.014,
+                            horizontal: width * 0.04,
+                          ),
                           filled: true,
                           fillColor: Colors.grey.shade300,
                           hintText: 'Password',
@@ -188,7 +182,6 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           suffixIcon: IconButton(
                             color: Colors.grey,
                             icon: Icon(
-
                               model.passwordVisible
                                   ? Icons.visibility_off
                                   : Icons.visibility,
@@ -203,42 +196,15 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
-                      // TextField(
-                      //   obscureText: true,
-                      //   decoration: InputDecoration(
-                      //     contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16), // Adjust the padding as needed
-                      //
-                      //     filled: true,
-                      //     fillColor: Colors.grey.shade300,
-                      //     hintText: 'Confirm Password',
-                      //     hintStyle: TextStyle(
-                      //       color: Colors.grey,
-                      //     ),
-                      //     prefixIcon: Icon(
-                      //       Icons.lock,
-                      //       color: Colors.grey,
-                      //     ),
-                      //     suffixIcon: Icon(
-                      //       Icons.visibility_off,
-                      //       color: Colors.grey,
-                      //     ),
-                      //     border: OutlineInputBorder(
-                      //       borderSide: BorderSide.none,
-                      //       borderRadius: BorderRadius.circular(30),
-                      //     ),
-                      //   ),
-                      // ),
-
-                      SizedBox(height: 10),
+                      SizedBox(height: height * 0.014),
                       GestureDetector(
                         onTap: () {
                           model.registerClicked();
-                          // Perform login action
+                          // Perform register action
                         },
                         child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 12),
+                          padding: EdgeInsets.symmetric(vertical: height * 0.017),
                           decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.circular(30),
@@ -248,14 +214,14 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                               'Sign Up',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: width * 0.043,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: height * 0.014),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -263,7 +229,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                             "Already have an account? ",
                             style: TextStyle(
                               color: Colors.blue,
-                              fontSize: 16,
+                              fontSize: width * 0.043,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -275,7 +241,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                               'Sign In',
                               style: TextStyle(
                                 color: Colors.blue,
-                                fontSize: 20,
+                                fontSize: width * 0.053,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -291,8 +257,11 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
         ],
       ),
     );
+  }
+}
 
-    // return Scaffold(
+
+// return Scaffold(
     //     backgroundColor: Colors.white,
     //     body: SingleChildScrollView(
     //       child: Column(
@@ -537,94 +506,10 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
     //         ],
     //       ),
     //     ));
-  }
-}
+//   }
+// }
 
-class OTPDialogBox extends BaseModelWidget<RegisterViewModel> {
-  final TextEditingController otpController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context, RegisterViewModel model) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              'Enter OTP',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: otpController,
-              keyboardType: TextInputType.number,
-              maxLength: 6,
-              decoration: InputDecoration(
-                hintText: 'Enter OTP',
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.grey[400]!),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey[400]!,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Ink(
-                      child: Text(
-                    'Cancel',
-                    style: TextStyle(
-                        color: HexColor('484948'), fontWeight: FontWeight.bold),
-                  )),
-                ),
-                SizedBox(width: 17.0),
-                GestureDetector(
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      color: HexColor('#f56624'),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Container(
-                      height: 40,
-                      width: 65,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: HexColor('484948'),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Submit",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class RegisterMobileLandscape extends BaseModelWidget<RegisterViewModel> {
   @override

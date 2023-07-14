@@ -1,14 +1,9 @@
-/// Contains the widgets that will be used for Mobile layout of home,
-/// portrait and landscape
-
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
-import 'dart:math';
-import 'dart:async';
 import 'package:flutter_svg/svg.dart';
 
 class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
@@ -25,42 +20,48 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
           Container(
             height: height * 0.49,
             decoration: BoxDecoration(
-                color: Colors.blue.shade700,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  bottomRight: Radius.circular(60),
-                )),
+              color: Colors.blue.shade700,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(60),
+                bottomRight: Radius.circular(60),
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Stack(
               children: [
+                // Positioned(
+                //   top: height * 0.4,
+                //   right: width * 0.2,
+                //   child: Image.asset(
+                //     'assets/images/login/1b.png',
+                //     width: width * 0.7,
+                //   ),
+                // ),
                 Positioned(
-                    top: 253,
-                    right: 30,
+                  top: height * 0.11,
+                  left: width * 0.059,
+                  child: Container(
                     child: Image.asset(
-                      'assets/images/login/1b.png',
-                      width: 270,
-                    )),
-                Positioned(
-                    top: 73,
-                    left: 20,
-                    child: Container(
-                        child: Image.asset(
                       'assets/images/login/loginElement.png',
-                      width: 300,
-                          height: 340,
-                    ))),
+                      width: width * 0.9,
+                      height: height * 0.5,
+                    ),
+                  ),
+                ),
                 Positioned(
-                    top: 35,
-                    left: 40,
-                    child: Text(
-                      'Welcome Back',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold),
-                    )),
+                  top: height * 0.06,
+                  left: width * 0.2,
+                  child: Text(
+                    'Welcome Back',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: width * 0.08,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -72,9 +73,9 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                             controller: model.emailController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 16), // Adjust the padding as needed
-
+                                vertical: height * 0.015,
+                                horizontal: width * 0.04,
+                              ),
                               filled: true,
                               fillColor: Colors.grey.shade300,
                               hintText: 'Username',
@@ -91,15 +92,15 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(height: height * 0.015),
                           TextField(
                             obscureText: model.passwordVisible,
                             controller: model.passwordController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 16), // Adjust the padding as needed
-
+                                vertical: height * 0.015,
+                                horizontal: width * 0.04,
+                              ),
                               filled: true,
                               fillColor: Colors.grey.shade300,
                               hintText: 'Password',
@@ -113,7 +114,6 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                               suffixIcon: IconButton(
                                 color: Colors.grey,
                                 icon: Icon(
-
                                   model.passwordVisible
                                       ? Icons.visibility_off
                                       : Icons.visibility,
@@ -143,28 +143,28 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                                   Text(
                                     'Remember Password',
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: width * 0.032,
                                       color: Colors.blue,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(width: width * 0.02),
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   model.forgotClicked();
                                 },
                                 child: Text(
                                   'Forgot Password',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: width * 0.032,
                                     color: Colors.blue,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: height * 0.015),
                           GestureDetector(
                             onTap: () {
                               model.loginClicked();
@@ -172,7 +172,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                             },
                             child: Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                              padding: EdgeInsets.symmetric(vertical: height * 0.024),
                               decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(30),
@@ -182,7 +182,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                                   'Login',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 16,
+                                    fontSize: width * 0.043,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -192,26 +192,33 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: height * 0.015),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account? ",style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),),
+                        Text(
+                          "Don't have an account? ",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: width * 0.043,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             model.RegisterClicked();
                           },
-                          child: Text('Sign Up',style: TextStyle(
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
                               color: Colors.blue,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),),
+                              fontSize: width * 0.053,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
-                    )
-
+                    ),
                   ],
                 )
               ],
@@ -220,7 +227,42 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
         ],
       ),
     );
-    // return Scaffold(
+  }
+}
+
+class LoginMobileLandscape extends BaseModelWidget<LoginViewModel> {
+  @override
+  Widget build(BuildContext context, LoginViewModel model) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => LoginSecondView(
+                key: new Key("test"),
+              ),
+            ),
+          );
+        },
+      ),
+      body: Row(
+        children: <Widget>[
+          const AppDrawer(),
+          Expanded(
+            child: Center(
+              child: Text(
+                model.title,
+                style: const TextStyle(fontSize: 35),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// return Scaffold(
     //     backgroundColor: Colors.white,
     //     body: SingleChildScrollView(
     //       child: Column(
@@ -396,34 +438,34 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
     //       ),
     //     )
     // );
-  }
-}
+//   }
+// }
 
-class LoginMobileLandscape extends BaseModelWidget<LoginViewModel> {
-  @override
-  Widget build(BuildContext context, LoginViewModel model) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => LoginSecondView(
-                    key: new Key("test"),
-                  )));
-        },
-      ),
-      body: Row(
-        children: <Widget>[
-          const AppDrawer(),
-          Expanded(
-            child: Center(
-              child: Text(
-                model.title,
-                style: const TextStyle(fontSize: 35),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class LoginMobileLandscape extends BaseModelWidget<LoginViewModel> {
+//   @override
+//   Widget build(BuildContext context, LoginViewModel model) {
+//     return Scaffold(
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           Navigator.of(context).push(MaterialPageRoute(
+//               builder: (context) => LoginSecondView(
+//                     key: new Key("test"),
+//                   )));
+//         },
+//       ),
+//       body: Row(
+//         children: <Widget>[
+//           const AppDrawer(),
+//           Expanded(
+//             child: Center(
+//               child: Text(
+//                 model.title,
+//                 style: const TextStyle(fontSize: 35),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

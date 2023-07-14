@@ -1,149 +1,158 @@
-/// Contains the widgets that will be used for Mobile layout of home,
-/// portrait and landscape
-
-import 'package:flutter/material.dart';
 import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
+import 'package:flutter/material.dart';
+import 'package:ClockSpotter/viewmodels/forgot_viewmodel.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
-
-
-import '../../viewmodels/forgot_viewmodel.dart';
 
 class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context, ForgotViewModel model) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double height = constraints.maxHeight;
+        final double width = constraints.maxWidth;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: height * 0.44,
-            decoration: BoxDecoration(
-                color: Colors.blue.shade700,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  bottomRight: Radius.circular(60),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Stack(
-              children: [
-                Positioned(
-                    top: 220,
-                    right: 30,
-                    child: Image.asset(
-                      'assets/images/login/1b.png',
-                      width: 300,
-                    )),
-                Positioned(
-                    top: 40,
-                    left: 10,
-                    child: Container(
-                        child: Image.asset(
-                      'assets/images/login/forgotElement.png',
-                      width: 300,
-                    ))),
-                Positioned(
-                  top: 410,
-                  left:20,
-
-                  child: Container(
-                    child: Text(
-                      'Forgot \nPassword ?',
-                      style: TextStyle(
-                        color: Colors.blue.shade900,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
+        return Scaffold(
+          body: Stack(
+            children: [
+              Container(
+                height: height * 0.43,
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade700,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(60),
+                    bottomRight: Radius.circular(60),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(width * 0.05),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: height * 0.37,
+                      right: width * 0.17,
+                      child: Image.asset(
+                        'assets/images/login/1b.png',
+                        width: width * 0.6,
                       ),
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 15,
-                  child: GestureDetector(
-                    onTap: (){
-                      model.backClicked();
-                    },
-                    child: Container(
-                      child: Icon(Icons.arrow_back_ios,color: Colors.white,)
-
+                    Positioned(
+                      top: height * 0.05,
+                      left: width * 0.03,
+                      child: Container(
+                        child: Image.asset(
+                          'assets/images/login/forgotElement.png',
+                          width: width * 0.9,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          TextField(
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16), // Adjust the padding as needed
-
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'Email',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
-                              prefixIcon: Icon(Icons.alternate_email,color: Colors.grey,),
-                              border: OutlineInputBorder(
-
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide.none
-
-                              ),
-                            ),
+                    Positioned(
+                      top: height * 0.57,
+                      left: width * 0.052,
+                      child: Container(
+                        child: Text(
+                          'Forgot \nPassword ?',
+                          style: TextStyle(
+                            color: Colors.blue.shade900,
+                            fontSize: width * 0.1,
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(height: 20),
-
-
-                          GestureDetector(
-                            onTap: () {
-                              // Perform login action
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: height * 0.03,
+                      child: GestureDetector(
+                        onTap: () {
+                          model.backClicked();
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(width * 0.04),
+                          child: Column(
+                            children: [
+                              TextField(
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: height * 0.02,
+                                      horizontal: width * 0.04),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade300,
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.alternate_email,
+                                    color: Colors.grey,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        height * 0.1),
+                                    borderSide: BorderSide.none,
                                   ),
                                 ),
                               ),
-                            ),
+                              SizedBox(height: height * 0.03),
+                              GestureDetector(
+                                onTap: () {
+                                  // Perform submit action
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: height * 0.015),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius:
+                                    BorderRadius.circular(height * 0.2),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: width * 0.05,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 30,),
-
-
+                        ),
+                        SizedBox(
+                          height: height * 0.06,
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
-    // return Scaffold(
+  }
+}
+
+// return Scaffold(
     //     backgroundColor: Colors.white,
     //     body: SingleChildScrollView(
     //       child: Column(
@@ -319,8 +328,8 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel> {
     //       ),
     //     )
     // );
-  }
-}
+//   }
+// }
 
 class LoginMobileLandscape extends BaseModelWidget<LoginViewModel> {
   @override

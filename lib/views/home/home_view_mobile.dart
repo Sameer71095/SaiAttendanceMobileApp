@@ -2,6 +2,7 @@
 /// portrait and landscape
 
 import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -25,10 +26,48 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel model) {
-    List myProducts=["assets/images/home/tick.png","assets/images/home/letter.png","assets/images/home/submit.png","assets/images/home/add.png","assets/images/home/beach.png","assets/images/home/health.png"];
-    List myProductsText=["Attendance check in/out","Request a Letter","submit work expenses","Add New Task","Request Time Off",'Health Insurance'];
-    List tile=["assets/images/home/tick.png","assets/images/home/letter.png","assets/images/home/submit.png","assets/images/home/add.png","assets/images/home/beach.png","assets/images/home/health.png","assets/images/home/health.png"];
-    List tileText=["Attendance","Timesheets","Time off","Letter requests","People",'My Pay',"Work expenses"];
+    List myProducts = [
+      "assets/images/home/tick.png",
+      "assets/images/home/letter.png",
+      "assets/images/home/submit.png",
+      "assets/images/home/add.png",
+      "assets/images/home/beach.png",
+      "assets/images/home/health.png"
+    ];
+    List myProductsText = [
+      "Attendance check in/out",
+      "Request a Letter",
+      "submit work expenses",
+      "Add New Task",
+      "Request Time Off",
+      'Health Insurance'
+    ];
+    List tile = [
+      "assets/images/home/tick.png",
+      "assets/images/home/timer.png",
+      "assets/images/home/beach.png",
+      "assets/images/home/letter.png",
+      "assets/images/home/people.png",
+      "assets/images/home/dollar.png",
+      "assets/images/home/submit.png"
+    ];
+    List tileText = [
+      "Attendance",
+      "Timesheets",
+      "Time off",
+      "Letter requests",
+      "People",
+      'My Pay',
+      "Work expenses"
+    ];
+    List myProductonTap = [
+      AttendanceView(),
+      null,
+      null,
+      null,
+      null,
+      null,
+    ];
 
 
     return Scaffold(
@@ -41,160 +80,167 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       drawer: Drawer(
         backgroundColor: Colors.blue.shade700,
         width: 200,
+
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 40),
-              child: Container(
-                child: Column(
-                  children: [
-                    ListTile(
-                      leading: Icon(
-                        Icons.people,
-                        color: Colors.white,
-                      ),
-                      title: const Text('Attendance',style: TextStyle(color: Colors.white),),
-                      onTap: () {
-                      },
-                    ),
-                    Divider(color: Colors.white,)
-                  ],
-                ),
-              ),
-            ),
-            Container(
               child: Column(
                 children: [
                   ListTile(
-                    leading: Icon(
-                      Icons.timelapse_sharp,
+                    trailing: Icon(
+                      Icons.menu_outlined,
                       color: Colors.white,
+                      size: 30,
                     ),
-                    title: const Text('Time Sheets',style: TextStyle(color: Colors.white),),
+                    title: const Text('Menu',
+                        style: TextStyle(color: Colors.white, fontSize: 25)),
                     onTap: () {
+                      Navigator.pop(context);
                     },
                   ),
-                  Divider(color: Colors.white,)
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.timer,
-                      color: Colors.white,
-                    ),
-                    title: const Text('Time off',style: TextStyle(color: Colors.white),),
-                    onTap: () {
-                    },
-                  ),
-                  Divider(color: Colors.white,)
                 ],
               ),
             ),
 
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.request_page,
-                      color: Colors.white,
-                    ),
-                    title: const Text('Letter Requests',style: TextStyle(color: Colors.white),),
-                    onTap: () {
-                    },
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.people,
+                    color: Colors.white,
                   ),
-                  Divider(color: Colors.white,)
-                ],
-              ),
+                  title: const Text(
+                    'Attendance', style: TextStyle(color: Colors.white),),
+                  onTap: () {},
+                ),
+                Divider(color: Colors.white,)
+              ],
             ),
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.people_alt,
-                      color: Colors.white,
-                    ),
-                    title: const Text('People',style: TextStyle(color: Colors.white),),
-                    onTap: () {
-                    },
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.timelapse_sharp,
+                    color: Colors.white,
                   ),
-                  Divider(color: Colors.white,)
-                ],
-              ),
+                  title: const Text(
+                    'Time Sheets', style: TextStyle(color: Colors.white),),
+                  onTap: () {},
+                ),
+                Divider(color: Colors.white,)
+              ],
             ),
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.monetization_on_outlined,
-                      color: Colors.white,
-                    ),
-                    title: const Text('Work Expense',style: TextStyle(color: Colors.white),),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.timer,
+                    color: Colors.white,
                   ),
-                  Divider(color: Colors.white,)
-                ],
-              ),
+                  title: const Text(
+                    'Time off', style: TextStyle(color: Colors.white),),
+                  onTap: () {},
+                ),
+                Divider(color: Colors.white,)
+              ],
             ),
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.home,
-                      color: Colors.white,
-                    ),
-                    title: const Text('My Profile',style: TextStyle(color: Colors.white),),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.request_page,
+                    color: Colors.white,
                   ),
-                  Divider(color: Colors.white,)
-                ],
-              ),
+                  title: const Text(
+                    'Letter Requests', style: TextStyle(color: Colors.white),),
+                  onTap: () {},
+                ),
+                Divider(color: Colors.white,)
+              ],
             ),
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
-                    title: const Text('Log Out',style: TextStyle(color: Colors.white),),
-                    onTap: () async{
-                      await storage.deleteAll(); // Delete all existing keys and values
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          transitionDuration: const Duration(milliseconds: 300),
-                          pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            return SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(-1.0, 0.0),
-                                end: Offset.zero,
-                              ).animate(animation),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
-                    },
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.people_alt,
+                    color: Colors.white,
                   ),
-                  Divider(color: Colors.white,)
-                ],
-              ),
+                  title: const Text(
+                    'People', style: TextStyle(color: Colors.white),),
+                  onTap: () {},
+                ),
+                Divider(color: Colors.white,)
+              ],
+            ),
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.monetization_on_outlined,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Work Expense', style: TextStyle(color: Colors.white),),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Divider(color: Colors.white,)
+              ],
+            ),
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'My Profile', style: TextStyle(color: Colors.white),),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Divider(color: Colors.white,)
+              ],
+            ),
+            Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Log Out', style: TextStyle(color: Colors.white),),
+                  onTap: () async {
+                    await storage
+                        .deleteAll(); // Delete all existing keys and values
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 300),
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            LoginView(),
+                        transitionsBuilder: (context, animation,
+                            secondaryAnimation, child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(-1.0, 0.0),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+                Divider(color: Colors.white,)
+              ],
             ),
           ],
         ),
@@ -208,12 +254,12 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
 
-                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                       ),
+                    ),
                     itemCount: myProducts.length,
                     itemBuilder: (BuildContext ctx, index) {
-                      return  Padding(
+                      return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           width: 50,
@@ -236,7 +282,25 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                 )
                               ]),
                           child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    transitionDuration: const Duration(milliseconds: 200),
+                                    pageBuilder: (context, animation, secondaryAnimation) => AttendanceView(),
+                                    transitionsBuilder: (context, animation, secondaryAnimation,
+                                        child) {
+                                      return SlideTransition(
+                                        position: Tween<Offset>(
+                                          begin: const Offset(1.0, 0.0),
+                                          end: Offset.zero,
+                                        ).animate(animation),
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -246,7 +310,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                       height: 40,
                                     ),
                                   ),
-                                  Text(myProductsText[index].toString(),textAlign:TextAlign.center,)
+                                  Text(myProductsText[index].toString(),
+                                    textAlign: TextAlign.center,)
                                 ],
                               )),
                         ),
@@ -263,13 +328,33 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   children: [
                     ListTile(
 
+
                       leading: Container(
-                        height:50,
+                          height: 50,
                           width: 50,
 
                           child: Image.asset(tile[index])),
                       title: Container(
                           child: Text(tileText[index])),
+                      onTap: (){
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondaryAnimation) => AttendanceView(),
+                            transitionsBuilder: (context, animation, secondaryAnimation,
+                                child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
 
                     ),
                     Divider()
@@ -283,237 +368,183 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
     );
   }
 
-  String _getListTitle(int index) {
-    switch (index) {
-      case 0:
-        return 'Attendance';
-      case 1:
-        return 'Timesheets';
-      case 2:
-        return 'Time Off';
-      case 3:
-        return 'Letter Requests';
-      case 4:
-        return 'People';
-      case 5:
-        return 'My Pay';
-      case 6:
-        return 'Work Expenses';
-      default:
-        return '';
-    }
-  }
-}
 
-class GridItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
+//   return Scaffold(
+//     body: Container(
+//       width: MediaQuery.of(context).size.width,
+//       height: MediaQuery.of(context).size.height,
+//       child: Stack(
+//         children: <Widget>[
+//           Padding(
+//               padding: const EdgeInsets.only(left: 60, top: 60),
+//               child: model.button1 ? _buildPageWidget(model) : Container()),
+//
+//           ///
+//           ///
+//           /// Create Appbar
+//           ///
+//           ///
+//           Align(
+//             alignment: Alignment.topCenter,
+//             child: Padding(
+//               padding:
+//               const EdgeInsets.only(top: 40.0, left: 80.0, right: 20.0),
+//               child: _customAppBar(model),),),
+//           Container(
+//             color: HexColor('484848'),
+//             height: MediaQuery.of(context).size.height,
+//             width: 60,
+//             padding: const EdgeInsets.only(top: 25),
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: <Widget>[
+//                 InkWell(
+//                   onTap: () {
+//                     Navigator.of(context).push(PageRouteBuilder(
+//                         pageBuilder: (_, __, ___) =>
+//                         drawerProfileScreen()));
+//                   },
+//                   child: Container(
+//                     width: 40,
+//                     height: 40,
+//                     margin: const EdgeInsets.only(bottom: 16, top: 17.0),
+//                     decoration: const BoxDecoration(
+//                       borderRadius: BorderRadius.all(
+//                         Radius.circular(12),
+//                       ),
+//                       color: Colors.white,
+//                     ),
+//                     child: const Center(
+//                       child: Icon(Icons.menu),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//
+//           ///
+//           ///
+//           /// Create left bottom nav bar
+//           ///
+//           ///
+//           Positioned(
+//             bottom: 200,
+//             child: Transform.rotate(
+//               angle: 3.141592653589793 / 2,
+//               alignment: Alignment.topLeft,
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: <Widget>[
+//                   Row(
+//                     children: <Widget>[
+//                       _buildMenu("Fash Food", 0,model),
+//                       _buildMenu("Healty Food", 1,model),
+//                     ],
+//                   ),
+//                   AnimatedContainer(
+//                     duration: const Duration(milliseconds: 250),
+//                     margin: EdgeInsets.only(left: model.paddingLeft),
+//                     width: 150,
+//                     height: 75,
+//                     child: Stack(
+//                       children: <Widget>[
+//                         Align(
+//                           alignment: Alignment.bottomCenter,
+//                           child: ClipPath(
+//                             clipper: AppClipper(),
+//                             child: Container(
+//                               width: 150,
+//                               height: 60,
+//                               color: HexColor('484848'),
+//                             ),
+//                           ),
+//                         ),
+//                         Align(
+//                           alignment: Alignment.center,
+//                           child: Transform.rotate(
+//                             angle: 3.141592653589793 / 2,
+//                             child: const Padding(
+//                               padding: EdgeInsets.only(right: 40),
+//                               child: Icon(
+//                                 Icons.arrow_forward_ios,
+//                                 color: Colors.white,
+//                                 size: 16,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
-  const GridItem({
-    required this.icon,
-    required this.label,
-  });
+// Widget _buildMenu(String menu, int index,HomeViewModel model) {
+//   return GestureDetector(
+//     onTap: () {
+//       model.buildMenu(index);
+//     },
+//     child: Container(
+//       width: 150,
+//       padding: const EdgeInsets.only(top: 16),
+//       child: Center(
+//         child: Text(
+//           menu,
+//           style: const TextStyle(
+//               fontSize: 18, color: Colors.white, fontFamily: "Sofia"),
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          size: 40,
-          color: Colors.white,
-        ),
-        SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-
-  //   return Scaffold(
-  //     body: Container(
-  //       width: MediaQuery.of(context).size.width,
-  //       height: MediaQuery.of(context).size.height,
-  //       child: Stack(
-  //         children: <Widget>[
-  //           Padding(
-  //               padding: const EdgeInsets.only(left: 60, top: 60),
-  //               child: model.button1 ? _buildPageWidget(model) : Container()),
-  //
-  //           ///
-  //           ///
-  //           /// Create Appbar
-  //           ///
-  //           ///
-  //           Align(
-  //             alignment: Alignment.topCenter,
-  //             child: Padding(
-  //               padding:
-  //               const EdgeInsets.only(top: 40.0, left: 80.0, right: 20.0),
-  //               child: _customAppBar(model),),),
-  //           Container(
-  //             color: HexColor('484848'),
-  //             height: MediaQuery.of(context).size.height,
-  //             width: 60,
-  //             padding: const EdgeInsets.only(top: 25),
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: <Widget>[
-  //                 InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).push(PageRouteBuilder(
-  //                         pageBuilder: (_, __, ___) =>
-  //                         drawerProfileScreen()));
-  //                   },
-  //                   child: Container(
-  //                     width: 40,
-  //                     height: 40,
-  //                     margin: const EdgeInsets.only(bottom: 16, top: 17.0),
-  //                     decoration: const BoxDecoration(
-  //                       borderRadius: BorderRadius.all(
-  //                         Radius.circular(12),
-  //                       ),
-  //                       color: Colors.white,
-  //                     ),
-  //                     child: const Center(
-  //                       child: Icon(Icons.menu),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //
-  //           ///
-  //           ///
-  //           /// Create left bottom nav bar
-  //           ///
-  //           ///
-  //           Positioned(
-  //             bottom: 200,
-  //             child: Transform.rotate(
-  //               angle: 3.141592653589793 / 2,
-  //               alignment: Alignment.topLeft,
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: <Widget>[
-  //                   Row(
-  //                     children: <Widget>[
-  //                       _buildMenu("Fash Food", 0,model),
-  //                       _buildMenu("Healty Food", 1,model),
-  //                     ],
-  //                   ),
-  //                   AnimatedContainer(
-  //                     duration: const Duration(milliseconds: 250),
-  //                     margin: EdgeInsets.only(left: model.paddingLeft),
-  //                     width: 150,
-  //                     height: 75,
-  //                     child: Stack(
-  //                       children: <Widget>[
-  //                         Align(
-  //                           alignment: Alignment.bottomCenter,
-  //                           child: ClipPath(
-  //                             clipper: AppClipper(),
-  //                             child: Container(
-  //                               width: 150,
-  //                               height: 60,
-  //                               color: HexColor('484848'),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         Align(
-  //                           alignment: Alignment.center,
-  //                           child: Transform.rotate(
-  //                             angle: 3.141592653589793 / 2,
-  //                             child: const Padding(
-  //                               padding: EdgeInsets.only(right: 40),
-  //                               child: Icon(
-  //                                 Icons.arrow_forward_ios,
-  //                                 color: Colors.white,
-  //                                 size: 16,
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget _buildMenu(String menu, int index,HomeViewModel model) {
-    return GestureDetector(
-      onTap: () {
-        model.buildMenu(index);
-      },
-      child: Container(
-        width: 150,
-        padding: const EdgeInsets.only(top: 16),
-        child: Center(
-          child: Text(
-            menu,
-            style: const TextStyle(
-                fontSize: 18, color: Colors.white, fontFamily: "Sofia"),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _customAppBar(HomeViewModel model) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          RichText(
-            text: TextSpan(
-              text: "Hello,\n",
-              style: const TextStyle(
-                  color: Colors.black, fontFamily: "Sofia", fontSize: 17.0),
-              children: [
-                TextSpan(
-                  text: constants.loginData.name,
-                  style: TextStyle(
-                    color: HexColor('f47320'),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 19.0,
-                    height: 1.0,
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            height: 50.0,
-            width: 50.0,
-            decoration: const BoxDecoration(
-              /*  image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                      "https://media.licdn.com/dms/image/C5603AQFs8d7ns-mD2g/profile-displayphoto-shrink_400_400/0/1605026303861?e=1683763200&v=beta&t=_ngBHfnnyWfAJbrvL9MsdlG3VR7c48YsHaiSg0043Ww",
-                    ),
-                    fit: BoxFit.cover),*/
-                borderRadius: BorderRadius.all(Radius.circular(150.0))),
-          ),
-        ],
-      ),
-    );
-  }
+// Widget _customAppBar(HomeViewModel model) {
+//   return Container(
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: <Widget>[
+//         RichText(
+//           text: TextSpan(
+//             text: "Hello,\n",
+//             style: const TextStyle(
+//                 color: Colors.black, fontFamily: "Sofia", fontSize: 17.0),
+//             children: [
+//               TextSpan(
+//                 text: constants.loginData.name,
+//                 style: TextStyle(
+//                   color: HexColor('f47320'),
+//                   fontWeight: FontWeight.bold,
+//                   fontSize: 19.0,
+//                   height: 1.0,
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//         const SizedBox(width: 16),
+//         Container(
+//           height: 50.0,
+//           width: 50.0,
+//           decoration: const BoxDecoration(
+//             /*  image: DecorationImage(
+//                   image: CachedNetworkImageProvider(
+//                     "https://media.licdn.com/dms/image/C5603AQFs8d7ns-mD2g/profile-displayphoto-shrink_400_400/0/1605026303861?e=1683763200&v=beta&t=_ngBHfnnyWfAJbrvL9MsdlG3VR7c48YsHaiSg0043Ww",
+//                   ),
+//                   fit: BoxFit.cover),*/
+//               borderRadius: BorderRadius.all(Radius.circular(150.0))),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 //   Widget _buildPageWidget(HomeViewModel model) {
 //     return Padding(
@@ -733,7 +764,7 @@ class GridItem extends StatelessWidget {
 //
 //
 // }
-
+}
 class HomeMobileLandscape extends BaseModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel model) {
@@ -741,7 +772,7 @@ class HomeMobileLandscape extends BaseModelWidget<HomeViewModel> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => SecondView(key: new Key("test"),)));
+              .push(MaterialPageRoute(builder: (context) => SecondViewHome(key: new Key("test"),)));
         },
       ),
       body: Row(
