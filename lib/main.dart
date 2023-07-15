@@ -1,6 +1,8 @@
 
+
 import 'package:ClockSpotter/utils/Custom_Theme.dart';
 import 'package:camera/camera.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -70,8 +72,10 @@ void main() async {
         options.environment = kReleaseMode ? 'production' : 'debug';
         options.release = 'AttendanceSystem@1.0.0'; // Replace with your app's name and version
       },
-      appRunner: () => runApp(MyApp(),
-           ),
+      appRunner: () => runApp(DevicePreview(
+        enabled: true,
+        builder: (context)=>MyApp())),
+
     );
     // runApp(MyApp());
   }  catch (exception, stackTrace) {
@@ -110,13 +114,12 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context , child) {
         return MaterialApp(
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           debugShowCheckedModeBanner: false,
           title: 'ClockSpotter',
           // You can use the library anywhere in the app even in theme
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          //  textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-          ),
+          theme: AppTheme.appTheme,
           home: child,
         );
       },

@@ -2,8 +2,10 @@
 /// portrait and landscape
 
 import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -60,196 +62,23 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       'My Pay',
       "Work expenses"
     ];
-    List myProductonTap = [
-      AttendanceView(),
-      null,
-      null,
-      null,
-      null,
-      null,
-    ];
+
 
 
     return Scaffold(
+
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: AppColor.primaryColor,
         elevation: 0,
         title: Text('Work'),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        backgroundColor: Colors.blue.shade700,
-        width: 200,
-
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Column(
-                children: [
-                  ListTile(
-                    trailing: Icon(
-                      Icons.menu_outlined,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    title: const Text('Menu',
-                        style: TextStyle(color: Colors.white, fontSize: 25)),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.people,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Attendance', style: TextStyle(color: Colors.white),),
-                  onTap: () {},
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.timelapse_sharp,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Time Sheets', style: TextStyle(color: Colors.white),),
-                  onTap: () {},
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.timer,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Time off', style: TextStyle(color: Colors.white),),
-                  onTap: () {},
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.request_page,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Letter Requests', style: TextStyle(color: Colors.white),),
-                  onTap: () {},
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.people_alt,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'People', style: TextStyle(color: Colors.white),),
-                  onTap: () {},
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.monetization_on_outlined,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Work Expense', style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'My Profile', style: TextStyle(color: Colors.white),),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Log Out', style: TextStyle(color: Colors.white),),
-                  onTap: () async {
-                    await storage
-                        .deleteAll(); // Delete all existing keys and values
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 300),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            LoginView(),
-                        transitionsBuilder: (context, animation,
-                            secondaryAnimation, child) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(-1.0, 0.0),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-                Divider(color: Colors.white,)
-              ],
-            ),
-          ],
-        ),
-      ),
+      drawer:const NewDrawer(),
       body: Column(
         children: [
           Expanded(
             child: Container(
-              color: Colors.blue.shade700,
+              color: AppColor.primaryColor,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(

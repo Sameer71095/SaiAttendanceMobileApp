@@ -1,18 +1,14 @@
 /// Contains the widgets that will be used for Mobile layout of home,
 /// portrait and landscape
 
-import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/Attendance_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
-import 'package:ClockSpotter/views/home/home_view.dart';
-import 'package:ClockSpotter/views/login/login_view.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
-import 'package:ClockSpotter/viewmodels/home_viewmodel.dart';
 import 'package:ClockSpotter/widgets/AttendanceWidget/AttendanceTile.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
@@ -25,355 +21,294 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
 
   @override
   Widget build(BuildContext context, AttendanceViewModel model) {
+    var theme = Theme.of(context).textTheme;
 
     List myProductonTap = [];
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade700,
-        elevation: 0,
-        title: Text('Attendance'),
-        centerTitle: true,
-      ),
-      drawer: Drawer(
-        backgroundColor: Colors.blue.shade700,
-        width: 200,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.menu_outlined,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    title: const Text('Menu',
-                        style: TextStyle(color: Colors.white, fontSize: 25)),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.people,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Attendance',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 200),
-                        pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
-                        transitionsBuilder: (context, animation, secondaryAnimation,
-                            child) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(1.0, 0.0),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.timelapse_sharp,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Time Sheets',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {},
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.timer,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Time off',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {},
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.request_page,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Letter Requests',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {},
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.people_alt,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'People',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {},
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.monetization_on_outlined,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Work Expense',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'My Profile',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Log Out',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () async {
-                    await storage
-                        .deleteAll(); // Delete all existing keys and values
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 300),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            LoginView(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(-1.0, 0.0),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-                Divider(
-                  color: Colors.white,
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-      body: Container(
-        color: Colors.blue.shade700,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white54,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-              Column(
-              children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.purple.shade50,
-                    borderRadius: BorderRadius.circular(15)
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+    return Builder(
+      builder: (BuildContext context) {
+        final MediaQueryData mediaQuery = MediaQuery.of(context);
 
+        return Scaffold(
+          backgroundColor: AppColor.primaryColor,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: AppColor.primaryColor,
+            title: Text('Attendance'),
+            centerTitle: true,
+          ),
+
+          drawer: NewDrawer(),
+          body: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: AppColor.ContainerBackground
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
+                    ///
                     Align(
-                      alignment:Alignment.topLeft,
-                        child: Text('DD/MM/YY')),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Shift Starts at ${constants.loginData.shiftStartTime}"),
-                        Container(
-                          child: Center(child: Text('Check In',style: TextStyle(color: Colors.red),)),
-                          height: 30,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.blue.shade300,
-                          ),
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                        child: _customAppBar(model),),),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
 
-                        )
-                      ],
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColor.containercolor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
+                                ),
+                                SizedBox(height: 10,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                                      children: [
+                                        Text(
+                                          'Shift ends at ${constants.loginData.shiftEndTime}',style: theme.displayMedium,
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Text(
+                                          "Shift Starts at ${constants.loginData.shiftStartTime}",style: theme.displayMedium,
+                                        ),
+
+                                      ],
+
+                                    ),
+
+                                    InkWell(
+                                      onTap: (){
+                                        model.onCheckInClicked();
+                                      },
+                                      child: Container(
+                                        child: Center(
+                                          child: Text(
+                                            'Tap',
+                                            style: theme.headlineSmall
+                                          ),
+                                        ),
+                                        height: 30,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(30),
+                                          border: Border.all(
+                                            color: AppColor.tapBorder
+                                          ),
+                                          color: AppColor.tapColor,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+
+
+
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(top: 10),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'History',
+                                style:theme.displayLarge,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Shift ends at ${constants.loginData.shiftEndTime}'),
-                        Container(
-                          child: Center(child: Text('Check Out',style: TextStyle(color: Colors.red),)),
-                          height: 30,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.blue.shade300,
-                          ),
-
-                        )
-                      ],
+                    Expanded(
+                      child: _buildList(model),
+                      // child: LayoutBuilder(
+                      //   builder: (BuildContext context,
+                      //       BoxConstraints constraints) {
+                      //     return ListView.builder(
+                      //       shrinkWrap: true,
+                      //       physics: const BouncingScrollPhysics(),
+                      //       itemCount:10,
+                      //       itemBuilder: (context, index) {
+                      //         return Padding(
+                      //           padding: const EdgeInsets.only(bottom: 10),
+                      //           child: Container(
+                      //             decoration: BoxDecoration(
+                      //               color: AppColor.containercolor,
+                      //               borderRadius: BorderRadius.circular(15),
+                      //             ),
+                      //             padding: EdgeInsets.symmetric(
+                      //                 horizontal: 10, vertical: 10),
+                      //             child: Column(
+                      //               children: [
+                      //                 Align(
+                      //                   alignment: Alignment.topLeft,
+                      //                   child: Text(
+                      //                     'DD/MM/YY',
+                      //                     style: TextStyle(
+                      //                         fontSize: 15,
+                      //                         fontWeight: FontWeight.bold),
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(height: 5),
+                      //                 Row(
+                      //                   mainAxisAlignment:
+                      //                   MainAxisAlignment.spaceBetween,
+                      //                   children: [
+                      //                     Text(
+                      //                       'shift Starts at 00:00 AM/PM',
+                      //                       style: TextStyle(fontSize: 13),
+                      //                     ),
+                      //                     Text('In:00:00'),
+                      //                   ],
+                      //                 ),
+                      //                 SizedBox(height: 5),
+                      //                 Row(
+                      //                   mainAxisAlignment:
+                      //                   MainAxisAlignment.spaceBetween,
+                      //                   children: [
+                      //                     Text(
+                      //                       'shift Starts at 00:00 AM/PM',
+                      //                       style: TextStyle(fontSize: 13),
+                      //                     ),
+                      //                     Text('Out: 00:00'),
+                      //                   ],
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     );
+                      //   },
+                      // ),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                    child: Text('History',style: TextStyle(fontSize: 30),)),
-              ),
-
-              ],
-          ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.purple.shade50,
-                              borderRadius: BorderRadius.circular(15)
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-
-
-                            child: Column(
-                              children: [
-                                Align(
-                                    alignment:Alignment.topLeft,
-                                    child: Text('DD/MM/YY',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
-                                SizedBox(height: 5,),
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('shift Starts at 00:00 AM/PM',style: TextStyle(fontSize: 13),),
-                                    Text('In:00:00')
-                                  ],
-                                ),
-                                SizedBox(height: 5,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('shift Starts at 00:00 AM/PM',style: TextStyle(fontSize: 13),),
-                                    Text('Out: 00:00')
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  Widget _customAppBar(AttendanceViewModel model) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          RichText(
+            text: TextSpan(
+              text: "Hello\n",
+              style: const TextStyle(
+                  color: Colors.black, fontFamily: "Sofia", fontSize: 18.0),
+
+              children: [
+
+                TextSpan(
+                  text: constants.loginData.name,
+                  style: TextStyle(
+                    color: Colors.blue.shade800,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22.0,
+                    height: 1.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+  Widget _buildList(AttendanceViewModel model) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification scrollInfo) {
+        if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+          //  model.loadMore(); // Function to load more data when the list reaches the end
+        }
+        return true;
+      },
+      child: RefreshIndicator(
+        onRefresh: model.onRefresh,
+        color:  Colors.blueAccent,
+        child: ValueListenableBuilder<bool>(
+          valueListenable: model.dataLoaded,
+          builder: (BuildContext context, bool dataLoaded, Widget? child) {
+            if (!dataLoaded) {
+              model.loadData();
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: model.attendanceList.data!.length,
+
+                itemBuilder: (context, index) {
+                  final attendance = model.attendanceList.data![index];
+                  return InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Container(
+
+                        decoration: BoxDecoration(
+                          color:AppColor.containercolor,
+                          borderRadius:  BorderRadius.circular(15)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                          child: AttendanceTile(
+                            name: attendance.employeeName!,
+                            date: attendance.checkedDate!,
+                            totalHours: attendance.totalHours!, // Update this value based on your data calculation
+                            timeEntries: attendance.checked
+                            !.map((e) => {
+                              e.isCheckedout: e.checkedTime!,
+                              /*   'out': e.isCheckedout ? 'checked out' : null,*/
+                            })
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  );
+                },
+              );
+            }
+          },
         ),
       ),
     );
   }
+
+
 }
+
 
 class AttendanceMobileLandscape extends BaseModelWidget<AttendanceViewModel> {
   @override
