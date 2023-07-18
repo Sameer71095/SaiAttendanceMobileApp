@@ -25,7 +25,6 @@ import 'dart:math';
 class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   @override
   Widget build(BuildContext context, HomeViewModel model) {
     List myProducts = [
@@ -63,140 +62,162 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       "Work expenses"
     ];
 
-
-
     return Scaffold(
-
-      appBar: AppBar(
-        backgroundColor: AppColor.primaryColor,
-        elevation: 0,
-        title: Text('Work'),
-        centerTitle: true,
-      ),
-      drawer:const NewDrawer(),
-      body: Column(
+      drawer: NewDrawer(),
+      body: Stack(
         children: [
-          Expanded(
-            child: Container(
-              color: AppColor.primaryColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
+          Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    image:AssetImage('assets/images/background/back.jpg')
+                )
+            ),),
+          Column(
+            children: [
+              AppBar(
+                centerTitle: true,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                flexibleSpace: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
 
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+
+                        image: AssetImage('assets/images/background/back.jpg'),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topRight
                     ),
-                    itemCount: myProducts.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: 50,
-
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(25.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45,
-                                  blurRadius: 3.0, // soften the shadow
-                                  spreadRadius: 1.0, //extend the shadow
-                                  offset: Offset(
-                                    1.0, // Move to right 5  horizontally
-                                    3.0, // Move to bottom 5 Vertically
-                                  ),
-                                )
-                              ]),
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                    transitionDuration: const Duration(milliseconds: 200),
-                                    pageBuilder: (context, animation, secondaryAnimation) => AttendanceView(),
-                                    transitionsBuilder: (context, animation, secondaryAnimation,
-                                        child) {
-                                      return SlideTransition(
-                                        position: Tween<Offset>(
-                                          begin: const Offset(1.0, 0.0),
-                                          end: Offset.zero,
-                                        ).animate(animation),
-                                        child: child,
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: Image.asset(
-                                      myProducts[index],
-                                      height: 40,
-                                    ),
-                                  ),
-                                  Text(myProductsText[index].toString(),
-                                    textAlign: TextAlign.center,)
-                                ],
-                              )),
-                        ),
-                      );
-                    }),
+                  ),
+                ),
+                title: Text('Work'),
               ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: tile.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    ListTile(
-
-
-                      leading: Container(
-                          height: 50,
-                          width: 50,
-
-                          child: Image.asset(tile[index])),
-                      title: Container(
-                          child: Text(tileText[index])),
-                      onTap: (){
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration: const Duration(milliseconds: 200),
-                            pageBuilder: (context, animation, secondaryAnimation) => AttendanceView(),
-                            transitionsBuilder: (context, animation, secondaryAnimation,
-                                child) {
-                              return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: child,
+              Expanded(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: myProducts.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(25.0),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black45,
+                                      blurRadius: 3.0, // soften the shadow
+                                      spreadRadius: 1.0, //extend the shadow
+                                      offset: Offset(
+                                        1.0, // Move to right 5  horizontally
+                                        3.0, // Move to bottom 5 Vertically
+                                      ),
+                                    )
+                                  ]),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        transitionDuration:
+                                            const Duration(milliseconds: 200),
+                                        pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            AttendanceView(),
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          return SlideTransition(
+                                            position: Tween<Offset>(
+                                              begin: const Offset(1.0, 0.0),
+                                              end: Offset.zero,
+                                            ).animate(animation),
+                                            child: child,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Image.asset(
+                                          myProducts[index],
+                                          height: 40,
+                                        ),
+                                      ),
+                                      Text(
+                                        myProductsText[index].toString(),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                    itemCount: tile.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: Container(
+                                height: 50,
+                                width: 50,
+                                child: Image.asset(tile[index])),
+                            title: Container(child: Text(tileText[index])),
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                PageRouteBuilder(
+                                  transitionDuration:
+                                      const Duration(milliseconds: 200),
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) =>
+                                          AttendanceView(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    return SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(1.0, 0.0),
+                                        end: Offset.zero,
+                                      ).animate(animation),
+                                      child: child,
+                                    );
+                                  },
+                                ),
                               );
                             },
                           ),
-                        );
-                      },
-
-                    ),
-                    Divider()
-                  ],
-                );
-              },
-            ),
+                          Divider()
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
-
 
 //   return Scaffold(
 //     body: Container(
@@ -594,14 +615,17 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
 //
 // }
 }
+
 class HomeMobileLandscape extends BaseModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel model) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => SecondViewHome(key: new Key("test"),)));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => SecondViewHome(
+                    key: new Key("test"),
+                  )));
         },
       ),
       body: Row(

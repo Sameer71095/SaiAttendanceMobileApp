@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 
-class RequestLetterViewTablet extends StatelessWidget {
-  const RequestLetterViewTablet({Key? key}) : super(key: key);
+class TimeSheetViewTablet extends StatelessWidget {
+  const TimeSheetViewTablet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

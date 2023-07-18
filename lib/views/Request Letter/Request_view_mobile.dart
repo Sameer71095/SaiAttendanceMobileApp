@@ -38,179 +38,69 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
 
 
     return  Scaffold(
-      backgroundColor: AppColor.primaryColor,
-      appBar: AppBar(
-        title: Text('Letter Request'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: AppColor.primaryColor,
-      ),
       drawer: NewDrawer(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              Text('Request Letter',style: theme.displayLarge?.copyWith(
-                color: AppColor.textColor,
-                fontWeight: FontWeight.bold
-              ),),
-              SizedBox(height: height*0.04,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-                child: Column(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
-                          child: Text('Letter name',style: theme.displayMedium?.copyWith(
-                            color: AppColor.textColor,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        ),
-                        TextFormField(
-                          controller: _letterNameController,
-                          decoration: InputDecoration(
-                            hintText: 'Letter name',
-                            filled: true,
-                            fillColor: AppColor.fieldColor,
+      body: Stack(
+        children: [
 
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
+      Container(
+      decoration: BoxDecoration(
+      image: DecorationImage(
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+          image:AssetImage('assets/images/background/back.jpg')
+      )
+    ),),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  flexibleSpace: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+
+
+                          image: AssetImage('assets/images/background/back.jpg'),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topRight
+                      ),
+                    ),
+                  ),
+                  title: Text('Letter Request'),
+                ),
+                SizedBox(height: height*0.03,),
+                Text('Request Letter',style: theme.displayLarge?.copyWith(
+                    color: AppColor.textColor,
+                    fontWeight: FontWeight.bold
+                ),),
+                SizedBox(height: height*0.04,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                  child: Column(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
+                            child: Text('Letter name',style: theme.displayMedium?.copyWith(
+                              color: AppColor.textColor,
+                              fontWeight: FontWeight.bold,
+                            ),),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          TextFormField(
+                            controller: _letterNameController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
 
-                        Padding(
-                          padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
-                          child: Text('Name',style: theme.displayMedium?.copyWith(
-                            color: AppColor.textColor,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: _firstNameController,
-                                decoration: InputDecoration(
-                                  hintText: 'First name',
-                                  filled: true,
-                                  fillColor: AppColor.fieldColor,
-
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 16.0),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _lastNameController,
-                                decoration: InputDecoration(
-                                  hintText: 'Last name',
-                                  filled: true,
-                                  fillColor: AppColor.fieldColor,
-
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                              Padding(
-                                padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
-                                child: Text('Date',style: theme.displayMedium?.copyWith(
-                                  color: AppColor.textColor,
+                              hintText: 'Letter name',
+                              hintStyle: theme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                ),),
+                                  color: Colors.grey.shade600
                               ),
-                              TextFormField(
-                                controller: _dateController,
-                                decoration: InputDecoration(
-                                  hintText: 'MM/DD/YY',
-                                  filled: true,
-                                  fillColor: AppColor.fieldColor,
-
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 16.0),
-                        // Expanded(
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //
-                        //     children: [
-                        //       Padding(
-                        //         padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
-                        //         child: Text('Day',style: theme.displayMedium?.copyWith(
-                        //           color: AppColor.textColor,
-                        //           fontWeight: FontWeight.bold,
-                        //         ),),
-                        //       ),
-                        //       TextFormField(
-                        //         controller: _dayController,
-                        //         decoration: InputDecoration(
-                        //           hintText: 'MTWTFSS',
-                        //           filled: true,
-                        //           fillColor: AppColor.fieldColor,
-                        //
-                        //           border: OutlineInputBorder(
-                        //             borderSide: BorderSide.none,
-                        //             borderRadius: BorderRadius.circular(10.0),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
-                          child: Text('Signature',style: theme.displayMedium?.copyWith(
-                            color: AppColor.textColor,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        ),
-                        TextFormField(
-                          controller: _signatureController,
-                          decoration: InputDecoration(
                               filled: true,
                               fillColor: AppColor.fieldColor,
 
@@ -218,50 +108,181 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 32.0),
-                    Container(
-                      height: height*0.07,
-                      width: width*0.4,
-                      decoration: BoxDecoration(
-                          color: Colors.blue.shade900,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15.0),
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Padding(
+                            padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
+                            child: Text('Name',style: theme.displayMedium?.copyWith(
+                              color: AppColor.textColor,
+                              fontWeight: FontWeight.bold,
+                            ),),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.lightBlue,
-                              blurRadius: 5.0, // soften the shadow
-                              spreadRadius: 3.0, //extend the shadow
-                              offset: Offset(
-                                0.0, // Move to right 5  horizontally
-                                0.0, // Move to bottom 5 Vertically
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _firstNameController,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+
+                                    hintText: 'First name',
+                                    hintStyle: theme.displayMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColor.fieldColor,
+
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            )
-                          ]),
+                              SizedBox(width: 16.0),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _lastNameController,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+
+                                    hintText: 'Last name',
+                                    hintStyle: theme.displayMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColor.fieldColor,
+
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                Padding(
+                                  padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
+                                  child: Text('Date',style: theme.displayMedium?.copyWith(
+                                    color: AppColor.textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),),
+                                ),
+                                TextFormField(
+                                  controller: _dateController,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+
+                                    hintText: 'MM/DD/YY',
+                                    hintStyle: theme.displayMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColor.fieldColor,
+
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 16.0),
+
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
+                            child: Text('Signature',style: theme.displayMedium?.copyWith(
+                              color: AppColor.textColor,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          TextFormField(
+                            controller: _signatureController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+
+                              filled: true,
+                              fillColor: AppColor.fieldColor,
+
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 32.0),
+                      Container(
+                        height: height*0.07,
+                        width: width*0.4,
+                        decoration: BoxDecoration(
+                            color: Colors.blue.shade900,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.lightBlue,
+                                blurRadius: 5.0, // soften the shadow
+                                spreadRadius: 3.0, //extend the shadow
+                                offset: Offset(
+                                  0.0, // Move to right 5  horizontally
+                                  0.0, // Move to bottom 5 Vertically
+                                ),
+                              )
+                            ]),
 
 
-                      child: Center(child: Text('Submit',style: theme.displayMedium?.copyWith(
-                        color: AppColor.textColor,
-                        fontWeight: FontWeight.bold
-                      ),)),
-                    ),
-                  ],
+                        child: Center(child: Text('Submit',style: theme.displayMedium?.copyWith(
+                            color: AppColor.textColor,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
+
+  ] ));
+
+
+
 
 }
 
-
+}
 class AttendanceMobileLandscape extends BaseModelWidget<RequestLetterViewModel> {
   @override
   Widget build(BuildContext context, RequestLetterViewModel model) {

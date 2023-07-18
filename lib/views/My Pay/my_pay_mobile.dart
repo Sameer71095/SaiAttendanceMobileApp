@@ -3,8 +3,10 @@
 
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/Attendance_viewmodel.dart';
+import 'package:ClockSpotter/viewmodels/my_pay_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
+import 'package:ClockSpotter/widgets/My%20Pay%20Widget/MyPay.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -16,17 +18,18 @@ import 'package:ClockSpotter/widgets/base_model_widget.dart';
 import '../../utils/Home_Clipper.dart';
 import '../../widgets/app_drawer/Drawer_Screen.dart';
 
-class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
+class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  Widget build(BuildContext context, AttendanceViewModel model) {
+  Widget build(BuildContext context, MyPayViewModel model) {
     var theme = Theme.of(context).textTheme;
 
     List myProductonTap = [];
 
     return Builder(
       builder: (BuildContext context) {
+
         final MediaQueryData mediaQuery = MediaQuery.of(context);
 
         return Scaffold(
@@ -62,7 +65,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                         ),
                       ),
                     ),
-                    title: Text('Attendance'),
+                    title: Text('My Pay'),
                   ),
                   Expanded(
                     child: Padding(
@@ -78,12 +81,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                             children: [
 
                               ///
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                                  child: _customAppBar(model),),),
+
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10),
                                 child: Column(
@@ -111,12 +109,18 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
 
                                                 children: [
-                                                  Text(
-                                                    'Shift ends at ${constants.loginData.shiftEndTime}',style: theme.displayMedium,
+                                                  Container(
+                                                    constraints:  BoxConstraints(maxWidth: 150),
+                                                    child: Text(
+                                                      'Name :Ramish Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
+                                                    ),
                                                   ),
                                                   SizedBox(height: 10,),
-                                                  Text(
-                                                    "Shift Starts at ${constants.loginData.shiftStartTime}",style: theme.displayMedium,
+                                                  Container(
+                                                    constraints:  BoxConstraints(maxWidth: 150),
+                                                    child: Text(
+                                                      "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
+                                                    ),
                                                   ),
 
                                                 ],
@@ -125,14 +129,13 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
 
                                               InkWell(
                                                 onTap: (){
-                                                  model.onCheckInClicked();
                                                 },
                                                 child: Container(
                                                   child: Center(
                                                     child: Text(
-                                                        'Tap',
+                                                        'Pending',
                                                         style: theme.headlineSmall?.copyWith(
-                                                            color: Colors.white
+                                                          color: Colors.white
                                                         )
                                                     ),
                                                   ),
@@ -172,66 +175,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                               ),
                               Expanded(
                                 child: _buildList(model),
-                                // child: LayoutBuilder(
-                                //   builder: (BuildContext context,
-                                //       BoxConstraints constraints) {
-                                //     return ListView.builder(
-                                //       shrinkWrap: true,
-                                //       physics: const BouncingScrollPhysics(),
-                                //       itemCount:10,
-                                //       itemBuilder: (context, index) {
-                                //         return Padding(
-                                //           padding: const EdgeInsets.only(bottom: 10),
-                                //           child: Container(
-                                //             decoration: BoxDecoration(
-                                //               color: AppColor.containercolor,
-                                //               borderRadius: BorderRadius.circular(15),
-                                //             ),
-                                //             padding: EdgeInsets.symmetric(
-                                //                 horizontal: 10, vertical: 10),
-                                //             child: Column(
-                                //               children: [
-                                //                 Align(
-                                //                   alignment: Alignment.topLeft,
-                                //                   child: Text(
-                                //                     'DD/MM/YY',
-                                //                     style: TextStyle(
-                                //                         fontSize: 15,
-                                //                         fontWeight: FontWeight.bold),
-                                //                   ),
-                                //                 ),
-                                //                 SizedBox(height: 5),
-                                //                 Row(
-                                //                   mainAxisAlignment:
-                                //                   MainAxisAlignment.spaceBetween,
-                                //                   children: [
-                                //                     Text(
-                                //                       'shift Starts at 00:00 AM/PM',
-                                //                       style: TextStyle(fontSize: 13),
-                                //                     ),
-                                //                     Text('In:00:00'),
-                                //                   ],
-                                //                 ),
-                                //                 SizedBox(height: 5),
-                                //                 Row(
-                                //                   mainAxisAlignment:
-                                //                   MainAxisAlignment.spaceBetween,
-                                //                   children: [
-                                //                     Text(
-                                //                       'shift Starts at 00:00 AM/PM',
-                                //                       style: TextStyle(fontSize: 13),
-                                //                     ),
-                                //                     Text('Out: 00:00'),
-                                //                   ],
-                                //                 ),
-                                //               ],
-                                //             ),
-                                //           ),
-                                //         );
-                                //       },
-                                //     );
-                                //   },
-                                // ),
+
                               ),
                             ],
                           ),
@@ -251,7 +195,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
     );
   }
 
-  Widget _customAppBar(AttendanceViewModel model) {
+  Widget _customAppBar(MyPayViewModel model) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -281,7 +225,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
       ),
     );
   }
-  Widget _buildList(AttendanceViewModel model) {
+  Widget _buildList(MyPayViewModel model) {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
@@ -318,7 +262,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                          child: AttendanceTile(
+                          child: MyPayTile(
                             name: attendance.employeeName!,
                             date: attendance.checkedDate!,
                             totalHours: attendance.totalHours!, // Update this value based on your data calculation
@@ -328,7 +272,19 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                               /*   'out': e.isCheckedout ? 'checked out' : null,*/
                             })
                                 .toList(),
-                          ),
+
+                          )
+                          // child: AttendanceTile(
+                          //   name: attendance.employeeName!,
+                          //   date: attendance.checkedDate!,
+                          //   totalHours: attendance.totalHours!, // Update this value based on your data calculation
+                          //   timeEntries: attendance.checked
+                          //   !.map((e) => {
+                          //     e.isCheckedout: e.checkedTime!,
+                          //     /*   'out': e.isCheckedout ? 'checked out' : null,*/
+                          //   })
+                          //       .toList(),
+                          // ),
                         ),
                       ),
                     ),
@@ -347,9 +303,9 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
 }
 
 
-class AttendanceMobileLandscape extends BaseModelWidget<AttendanceViewModel> {
+class AttendanceMobileLandscape extends BaseModelWidget< MyPayViewModel> {
   @override
-  Widget build(BuildContext context, AttendanceViewModel model) {
+  Widget build(BuildContext context, MyPayViewModel model) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
