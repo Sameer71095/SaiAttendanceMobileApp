@@ -25,229 +25,231 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
 
     List myProductonTap = [];
 
-    return Builder(
-      builder: (BuildContext context) {
-        final MediaQueryData mediaQuery = MediaQuery.of(context);
+    return SafeArea(
+      child: Builder(
+        builder: (BuildContext context) {
+          final MediaQueryData mediaQuery = MediaQuery.of(context);
 
-        return Scaffold(
-
-
-          drawer: NewDrawer(),
-          body: Stack(
-            children: [
-
-              Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      image:AssetImage('assets/images/background/back.jpg')
-                  )
-              ),),
-
-              Column(
-                children: [
-                  AppBar(
-                    centerTitle: true,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    flexibleSpace: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
+          return Scaffold(
 
 
-                            image: AssetImage('assets/images/background/back.jpg'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topRight
+            drawer: NewDrawer(),
+            body: Stack(
+              children: [
+
+                Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        image:AssetImage('assets/images/background/back.jpg')
+                    )
+                ),),
+
+                Column(
+                  children: [
+                    AppBar(
+                      centerTitle: true,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      flexibleSpace: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+
+
+                              image: AssetImage('assets/images/background/back.jpg'),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topRight
+                          ),
                         ),
                       ),
+                      title: Text('Attendance'),
                     ),
-                    title: Text('Attendance'),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: AppColor.ContainerBackground
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: AppColor.ContainerBackground
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
 
-                              ///
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                                  child: _customAppBar(model),),),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                child: Column(
+                                ///
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                                    child: _customAppBar(model),),),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  child: Column(
 
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColor.containercolor,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
-                                          ),
-                                          SizedBox(height: 10,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColor.containercolor,
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                                                children: [
-                                                  Text(
-                                                    'Shift ends at ${constants.loginData.shiftEndTime}',style: theme.displayMedium,
-                                                  ),
-                                                  SizedBox(height: 10,),
-                                                  Text(
-                                                    "Shift Starts at ${constants.loginData.shiftStartTime}",style: theme.displayMedium,
-                                                  ),
+                                                  children: [
+                                                    Text(
+                                                      'Shift ends at ${constants.loginData.shiftEndTime}',style: theme.displayMedium,
+                                                    ),
+                                                    SizedBox(height: 10,),
+                                                    Text(
+                                                      "Shift Starts at ${constants.loginData.shiftStartTime}",style: theme.displayMedium,
+                                                    ),
 
-                                                ],
+                                                  ],
 
-                                              ),
+                                                ),
 
-                                              InkWell(
-                                                onTap: (){
-                                                  model.onCheckInClicked();
-                                                },
-                                                child: Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                        'Tap',
-                                                        style: theme.headlineSmall?.copyWith(
-                                                            color: Colors.white
-                                                        )
+                                                InkWell(
+                                                  onTap: (){
+                                                    model.onCheckInClicked();
+                                                  },
+                                                  child: Container(
+                                                    child: Center(
+                                                      child: Text(
+                                                          'Tap',
+                                                          style: theme.headlineSmall?.copyWith(
+                                                              color: Colors.white
+                                                          )
+                                                      ),
+                                                    ),
+                                                    height: 30,
+                                                    width: 90,
+                                                    decoration: BoxDecoration(
+
+                                                      borderRadius:
+                                                      BorderRadius.circular(10),
+
+
+                                                      color: AppColor.tapColor,
                                                     ),
                                                   ),
-                                                  height: 30,
-                                                  width: 90,
-                                                  decoration: BoxDecoration(
-
-                                                    borderRadius:
-                                                    BorderRadius.circular(10),
-
-
-                                                    color: AppColor.tapColor,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                                )
+                                              ],
+                                            ),
 
 
 
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          'History',
-                                          style:theme.displayLarge,
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(top: 10),
+                                        child: Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            'History',
+                                            style:theme.displayLarge,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: _buildList(model),
-                                // child: LayoutBuilder(
-                                //   builder: (BuildContext context,
-                                //       BoxConstraints constraints) {
-                                //     return ListView.builder(
-                                //       shrinkWrap: true,
-                                //       physics: const BouncingScrollPhysics(),
-                                //       itemCount:10,
-                                //       itemBuilder: (context, index) {
-                                //         return Padding(
-                                //           padding: const EdgeInsets.only(bottom: 10),
-                                //           child: Container(
-                                //             decoration: BoxDecoration(
-                                //               color: AppColor.containercolor,
-                                //               borderRadius: BorderRadius.circular(15),
-                                //             ),
-                                //             padding: EdgeInsets.symmetric(
-                                //                 horizontal: 10, vertical: 10),
-                                //             child: Column(
-                                //               children: [
-                                //                 Align(
-                                //                   alignment: Alignment.topLeft,
-                                //                   child: Text(
-                                //                     'DD/MM/YY',
-                                //                     style: TextStyle(
-                                //                         fontSize: 15,
-                                //                         fontWeight: FontWeight.bold),
-                                //                   ),
-                                //                 ),
-                                //                 SizedBox(height: 5),
-                                //                 Row(
-                                //                   mainAxisAlignment:
-                                //                   MainAxisAlignment.spaceBetween,
-                                //                   children: [
-                                //                     Text(
-                                //                       'shift Starts at 00:00 AM/PM',
-                                //                       style: TextStyle(fontSize: 13),
-                                //                     ),
-                                //                     Text('In:00:00'),
-                                //                   ],
-                                //                 ),
-                                //                 SizedBox(height: 5),
-                                //                 Row(
-                                //                   mainAxisAlignment:
-                                //                   MainAxisAlignment.spaceBetween,
-                                //                   children: [
-                                //                     Text(
-                                //                       'shift Starts at 00:00 AM/PM',
-                                //                       style: TextStyle(fontSize: 13),
-                                //                     ),
-                                //                     Text('Out: 00:00'),
-                                //                   ],
-                                //                 ),
-                                //               ],
-                                //             ),
-                                //           ),
-                                //         );
-                                //       },
-                                //     );
-                                //   },
-                                // ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: _buildList(model),
+                                  // child: LayoutBuilder(
+                                  //   builder: (BuildContext context,
+                                  //       BoxConstraints constraints) {
+                                  //     return ListView.builder(
+                                  //       shrinkWrap: true,
+                                  //       physics: const BouncingScrollPhysics(),
+                                  //       itemCount:10,
+                                  //       itemBuilder: (context, index) {
+                                  //         return Padding(
+                                  //           padding: const EdgeInsets.only(bottom: 10),
+                                  //           child: Container(
+                                  //             decoration: BoxDecoration(
+                                  //               color: AppColor.containercolor,
+                                  //               borderRadius: BorderRadius.circular(15),
+                                  //             ),
+                                  //             padding: EdgeInsets.symmetric(
+                                  //                 horizontal: 10, vertical: 10),
+                                  //             child: Column(
+                                  //               children: [
+                                  //                 Align(
+                                  //                   alignment: Alignment.topLeft,
+                                  //                   child: Text(
+                                  //                     'DD/MM/YY',
+                                  //                     style: TextStyle(
+                                  //                         fontSize: 15,
+                                  //                         fontWeight: FontWeight.bold),
+                                  //                   ),
+                                  //                 ),
+                                  //                 SizedBox(height: 5),
+                                  //                 Row(
+                                  //                   mainAxisAlignment:
+                                  //                   MainAxisAlignment.spaceBetween,
+                                  //                   children: [
+                                  //                     Text(
+                                  //                       'shift Starts at 00:00 AM/PM',
+                                  //                       style: TextStyle(fontSize: 13),
+                                  //                     ),
+                                  //                     Text('In:00:00'),
+                                  //                   ],
+                                  //                 ),
+                                  //                 SizedBox(height: 5),
+                                  //                 Row(
+                                  //                   mainAxisAlignment:
+                                  //                   MainAxisAlignment.spaceBetween,
+                                  //                   children: [
+                                  //                     Text(
+                                  //                       'shift Starts at 00:00 AM/PM',
+                                  //                       style: TextStyle(fontSize: 13),
+                                  //                     ),
+                                  //                     Text('Out: 00:00'),
+                                  //                   ],
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         );
+                                  //       },
+                                  //     );
+                                  //   },
+                                  // ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
 
 
-            ],
+              ],
 
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 

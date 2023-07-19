@@ -1,26 +1,18 @@
 /// Contains the widgets that will be used for Mobile layout of home,
 /// portrait and landscape
 
-import 'package:ClockSpotter/api/secureCacheManager.dart';
-import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
-import 'package:ClockSpotter/views/login/login_view.dart';
+import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
+import 'package:ClockSpotter/views/Peoples/peoples_view.dart';
+import 'package:ClockSpotter/views/Request%20Letter/Request_view.dart';
+import 'package:ClockSpotter/views/Time%20Sheet/time_sheet_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/intl.dart';
-import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/viewmodels/home_viewmodel.dart';
-import 'package:ClockSpotter/widgets/AttendanceWidget/AttendanceTile.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
 
-import '../../utils/Home_Clipper.dart';
-import '../../widgets/app_drawer/Drawer_Screen.dart';
 import 'home_view.dart';
-import 'dart:math';
 
 class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -61,92 +53,127 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       'My Pay',
       "Work expenses"
     ];
-
-    return Scaffold(
-      drawer: NewDrawer(),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    image:AssetImage('assets/images/background/back.jpg')
-                )
-            ),),
-          Column(
-            children: [
-              AppBar(
-                centerTitle: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
+    List<String> screenNames = ['AttendanceView', 'Time Sheets','Time Sheets','Request Letter', 'Peoples','My Pay','Time Sheets'];
+    int currentScreenIndex = 0;
 
 
-                        image: AssetImage('assets/images/background/back.jpg'),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topRight
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
+    var theme = Theme.of(context).textTheme;
+
+      void navigateToScreenAtIndex(int index) {
+        if (index >= 0 && index < screenNames.length) {
+          currentScreenIndex = index;
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              transitionDuration: const Duration(milliseconds: 200),
+              pageBuilder: (context, animation, secondaryAnimation) {
+                String currentScreenName = screenNames[currentScreenIndex];
+                // Return the appropriate screen based on the currentScreenName
+                // For example:
+                switch (currentScreenName) {
+                  case 'AttendanceView':
+                    return AttendanceView();
+                  case  'Time Sheets':
+                    return TimeSheetView();
+                  case 'Time Sheets':
+                    return TimeSheetView();
+                  case 'Request Letter':
+                    return RequestLetterView();
+                  case 'Peoples':
+                    return PeoplesView();
+                  case 'My Pay':
+                    return MyPayView();
+                  case 'Time Sheets':
+                    return TimeSheetView();
+                  default:
+                    return Container();
+                }
+              },
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+            ),
+          );
+        }}
+
+
+    return SafeArea(
+      child: Scaffold(
+        drawer: NewDrawer(),
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image:AssetImage('assets/images/background/back.jpg')
+                  )
+              ),),
+            Column(
+              children: [
+                AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  flexibleSpace: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+
+
+                          image: AssetImage('assets/images/background/back.jpg'),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topRight
+                      ),
                     ),
                   ),
+                  title: Text('Work',style: theme.titleLarge?.copyWith(
+                    color: Colors.white
+                  ),),
                 ),
-                title: Text('Work'),
-              ),
-              Expanded(
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                        ),
-                        itemCount: myProducts.length,
-                        itemBuilder: (BuildContext ctx, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(25.0),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black45,
-                                      blurRadius: 3.0, // soften the shadow
-                                      spreadRadius: 1.0, //extend the shadow
-                                      offset: Offset(
-                                        1.0, // Move to right 5  horizontally
-                                        3.0, // Move to bottom 5 Vertically
-                                      ),
-                                    )
-                                  ]),
+                Expanded(
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                          ),
+                          itemCount: myProducts.length,
+                          itemBuilder: (BuildContext ctx, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      PageRouteBuilder(
-                                        transitionDuration:
-                                            const Duration(milliseconds: 200),
-                                        pageBuilder: (context, animation,
-                                                secondaryAnimation) =>
-                                            AttendanceView(),
-                                        transitionsBuilder: (context, animation,
-                                            secondaryAnimation, child) {
-                                          return SlideTransition(
-                                            position: Tween<Offset>(
-                                              begin: const Offset(1.0, 0.0),
-                                              end: Offset.zero,
-                                            ).animate(animation),
-                                            child: child,
-                                          );
-                                        },
+                                onTap: (){
+                                  navigateToScreenAtIndex(index);
+                                },
+                                child: Container(
+                                  width:50 ,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(25.0),
                                       ),
-                                    );
-                                  },
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black45,
+                                          blurRadius: 3.0, // soften the shadow
+                                          spreadRadius: 1.0, //extend the shadow
+                                          offset: Offset(
+                                            1.0, // Move to right 5  horizontally
+                                            3.0, // Move to bottom 5 Vertically
+                                          ),
+                                        )
+                                      ]),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -156,65 +183,53 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                           height: 40,
                                         ),
                                       ),
-                                      Text(
-                                        myProductsText[index].toString(),
-                                        textAlign: TextAlign.center,
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          myProductsText[index].toString(),
+                                          textAlign: TextAlign.center,
+                                          style: theme.displaySmall,
+                                        ),
                                       )
                                     ],
-                                  )),
-                            ),
-                          );
-                        }),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: ListView.builder(
-                    itemCount: tile.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            leading: Container(
-                                height: 50,
-                                width: 50,
-                                child: Image.asset(tile[index])),
-                            title: Container(child: Text(tileText[index])),
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                PageRouteBuilder(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 200),
-                                  pageBuilder:
-                                      (context, animation, secondaryAnimation) =>
-                                          AttendanceView(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    return SlideTransition(
-                                      position: Tween<Offset>(
-                                        begin: const Offset(1.0, 0.0),
-                                        end: Offset.zero,
-                                      ).animate(animation),
-                                      child: child,
-                                    );
-                                  },
+                                  ),
                                 ),
-                              );
-                            },
-                          ),
-                          Divider()
-                        ],
-                      );
-                    },
+                              ),
+                            );
+                          }),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                Expanded(
+                  child: Container(
+                    color: Colors.white,
+                    child: ListView.builder(
+                      itemCount: tile.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: Image.asset(tile[index])),
+                              title: Container(child: Text(tileText[index],style: theme.titleLarge,)),
+                              onTap: () {
+                                navigateToScreenAtIndex(index);
+
+                              },
+                            ),
+                            Divider()
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

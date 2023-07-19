@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 
-class MyProfileViewTablet extends StatelessWidget {
-  const MyProfileViewTablet({Key? key}) : super(key: key);
+class PeoplesViewTablet extends StatelessWidget {
+  const PeoplesViewTablet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

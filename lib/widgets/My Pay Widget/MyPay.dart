@@ -47,15 +47,7 @@ class MyPayTile extends StatelessWidget {
                       "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
                     ),
                   ),
-                  // RichText(
-                  //   text: TextSpan(
-                  //     style: TextStyle(fontSize: 16, color: Colors.black),
-                  //     children: [
-                  //       TextSpan(text: 'Hours: '),
-                  //       TextSpan(text: totalHours.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
-                  //     ],
-                  //   ),
-                  // ),
+
                 ],
               ),
             ),
@@ -65,60 +57,32 @@ class MyPayTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: timeEntries.map((entry) {
-
-                  String checkedTime = entry.values.first;
-                  bool isCheckedOut = entry.keys.first!;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: (){
-                        },
-                        child: Container(
-                          child: Center(
-                            child: Text(
-                                'Paid!',
-                                style: theme.headlineSmall?.copyWith(
-                                    color: Colors.white
-                                )
-                            ),
-                          ),
-                          height: 30,
-                          width: 70,
-                          decoration: BoxDecoration(
-
-                            borderRadius:
-                            BorderRadius.circular(10),
-
-
-                            color: AppColor.tapColor,
-                          ),
-                        ),
+              children: [
+                InkWell(
+                  onTap: (){
+                  },
+                  child: Container(
+                    child: Center(
+                      child: Text(
+                          'Paid!',
+                          style: theme.headlineSmall?.copyWith(
+                              color: Colors.white
+                          )
                       ),
-                      // if (!isCheckedOut)
-                      //   RichText(
-                      //     text: TextSpan(
-                      //       style: TextStyle(fontSize: 16, color: Colors.black),
-                      //       children: [
-                      //         TextSpan(text: 'In -    '),
-                      //         TextSpan(text: checkedTime, style: TextStyle(fontWeight: FontWeight.bold)),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // if (isCheckedOut)
-                      //   RichText(
-                      //     text: TextSpan(
-                      //       style: TextStyle(fontSize: 16, color: Colors.black),
-                      //       children: [
-                      //         TextSpan(text: 'Out - '),
-                      //         TextSpan(text: checkedTime, style: TextStyle(fontWeight: FontWeight.bold)),
-                      //       ],
-                      //     ),
-                      //   ),
-                    ],
-                  );
-                }).toList(),
+                    ),
+                    height: 30,
+                    width: 70,
+                    decoration: BoxDecoration(
+
+                      borderRadius:
+                      BorderRadius.circular(10),
+
+
+                      color: AppColor.tapColor,
+                    ),
+                  ),
+                ),
+              ],
               ),
             ),
           ],

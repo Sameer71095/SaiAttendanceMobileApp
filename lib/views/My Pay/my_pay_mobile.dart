@@ -65,7 +65,7 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
                         ),
                       ),
                     ),
-                    title: Text('My Pay'),
+                    title: Text('My Pay',style: theme.titleLarge?.copyWith(color: Colors.white),),
                   ),
                   Expanded(
                     child: Padding(
@@ -274,17 +274,6 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
                                 .toList(),
 
                           )
-                          // child: AttendanceTile(
-                          //   name: attendance.employeeName!,
-                          //   date: attendance.checkedDate!,
-                          //   totalHours: attendance.totalHours!, // Update this value based on your data calculation
-                          //   timeEntries: attendance.checked
-                          //   !.map((e) => {
-                          //     e.isCheckedout: e.checkedTime!,
-                          //     /*   'out': e.isCheckedout ? 'checked out' : null,*/
-                          //   })
-                          //       .toList(),
-                          // ),
                         ),
                       ),
                     ),

@@ -24,12 +24,11 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
 
   @override
   Widget build(BuildContext context, TimeSheetViewModel model) {
-    TextEditingController _letterNameController = TextEditingController();
-    TextEditingController _firstNameController = TextEditingController();
-    TextEditingController _lastNameController = TextEditingController();
-    TextEditingController _dateController = TextEditingController();
-    TextEditingController _dayController = TextEditingController();
-    TextEditingController _signatureController = TextEditingController();
+    TextEditingController _EmployeName = TextEditingController();
+    TextEditingController _Day = TextEditingController();
+    TextEditingController _Date = TextEditingController();
+    TextEditingController _TimeIn = TextEditingController();
+    TextEditingController _TimeOut= TextEditingController();
 
 
     var theme = Theme.of(context).textTheme;
@@ -38,22 +37,21 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
 
 
 
-    return  Scaffold(
-      drawer: NewDrawer(),
-      body: Stack(
-        children: [
+    return  SafeArea(
+      child: Scaffold(
+        drawer: NewDrawer(),
+        body: Stack(
+          children: [
 
-      Container(
-      decoration: BoxDecoration(
-      image: DecorationImage(
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          image:AssetImage('assets/images/background/back.jpg')
-      )
-    ),),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
+        Container(
+        decoration: BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            image:AssetImage('assets/images/background/back.jpg')
+        )
+      ),),
+            SingleChildScrollView(
               child: Column(
                 children: [
                   AppBar(
@@ -71,7 +69,7 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
                         ),
                       ),
                     ),
-                    title: Text('Time Sheet'),
+                    title: Text('Time Sheet', style: theme.titleLarge?.copyWith(color: Colors.white),),
                   ),
 
                   Padding(
@@ -87,7 +85,7 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
 
 
                         TextFormField(
-                          controller: _letterNameController,
+                          controller: _EmployeName,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
                             hintText: 'Employ name',
@@ -106,7 +104,7 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
-                          controller: _letterNameController,
+                          controller: _Day,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
                             hintText: 'Day',
@@ -125,7 +123,7 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
-                          controller: _letterNameController,
+                          controller: _Date,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
                             hintText: 'Date dd/mm/yyy',
@@ -144,7 +142,7 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
-                          controller: _letterNameController,
+                          controller: _TimeIn,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
                             hintText: 'Time in',
@@ -163,7 +161,7 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
-                          controller: _letterNameController,
+                          controller: _TimeOut,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
                             hintText: 'Time out',
@@ -213,9 +211,9 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
                 ],
               ),
             ),
-          ),
 
-  ] ));
+  ] )),
+    );
 
 
 

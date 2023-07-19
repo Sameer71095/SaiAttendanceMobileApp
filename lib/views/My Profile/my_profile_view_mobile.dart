@@ -26,123 +26,209 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
 
   @override
   Widget build(BuildContext context, MyProfileViewModel model) {
-    double height=MediaQuery.of(context).size.height;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
+    var theme = Theme.of(context).textTheme;
+    double fontSize = 20;
 
-
-    return Scaffold(
-      drawer: NewDrawer(),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    image:AssetImage('assets/images/background/back.jpg')
-                )
-            ),),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                AppBar(
-                  centerTitle: true,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  flexibleSpace: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-
-
-                          image: AssetImage('assets/images/background/back.jpg'),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topRight
+    return SafeArea(
+      child: Scaffold(
+        drawer: NewDrawer(),
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image: AssetImage('assets/images/background/back.jpg'))),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  AppBar(
+                    centerTitle: true,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    flexibleSpace: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/background/back.jpg'),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topRight),
                       ),
+                    ),
+                    title: Text(
+                      'My Profile',
+                      style: theme.titleLarge?.copyWith(color: Colors.white),
                     ),
                   ),
-                  title: Text('My Profile'),
-                ),
-                Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-
-                    Container(
-                      height: height*0.6,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-
-                          borderRadius: BorderRadius.circular(20)
-                      ),
-                      margin: EdgeInsets.only(top: 100),
-                      child: Padding(
-                        padding: EdgeInsets.all(22.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Name',
-                              ),
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Company Name',
-                              ),
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Designation',
-                              ),
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Nationality',
-                              ),
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Location',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 7,
-                      child: Container(
-                        width: 160,
-                        height: 160,
+                  Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Container(
+                        height: height * 0.6,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue,
-                        ),
-                        child: Center(
-                          child: Container(
-                            width: 130,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        margin: EdgeInsets.only(top: 100),
+                        child: Padding(
+                          padding: EdgeInsets.all(22.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Name: ',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Rakesh Kumar',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: height * 0.05,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Company Name: ',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Rushtech360',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: height * 0.05,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Designation: ',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Flutter Developer',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: height * 0.05,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Nationality: ',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Pakistani',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: height * 0.05,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Location: ',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Johar Chowrangi',
+                                      style: theme.displayLarge?.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ),
-
-                  ],
-                ),
-
-
-              ],
+                      ),
+                      Positioned(
+                          top: height * 0.00009,
+                          child: Container(
+                            width: width * 0.45,
+                            height: height * 0.25,
+                            decoration: BoxDecoration(
+                              // image: DecorationImage(
+                              //   fit: BoxFit.cover,
+                              //   image: AssetImage('assets/images/background/back.jpg')
+                              // ),
+                              shape: BoxShape.circle,
+                              color: Colors.blue.shade900,
+                            ),
+                            child: Center(
+                              child: Container(
+                                width: width * 0.35,
+                                height: height * 0.62,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
-
-
 }
 
 class HomeMobileLandscape extends BaseModelWidget<MyProfileViewModel> {
