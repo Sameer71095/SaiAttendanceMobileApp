@@ -2,11 +2,14 @@
 
 
 import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/views/Insurance/insurance_view.dart';
 import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
 import 'package:ClockSpotter/views/My%20Profile/my_profile_view.dart';
 import 'package:ClockSpotter/views/Peoples/peoples_view.dart';
 import 'package:ClockSpotter/views/Request%20Letter/Request_view.dart';
+import 'package:ClockSpotter/views/Time%20Off/time_of_view.dart';
 import 'package:ClockSpotter/views/Time%20Sheet/time_sheet_view.dart';
+import 'package:ClockSpotter/views/Work%20Expense/work_expense_view.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +140,25 @@ class _NewDrawerState extends State<NewDrawer> {
                       ),
                       title: const Text(
                         'Time off', style: TextStyle(color: Colors.white),),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondaryAnimation) => TimeOffView(),
+                            transitionsBuilder: (context, animation, secondaryAnimation,
+                                child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
                     Divider(color: Colors.white,)
                   ],
@@ -212,6 +233,38 @@ class _NewDrawerState extends State<NewDrawer> {
                   children: [
                     ListTile(
                       leading: Icon(
+                        Icons.local_hospital_outlined,
+                        color: Colors.white,
+                      ),
+                      title: const Text(
+                        'Insurance', style: TextStyle(color: Colors.white),),
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondaryAnimation) => InsuranceView(),
+                            transitionsBuilder: (context, animation, secondaryAnimation,
+                                child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    Divider(color: Colors.white,)
+                  ],
+                ),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
                         Icons.attach_money,
                         color: Colors.white,
                       ),
@@ -250,7 +303,23 @@ class _NewDrawerState extends State<NewDrawer> {
                       title: const Text(
                         'Work Expense', style: TextStyle(color: Colors.white),),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondaryAnimation) => WorkExpenseView(),
+                            transitionsBuilder: (context, animation, secondaryAnimation,
+                                child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
                       },
                     ),
                     Divider(color: Colors.white,)

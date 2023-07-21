@@ -91,7 +91,7 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Rakesh Kumar',
+                                      constants.loginData.name.toString(),
                                       style: theme.displayLarge?.copyWith(
                                           fontSize: fontSize,
                                           fontWeight: FontWeight.bold),
@@ -114,7 +114,7 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Rushtech360',
+                                      ' ',
                                       style: theme.displayLarge?.copyWith(
                                           fontSize: fontSize,
                                           fontWeight: FontWeight.bold),
@@ -137,7 +137,7 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Flutter Developer',
+                                      '',
                                       style: theme.displayLarge?.copyWith(
                                           fontSize: fontSize,
                                           fontWeight: FontWeight.bold),
@@ -160,7 +160,7 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Pakistani',
+                                      ' ',
                                       style: theme.displayLarge?.copyWith(
                                           fontSize: fontSize,
                                           fontWeight: FontWeight.bold),
@@ -183,7 +183,7 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Johar Chowrangi',
+                                      constants.loginData.location.toString(),
                                       style: theme.displayLarge?.copyWith(
                                           fontSize: fontSize,
                                           fontWeight: FontWeight.bold),
@@ -201,10 +201,7 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
                             width: width * 0.45,
                             height: height * 0.25,
                             decoration: BoxDecoration(
-                              // image: DecorationImage(
-                              //   fit: BoxFit.cover,
-                              //   image: AssetImage('assets/images/background/back.jpg')
-                              // ),
+
                               shape: BoxShape.circle,
                               color: Colors.blue.shade900,
                             ),

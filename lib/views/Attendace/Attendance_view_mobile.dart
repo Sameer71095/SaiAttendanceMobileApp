@@ -2,6 +2,7 @@
 /// portrait and landscape
 
 import 'package:ClockSpotter/utils/app_color.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/viewmodels/Attendance_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
@@ -258,24 +259,26 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          RichText(
-            text: TextSpan(
-              text: "Hello\n",
-              style: const TextStyle(
-                  color: Colors.black, fontFamily: "Sofia", fontSize: 18.0),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                text: "Hello\n",
+                style: const TextStyle(
+                    color: Colors.black, fontFamily: "Sofia", fontSize: 20.0),
 
-              children: [
+                children: [
 
-                TextSpan(
-                  text: constants.loginData.name,
-                  style: TextStyle(
-                    color: Colors.blue.shade800,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22.0,
-                    height: 1.0,
-                  ),
-                )
-              ],
+                  TextSpan(
+                    text:constants.loginData.name,
+                    style: TextStyle(
+                      color: Colors.blue.shade800,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.0,
+                      height: 1.0,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
 

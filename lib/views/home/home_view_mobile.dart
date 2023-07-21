@@ -2,10 +2,13 @@
 /// portrait and landscape
 
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
+import 'package:ClockSpotter/views/Insurance/insurance_view.dart';
 import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
 import 'package:ClockSpotter/views/Peoples/peoples_view.dart';
 import 'package:ClockSpotter/views/Request%20Letter/Request_view.dart';
+import 'package:ClockSpotter/views/Time%20Off/time_of_view.dart';
 import 'package:ClockSpotter/views/Time%20Sheet/time_sheet_view.dart';
+import 'package:ClockSpotter/views/Work%20Expense/work_expense_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:ClockSpotter/viewmodels/home_viewmodel.dart';
@@ -53,7 +56,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       'My Pay',
       "Work expenses"
     ];
-    List<String> screenNames = ['AttendanceView', 'Time Sheets','Time Sheets','Request Letter', 'Peoples','My Pay','Time Sheets'];
+    List<String> screenNames = ['AttendanceView', 'Time Sheets','Time Off','Request Letter', 'Peoples','My Pay','Time Sheets'];
+
     int currentScreenIndex = 0;
 
 
@@ -77,16 +81,16 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                     return AttendanceView();
                   case  'Time Sheets':
                     return TimeSheetView();
-                  case 'Time Sheets':
-                    return TimeSheetView();
+                  case 'Time Off':
+                    return TimeOffView();
                   case 'Request Letter':
                     return RequestLetterView();
                   case 'Peoples':
                     return PeoplesView();
                   case 'My Pay':
                     return MyPayView();
-                  case 'Time Sheets':
-                    return TimeSheetView();
+                  case 'Work Expense':
+                    return WorkExpenseView();
                   default:
                     return Container();
                 }
@@ -103,6 +107,48 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
             ),
           );
         }}
+    List<String> screenNamesGrid = ['AttendanceView','Request Letter','Work Expense','Time Sheets','Time Off', 'Insurance'];
+    void navigateToScreenAtIndexGrid(int index) {
+      if (index >= 0 && index < screenNamesGrid.length) {
+        currentScreenIndex = index;
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 200),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              String currentScreenName = screenNamesGrid[currentScreenIndex];
+              // Return the appropriate screen based on the currentScreenName
+              // For example:
+              switch (currentScreenName) {
+                case 'AttendanceView':
+                  return AttendanceView();
+                case 'Request Letter':
+                  return RequestLetterView();
+                case 'Work Expense':
+                  return WorkExpenseView();
+                case 'Time Sheets':
+                  return TimeSheetView();
+                case 'Time Off':
+                  return TimeOffView();
+                case 'Insurance':
+                  return InsuranceView();
+
+                default:
+                  return Container();
+              }
+            },
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              );
+            },
+          ),
+        );
+      }}
 
 
     return SafeArea(
@@ -140,12 +186,17 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   ),),
                 ),
                 Expanded(
+
                   child: Container(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(top: 25,left: 10,right: 10),
                       child: GridView.builder(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
+                            childAspectRatio: MediaQuery.of(context).size.width /
+                                (MediaQuery.of(context).size.height /1.7),
+                            mainAxisSpacing: 8.0,
+                            crossAxisSpacing: 7.0,
                           ),
                           itemCount: myProducts.length,
                           itemBuilder: (BuildContext ctx, index) {
@@ -153,10 +204,10 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                               padding: const EdgeInsets.all(8.0),
                               child: GestureDetector(
                                 onTap: (){
-                                  navigateToScreenAtIndex(index);
+                                  navigateToScreenAtIndexGrid(index);
                                 },
                                 child: Container(
-                                  width:50 ,
+                                  width:40 ,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       border: Border.all(color: Colors.black),
@@ -201,6 +252,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   ),
                 ),
                 Expanded(
+                  flex: 1,
                   child: Container(
                     color: Colors.white,
                     child: ListView.builder(

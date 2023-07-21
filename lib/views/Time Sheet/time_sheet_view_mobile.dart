@@ -221,9 +221,9 @@ class TimeSheetMobilePortrait extends BaseModelWidget<TimeSheetViewModel> {
 }
 
 }
-class AttendanceMobileLandscape extends BaseModelWidget<RequestLetterViewModel> {
+class TimeSheetMobileLandscape extends BaseModelWidget<TimeSheetViewModel> {
   @override
-  Widget build(BuildContext context, RequestLetterViewModel model) {
+  Widget build(BuildContext context, TimeSheetViewModel model) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {

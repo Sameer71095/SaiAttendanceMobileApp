@@ -31,14 +31,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
             padding: EdgeInsets.all(20.0),
             child: Stack(
               children: [
-                // Positioned(
-                //   top: height * 0.4,
-                //   right: width * 0.2,
-                //   child: Image.asset(
-                //     'assets/images/login/1b.png',
-                //     width: width * 0.7,
-                //   ),
-                // ),
+
                 Positioned(
                   top: height * 0.11,
                   left: width * 0.059,

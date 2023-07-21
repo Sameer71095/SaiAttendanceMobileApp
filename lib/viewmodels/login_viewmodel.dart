@@ -5,7 +5,6 @@ import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/Registeration/register_view.dart';
 import 'package:ClockSpotter/views/forgot%20password/forgot_password.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
@@ -55,23 +54,7 @@ class LoginViewModel extends ChangeNotifier {
       return;
     }*/
  Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotView()));
-    // Navigator.pushReplacement(
-    //   context,
-    //   PageRouteBuilder(
-    //     transitionDuration: const Duration(milliseconds: 200),
-    //     pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
-    //     transitionsBuilder: (context, animation, secondaryAnimation,
-    //         child) {
-    //       return SlideTransition(
-    //         position: Tween<Offset>(
-    //           begin: const Offset(1.0, 0.0),
-    //           end: Offset.zero,
-    //         ).animate(animation),
-    //         child: child,
-    //       );
-    //     },
-    //   ),
-    // );
+
   }
   void RegisterClicked() {
 
