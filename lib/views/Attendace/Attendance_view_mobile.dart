@@ -159,8 +159,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.only(top: 10),
+                                        padding: const EdgeInsets.only(top: 10,bottom: 10),
                                         child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
@@ -314,7 +313,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                   return InkWell(
                     onTap: () {},
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.only(bottom: 15),
                       child: Container(
 
                         decoration: BoxDecoration(

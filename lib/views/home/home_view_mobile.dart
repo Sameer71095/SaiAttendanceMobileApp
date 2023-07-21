@@ -6,8 +6,8 @@ import 'package:ClockSpotter/views/Insurance/insurance_view.dart';
 import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
 import 'package:ClockSpotter/views/Peoples/peoples_view.dart';
 import 'package:ClockSpotter/views/Request%20Letter/Request_view.dart';
+import 'package:ClockSpotter/views/Task%20Sheet/task_sheet_view.dart';
 import 'package:ClockSpotter/views/Time%20Off/time_of_view.dart';
-import 'package:ClockSpotter/views/Time%20Sheet/time_sheet_view.dart';
 import 'package:ClockSpotter/views/Work%20Expense/work_expense_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +49,14 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
     ];
     List tileText = [
       "Attendance",
-      "Timesheets",
+      "Tasksheets",
       "Time off",
       "Letter requests",
       "People",
       'My Pay',
       "Work expenses"
     ];
-    List<String> screenNames = ['AttendanceView', 'Time Sheets','Time Off','Request Letter', 'Peoples','My Pay','Time Sheets'];
+    List<String> screenNames = ['AttendanceView', 'Task Sheets','Time Off','Request Letter', 'Peoples','My Pay','Time Sheets'];
 
     int currentScreenIndex = 0;
 
@@ -79,8 +79,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                 switch (currentScreenName) {
                   case 'AttendanceView':
                     return AttendanceView();
-                  case  'Time Sheets':
-                    return TimeSheetView();
+                  case  'Task Sheets':
+                    return TaskSheetView();
                   case 'Time Off':
                     return TimeOffView();
                   case 'Request Letter':
@@ -107,7 +107,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
             ),
           );
         }}
-    List<String> screenNamesGrid = ['AttendanceView','Request Letter','Work Expense','Time Sheets','Time Off', 'Insurance'];
+    List<String> screenNamesGrid = ['AttendanceView','Request Letter','Work Expense','Task Sheets','Time Off', 'Insurance'];
     void navigateToScreenAtIndexGrid(int index) {
       if (index >= 0 && index < screenNamesGrid.length) {
         currentScreenIndex = index;
@@ -126,8 +126,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   return RequestLetterView();
                 case 'Work Expense':
                   return WorkExpenseView();
-                case 'Time Sheets':
-                  return TimeSheetView();
+                case 'Task Sheets':
+                  return TaskSheetView();
                 case 'Time Off':
                   return TimeOffView();
                 case 'Insurance':

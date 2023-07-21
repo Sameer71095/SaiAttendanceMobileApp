@@ -3,7 +3,6 @@ import 'package:ClockSpotter/views/Attendace/Attendance_view_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:ClockSpotter/responsive/orientation_layout.dart';
 import 'package:ClockSpotter/responsive/screen_type_layout.dart';
-import 'package:ClockSpotter/viewmodels/home_viewmodel.dart';
 import 'package:ClockSpotter/widgets/base_widget.dart';
 
 

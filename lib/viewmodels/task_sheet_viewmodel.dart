@@ -20,7 +20,7 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 
 import '../api/secureCacheManager.dart';
 
-class TimeSheetViewModel extends ChangeNotifier {
+class TaskSheetViewModel extends ChangeNotifier {
 
 
 

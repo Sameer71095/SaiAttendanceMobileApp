@@ -76,102 +76,99 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
                             color: AppColor.ContainerBackground
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                           child: Column(
                             children: [
 
                               ///
 
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                child: Column(
+                              Column(
 
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColor.containercolor,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
-                                          ),
-                                          SizedBox(height: 10,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColor.containercolor,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
 
-                                                children: [
-                                                  Container(
-                                                    constraints:  BoxConstraints(maxWidth: 150),
-                                                    child: Text(
-                                                      'Name :Ramish Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10,),
-                                                  Container(
-                                                    constraints:  BoxConstraints(maxWidth: 150),
-                                                    child: Text(
-                                                      "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
-                                                    ),
-                                                  ),
-
-                                                ],
-
-                                              ),
-
-                                              InkWell(
-                                                onTap: (){
-                                                },
-                                                child: Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                        'Pending',
-                                                        style: theme.headlineSmall?.copyWith(
-                                                          color: Colors.white
-                                                        )
-                                                    ),
-                                                  ),
-                                                  height: 30,
-                                                  width: 90,
-                                                  decoration: BoxDecoration(
-
-                                                    borderRadius:
-                                                    BorderRadius.circular(10),
-
-
-                                                    color: AppColor.tapColor,
+                                              children: [
+                                                Container(
+                                                  constraints:  BoxConstraints(maxWidth: 150),
+                                                  child: Text(
+                                                    'Name :Ramish Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
+                                                SizedBox(height: 10,),
+                                                Container(
+                                                  constraints:  BoxConstraints(maxWidth: 150),
+                                                  child: Text(
+                                                    "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
+                                                  ),
+                                                ),
+
+                                              ],
+
+                                            ),
+
+                                            InkWell(
+                                              onTap: (){
+                                              },
+                                              child: Container(
+                                                child: Center(
+                                                  child: Text(
+                                                      'Pending',
+                                                      style: theme.headlineSmall?.copyWith(
+                                                        color: Colors.white
+                                                      )
+                                                  ),
+                                                ),
+                                                height: 30,
+                                                width: 90,
+                                                decoration: BoxDecoration(
+
+                                                  borderRadius:
+                                                  BorderRadius.circular(10),
 
 
-
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          'History',
-                                          style:theme.displayLarge,
+                                                  color: AppColor.tapColor,
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
+
+
+
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(top: 10),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        'History',
+                                        style:theme.displayLarge,
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                               Expanded(
                                 child: _buildList(model),

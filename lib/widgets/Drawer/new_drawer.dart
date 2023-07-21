@@ -7,8 +7,8 @@ import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
 import 'package:ClockSpotter/views/My%20Profile/my_profile_view.dart';
 import 'package:ClockSpotter/views/Peoples/peoples_view.dart';
 import 'package:ClockSpotter/views/Request%20Letter/Request_view.dart';
+import 'package:ClockSpotter/views/Task%20Sheet/task_sheet_view.dart';
 import 'package:ClockSpotter/views/Time%20Off/time_of_view.dart';
-import 'package:ClockSpotter/views/Time%20Sheet/time_sheet_view.dart';
 import 'package:ClockSpotter/views/Work%20Expense/work_expense_view.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
@@ -112,7 +112,7 @@ class _NewDrawerState extends State<NewDrawer> {
                           context,
                           PageRouteBuilder(
                             transitionDuration: const Duration(milliseconds: 200),
-                            pageBuilder: (context, animation, secondaryAnimation) => TimeSheetView(),
+                            pageBuilder: (context, animation, secondaryAnimation) => TaskSheetView(),
                             transitionsBuilder: (context, animation, secondaryAnimation,
                                 child) {
                               return SlideTransition(
