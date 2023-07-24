@@ -12,7 +12,7 @@ import 'package:ClockSpotter/entities/recognize_entity/registerface_response_ent
 part 'restClientPython.g.dart';
 
 //@RestApi(baseUrl: 'http://10.39.1.117:8020/api')
-@RestApi(baseUrl: 'http://192.67.63.238:8020/api')
+@RestApi(baseUrl: 'https://backend.clockspotter.com/api')
 abstract class RestClientPython {
   factory RestClientPython(Dio dio, {String? baseUrl}) = _RestClientPython;
 
