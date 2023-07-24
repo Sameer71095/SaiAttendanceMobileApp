@@ -92,7 +92,7 @@ class InsuranceMobilePortrait extends BaseModelWidget<InsuranceViewModel> {
                       SizedBox(width: width*0.05,),
                       Column(
                         children: [
-                          Text('Ramish Masood',style: theme.displayMedium?.copyWith(
+                          Text('Sameer',style: theme.displayMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold
                           )),

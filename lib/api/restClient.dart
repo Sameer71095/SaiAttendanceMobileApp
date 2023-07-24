@@ -15,7 +15,7 @@ import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 part 'restClient.g.dart';
 
 //@RestApi(baseUrl: 'http://10.39.1.117:8020/api')
-@RestApi(baseUrl: 'http://192.67.63.238:5000/api')
+@RestApi(baseUrl: 'https://api.clockspotter.com/api')
 abstract class RestClient {
 
   factory RestClient(Dio dio, {String? baseUrl}) {

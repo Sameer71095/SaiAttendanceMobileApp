@@ -13,7 +13,7 @@ class _RestClientPython implements RestClientPython {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.67.63.238:8020/api';
+    baseUrl ??= 'https://backend.clockspotter.com/api';
   }
 
   final Dio _dio;

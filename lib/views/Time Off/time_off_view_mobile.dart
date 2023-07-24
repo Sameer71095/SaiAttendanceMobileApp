@@ -265,7 +265,7 @@ class TimeOffMobilePortrait extends BaseModelWidget<TimeOffViewModel> {
                       SizedBox(width: width*0.05,),
                       Column(
                         children: [
-                          Text('Ramish Masood',style: theme.displayMedium?.copyWith(
+                          Text('Sameer Masood',style: theme.displayMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold
                           )),

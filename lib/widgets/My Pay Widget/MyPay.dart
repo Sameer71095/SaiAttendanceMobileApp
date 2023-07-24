@@ -38,7 +38,7 @@ class MyPayTile extends StatelessWidget {
                   SizedBox(height: height*0.02,),
                   Container(
                     child: Text(
-                      'Name :Ramish Masood',style: theme.displayMedium,
+                      'Name :Sameer',style: theme.displayMedium,
                     ),
                   ),
                   SizedBox(height: 10,),

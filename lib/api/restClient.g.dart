@@ -13,7 +13,7 @@ class _RestClient implements RestClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.67.63.238:5000/api';
+    baseUrl ??= 'https://api.clockspotter.com/api';
   }
 
   final Dio _dio;

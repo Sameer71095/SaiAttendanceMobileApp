@@ -110,7 +110,7 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
                                                 Container(
                                                   constraints:  BoxConstraints(maxWidth: 150),
                                                   child: Text(
-                                                    'Name :Ramish Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
+                                                    'Name :Sameer Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
                                                   ),
                                                 ),
                                                 SizedBox(height: 10,),
