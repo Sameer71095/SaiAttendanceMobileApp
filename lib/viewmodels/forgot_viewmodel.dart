@@ -26,7 +26,11 @@ class ForgotViewModel extends ChangeNotifier {
   bool rememberpassword=false;
 
 
-// Create storage
+
+
+  // Create storage
+
+
 
   void initialise(BuildContext contexts) {
     context=contexts;
@@ -57,23 +61,23 @@ class ForgotViewModel extends ChangeNotifier {
     }*/
     Navigator.pop(context);
 
-    // Navigator.pushReplacement(
-    //   context,
-    //   PageRouteBuilder(
-    //     transitionDuration: const Duration(milliseconds: 200),
-    //     pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
-    //     transitionsBuilder: (context, animation, secondaryAnimation,
-    //         child) {
-    //       return SlideTransition(
-    //         position: Tween<Offset>(
-    //           begin: const Offset(1.0, 0.0),
-    //           end: Offset.zero,
-    //         ).animate(animation),
-    //         child: child,
-    //       );
-    //     },
-    //   ),
-    // );
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
 
   }
   void forgotClicked() {

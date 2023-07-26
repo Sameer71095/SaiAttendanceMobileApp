@@ -10,6 +10,8 @@ class AppColor{
   static  Color tapBorder = Colors.blue.shade800;//Tap Button
   static  Color fieldColor = Colors.grey.shade100; //fields color
   static  Color textColor = Colors.white;//fields color
+  static  Color iconColor = Colors.white;//fields color
+
 
 
 

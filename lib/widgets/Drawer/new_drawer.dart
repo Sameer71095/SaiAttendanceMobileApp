@@ -6,6 +6,7 @@ import 'package:ClockSpotter/views/Insurance/insurance_view.dart';
 import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
 import 'package:ClockSpotter/views/My%20Profile/my_profile_view.dart';
 import 'package:ClockSpotter/views/Peoples/peoples_view.dart';
+import 'package:ClockSpotter/views/Re-register%20Face/re_register_view.dart';
 import 'package:ClockSpotter/views/Request%20Letter/Request_view.dart';
 import 'package:ClockSpotter/views/Task%20Sheet/task_sheet_view.dart';
 import 'package:ClockSpotter/views/Time%20Off/time_of_view.dart';
@@ -146,6 +147,38 @@ class _NewDrawerState extends State<NewDrawer> {
                           PageRouteBuilder(
                             transitionDuration: const Duration(milliseconds: 200),
                             pageBuilder: (context, animation, secondaryAnimation) => TimeOffView(),
+                            transitionsBuilder: (context, animation, secondaryAnimation,
+                                child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    Divider(color: Colors.white,)
+                  ],
+                ),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Icons.camera,
+                        color: Colors.white,
+                      ),
+                      title: const Text(
+                        'Re-register Face', style: TextStyle(color: Colors.white),),
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondaryAnimation) => ReRegisterFaceView(),
                             transitionsBuilder: (context, animation, secondaryAnimation,
                                 child) {
                               return SlideTransition(

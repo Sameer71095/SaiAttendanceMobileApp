@@ -13,211 +13,236 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
   Widget build(BuildContext context, LoginViewModel model) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: height * 0.49,
-            decoration: BoxDecoration(
-              color: Colors.blue.shade700,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(60),
-                bottomRight: Radius.circular(60),
+
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            if(!isKeyboard)
+              Container(
+              height: height * 0.49,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade700,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(60),
+                  bottomRight: Radius.circular(60),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Stack(
-              children: [
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Stack(
+                children: [
+                  if(!isKeyboard)
+                    Positioned(
+                    top: height * 0.11,
+                    left: width * 0.059,
+                    child: Container(
+                      child: Image.asset(
+                        'assets/images/login/loginElement.png',
+                        width: width * 0.83,
+                        height: height * 0.47,
+                      ),
+                    ),
+                  ),
+                  if(!isKeyboard)
+                    Positioned(
+                    top: height * 0.06,
+                    left: width * 0.2,
+                    child: Text(
+                      'Welcome Back',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: width * 0.08,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  CustomScrollView(
+                    scrollDirection: Axis.vertical,
+                    slivers: [
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child:  Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
 
-                Positioned(
-                  top: height * 0.11,
-                  left: width * 0.059,
-                  child: Container(
-                    child: Image.asset(
-                      'assets/images/login/loginElement.png',
-                      width: width * 0.9,
-                      height: height * 0.5,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: height * 0.06,
-                  left: width * 0.2,
-                  child: Text(
-                    'Welcome Back',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: width * 0.08,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: model.emailController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: height * 0.015,
-                                horizontal: width * 0.04,
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'Username',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: Colors.grey,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: height * 0.015),
-                          TextField(
-                            obscureText: model.passwordVisible,
-                            controller: model.passwordController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: height * 0.015,
-                                horizontal: width * 0.04,
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'Password',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: Colors.grey,
-                              ),
-                              suffixIcon: IconButton(
-                                color: Colors.grey,
-                                icon: Icon(
-                                  model.passwordVisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                                onPressed: () {
-                                  model.onPasswordVisibility();
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: !isKeyboard? MainAxisAlignment.end:MainAxisAlignment.start,
+
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: model.rememberpassword,
-                                    onChanged: (bool? value1) {
-                                      model.onCheckBox(value1!);
-                                    },
-                                    activeColor: Colors.blue,
+                              if(isKeyboard)
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    child: Image.asset(
+                                      'assets/images/login/loginElement.png',
+                                      width: width * 0.4,
+                                    ),
                                   ),
-                                  Text(
-                                    'Remember Password',
-                                    style: TextStyle(
-                                      fontSize: width * 0.032,
-                                      color: Colors.blue,
+                                ),
+                              TextField(
+                                controller: model.emailController,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: height * 0.015,
+                                    horizontal: width * 0.04,
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade300,
+                                  hintText: 'Username',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.person,
+                                    color: Colors.grey,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: height * 0.015),
+                              TextField(
+                                obscureText: model.passwordVisible,
+                                controller: model.passwordController,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: height * 0.015,
+                                    horizontal: width * 0.04,
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade300,
+                                  hintText: 'Password',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    color: Colors.grey,
+                                    icon: Icon(
+                                      model.passwordVisible
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                    ),
+                                    onPressed: () {
+                                      model.onPasswordVisibility();
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                        value: model.rememberpassword,
+                                        onChanged: (bool? value1) {
+                                          model.onCheckBox(value1!);
+                                        },
+                                        activeColor: Colors.blue,
+                                      ),
+                                      Text(
+                                        'Remember Password',
+                                        style: TextStyle(
+                                          fontSize: width * 0.032,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(width: width * 0.02),
+                                  InkWell(
+                                    onTap: () {
+                                      model.forgotClicked();
+                                    },
+                                    child: Text(
+                                      'Forgot Password',
+                                      style: TextStyle(
+                                        fontSize: width * 0.032,
+                                        color: Colors.blue,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(width: width * 0.02),
-                              InkWell(
+                              SizedBox(height: height * 0.015),
+                              GestureDetector(
                                 onTap: () {
-                                  model.forgotClicked();
+                                  model.loginClicked();
+                                  // Perform login action
                                 },
-                                child: Text(
-                                  'Forgot Password',
-                                  style: TextStyle(
-                                    fontSize: width * 0.032,
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(vertical: height * 0.024),
+                                  decoration: BoxDecoration(
                                     color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Login',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: width * 0.043,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(height: height * 0.015),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Don't have an account? ",
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: width * 0.043,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      model.RegisterClicked();
+                                    },
+                                    child: Text(
+                                      'Sign Up',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: width * 0.053,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          SizedBox(height: height * 0.015),
-                          GestureDetector(
-                            onTap: () {
-                              model.loginClicked();
-                              // Perform login action
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(vertical: height * 0.024),
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: width * 0.043,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        )
                       ),
-                    ),
-                    SizedBox(height: height * 0.015),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: width * 0.043,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            model.RegisterClicked();
-                          },
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: width * 0.053,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
+                    ],
+                  ),
+
+
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

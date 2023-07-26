@@ -13,248 +13,257 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
   Widget build(BuildContext context, RegisterViewModel model) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: height * 0.21,
-            decoration: BoxDecoration(
-              color: Colors.blue.shade700,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(60),
-                bottomRight: Radius.circular(60),
+
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            if(!isKeyboard)
+            Container(
+              height: height * 0.21,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade700,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(60),
+                  bottomRight: Radius.circular(60),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Stack(
-              children: [
-                // Positioned(
-                //   top: height * 0.176,
-                //   right: width * 0.29,
-                //   child: Image.asset(
-                //     'assets/images/login/1b.png',
-                //     width: width * 0.50,
-                //   ),
-                // ),
-                Positioned(
-                  top: height * 0.02,
-                  left: width * 0.1,
-                  child: Container(
-                    child: Image.asset(
-                      'assets/images/login/loginElement.png',
-                      width: width * 0.8,
-                      height: height * 0.30,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: height * 0.38,
-                  left: width * 0.06,
-                  child: Container(
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Colors.blue.shade900,
-                        fontSize: width * 0.09,
-                        fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Stack(
+                children: [
+                  if(!isKeyboard)
+                  Positioned(
+                    top: height * 0.03,
+                    left: width * 0.05,
+
+                    child: Container(
+                      child: Image.asset(
+                        'assets/images/login/loginElement.png',
+                        width: width * 0.8,
+                        height: height * 0.30,
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: height * 0.014,
-                            horizontal: width * 0.04,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          hintText: 'Username',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.014),
-                      TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: height * 0.014,
-                            horizontal: width * 0.04,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.alternate_email,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.014),
-                      TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: height * 0.014,
-                            horizontal: width * 0.04,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          hintText: 'Mobile Number',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.014),
-                      TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: height * 0.014,
-                            horizontal: width * 0.04,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          hintText: 'Company Name',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.work,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.014),
-                      TextField(
-                        obscureText: model.passwordVisible,
-                        controller: model.passwordController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: height * 0.014,
-                            horizontal: width * 0.04,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            color: Colors.grey,
-                            icon: Icon(
-                              model.passwordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              model.onPasswordVisibility();
-                            },
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.014),
-                      GestureDetector(
-                        onTap: () {
-                          model.registerClicked();
-                          // Perform register action
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: height * 0.017),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: width * 0.043,
-                                fontWeight: FontWeight.bold,
+                  CustomScrollView(
+                    scrollDirection: Axis.vertical,
+                    slivers: [
+                      SliverFillRemaining(
+                          hasScrollBody: false,
+                          child:  Padding(
+                            padding: EdgeInsets.all(10),
+                            child:  Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+
+                                children: [
+                                  Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                      color: Colors.blue.shade900,
+                                      fontSize: isKeyboard? width*0.07:width * 0.1,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.018),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.014,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade300,
+                                      hintText: 'Username',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.person,
+                                        color: Colors.grey,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.014),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.014,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade300,
+                                      hintText: 'Email',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.alternate_email,
+                                        color: Colors.grey,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.014),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.014,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade300,
+                                      hintText: 'Mobile Number',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.phone,
+                                        color: Colors.grey,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.014),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.014,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade300,
+                                      hintText: 'Company Name',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.work,
+                                        color: Colors.grey,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.014),
+                                  TextField(
+                                    obscureText: model.passwordVisible,
+                                    controller: model.passwordController,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.014,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade300,
+                                      hintText: 'Password',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.lock,
+                                        color: Colors.grey,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        color: Colors.grey,
+                                        icon: Icon(
+                                          model.passwordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                        ),
+                                        onPressed: () {
+                                          model.onPasswordVisibility();
+                                        },
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.014),
+                                  GestureDetector(
+                                    onTap: () {
+                                      model.registerClicked();
+                                      // Perform register action
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(vertical: height * 0.017),
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Sign Up',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: width * 0.043,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.014),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Already have an account? ",
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: width * 0.043,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          model.alreadyClicked();
+                                        },
+                                        child: Text(
+                                          'Sign In',
+                                          style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: width * 0.053,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.014),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Already have an account? ",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: width * 0.043,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              model.alreadyClicked();
-                            },
-                            child: Text(
-                              'Sign In',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: width * 0.053,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                          )
                       ),
                     ],
                   ),
-                ),
-              ],
+
+
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
