@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
@@ -21,6 +22,39 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 import '../api/secureCacheManager.dart';
 
 class TaskSheetViewModel extends ChangeNotifier {
+  TimeOfDay? _selectedTimeStart;
+  TimeOfDay? get selectedTimeStart => _selectedTimeStart;
+
+  TimeOfDay? _selectedTimeEnd;
+  TimeOfDay? get selectedTimeEnd => _selectedTimeEnd;
+
+  DateTime? _selectedDate;
+  DateTime? get selectedDate => _selectedDate;
+
+   String get formattedDate =>
+       _selectedDate != null ? DateFormat('yyyy-MM-dd').format(_selectedDate!) : '';
+
+  String get formattedTimeStart => _selectedTimeStart != null ? _selectedTimeStart!.format(context) : '';
+
+  String get formattedTimeEnd => _selectedTimeEnd != null ? _selectedTimeEnd!.format(context) : '';
+
+  void setSelectedDate(DateTime date) {
+    _selectedDate = date;
+    notifyListeners();
+  }
+  void setSelectedTimeStart(TimeOfDay time) {
+    _selectedTimeStart = time;
+    notifyListeners();
+  }
+  void setSelectedTimeEnd(TimeOfDay time) {
+    _selectedTimeEnd = time;
+    notifyListeners();
+  }
+
+
+
+
+
 
 
 

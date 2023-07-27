@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ClockSpotter/api/MultipartFileWrapper.dart';
 import 'package:ClockSpotter/entities/default_response_entity.dart';
+import 'package:ClockSpotter/entities/tasktype_entity/task_type_id.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_request_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
 import 'package:dio/dio.dart' hide Headers;
@@ -92,4 +93,9 @@ abstract class RestClient {
 
   @POST("/vacation/getvacationtypes")
   Future<VacationTypeResponseEntity> getvacationtypes();
+
+
+
+
+
 }

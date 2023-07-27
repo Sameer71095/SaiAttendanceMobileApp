@@ -1,6 +1,7 @@
 /// Contains the widgets that will be used for Mobile layout of home,
 /// portrait and landscape
 
+
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/Attendance_viewmodel.dart';
 import 'package:ClockSpotter/viewmodels/attendance_viewmodel.dart';
@@ -25,11 +26,12 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
   @override
   Widget build(BuildContext context, TaskSheetViewModel model) {
-    TextEditingController _EmployeName = TextEditingController();
-    TextEditingController _Day = TextEditingController();
-    TextEditingController _Date = TextEditingController();
     TextEditingController _TimeIn = TextEditingController();
     TextEditingController _TimeOut= TextEditingController();
+    TextEditingController _startTimeController = TextEditingController();
+    TextEditingController _endTimeController = TextEditingController();
+
+
 
 
     var theme = Theme.of(context).textTheme;
@@ -38,6 +40,43 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
     double borderRadius= 12;
     double sizeBox=height*0.02;
 
+
+    Future<void> _selectDate(BuildContext context, model) async {
+      DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: model.selectedDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100),
+      );
+
+      if (picked != null && picked != model.selectedDate) {
+        model.setSelectedDate(picked);
+      }
+    }
+
+    Future<void> _selectTimeStart(BuildContext context, model) async {
+      TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: model.selectedTimeStart ?? TimeOfDay.now(),
+      );
+
+      if (pickedTime != null && pickedTime != model.selectedTimeStart) {
+        model.setSelectedTimeStart(pickedTime);
+
+      }
+    }
+
+    Future<void> _selectTimeEnd(BuildContext context, model) async {
+      TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: model.selectedTimeEnd ?? TimeOfDay.now(),
+      );
+
+      if (pickedTime != null && pickedTime != model.selectedTimeEnd) {
+        model.setSelectedTimeEnd(pickedTime);
+
+      }
+    }
 
 
     return  SafeArea(
@@ -74,140 +113,165 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                   title: Text('Task Sheet', style: theme.titleLarge?.copyWith(color: Colors.white),),
                 ),
 
-                SingleChildScrollView(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22,),
                   child: Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 22,),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-
-
-                          TextFormField(
-                            controller: _EmployeName,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 20.0), // Adjust the padding values
-                              hintText: 'Date dd/mm/yy',
-                              hintStyle: theme.displayMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          maxLines: 4,
+                          controller: _TimeOut,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                            hintText: 'Task details',
+                            hintStyle: theme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
                                 color: Colors.grey.shade600
                             ),
-                              filled: true,
-                              fillColor: AppColor.fieldColor,
+                            filled: true,
+                            fillColor: AppColor.fieldColor,
 
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(borderRadius),
-                              ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          SizedBox(height: sizeBox),
-                          TextFormField(
-                            controller: _Day,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
-                              hintText: 'Task Start time',
-                              hintStyle: theme.displayMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey.shade600
-                              ),
-                              filled: true,
-                              fillColor: AppColor.fieldColor,
+                        ),
+                        SizedBox(height: sizeBox+5),
 
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(borderRadius),
-                              ),
+                        TextFormField(
+                          controller: TextEditingController(
+                            text: model.formattedDate,
+
+                          ),
+                          style:theme.displayMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade600
+                          ),
+
+                          readOnly: true,
+
+                          onTap: () => _selectDate(context, model),
+
+                          decoration: InputDecoration(
+
+                            contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 20.0), // Adjust the padding values
+                            hintText: 'Enter Date',
+                            hintStyle: theme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade600
+                            ),
+                            filled: true,
+                            fillColor: AppColor.fieldColor,
+
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          SizedBox(height: sizeBox),
-                          TextFormField(
-                            controller: _Date,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
-                              hintText: 'Task end time',
-                              hintStyle: theme.displayMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey.shade600
-                              ),
-                              filled: true,
-                              fillColor: AppColor.fieldColor,
+                        ),
 
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(borderRadius),
-                              ),
+                        SizedBox(height: sizeBox),
+                        TextFormField(
+                          readOnly: true,
+                          onTap: () => _selectTimeStart(context, model),
+                          controller: _startTimeController..text = model.formattedTimeStart,
+                          style:theme.displayMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade600
+                          ),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                            hintText: 'Task Start time',
+                            hintStyle: theme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade600
+                            ),
+                            filled: true,
+                            fillColor: AppColor.fieldColor,
+
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          SizedBox(height: sizeBox),
-                          TextFormField(
-                            controller: _TimeIn,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Adjust the padding values
-                              hintText: 'Task type',
-                              hintStyle: theme.displayMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey.shade600
-                              ),
-                              filled: true,
-                              fillColor: AppColor.fieldColor,
+                        ),
+                        SizedBox(height: sizeBox),
+                        TextFormField(
+                          readOnly: true,
+                          onTap: () => _selectTimeEnd(context, model),
+                          controller: _endTimeController..text = model.formattedTimeEnd,
+                          style:theme.displayMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade600
+                          ),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                            hintText: 'Task end time',
+                            hintStyle: theme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade600
+                            ),
+                            filled: true,
+                            fillColor: AppColor.fieldColor,
 
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(borderRadius),
-                              ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          SizedBox(height: sizeBox),
-                          TextFormField(
-                            controller: _TimeOut,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
-                              hintText: 'Task details',
-                              hintStyle: theme.displayMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey.shade600
-                              ),
-                              filled: true,
-                              fillColor: AppColor.fieldColor,
+                        ),
+                        SizedBox(height: sizeBox),
+                        TextFormField(
+                          controller: _TimeIn,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Adjust the padding values
+                            hintText: 'Task type',
+                            hintStyle: theme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade600
+                            ),
+                            filled: true,
+                            fillColor: AppColor.fieldColor,
 
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(borderRadius),
-                              ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          SizedBox(height: sizeBox+5),
-                          Container(
-                            height: height*0.06,
-                            width: width*0.5,
-                            decoration: BoxDecoration(
-                                color: Colors.blue.shade900,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15.0),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.lightBlue,
-                                    blurRadius: 5.0, // soften the shadow
-                                    spreadRadius: 3.0, //extend the shadow
-                                    offset: Offset(
-                                      0.0, // Move to right 5  horizontally
-                                      0.0, // Move to bottom 5 Vertically
-                                    ),
-                                  )
-                                ]),
+                        ),
+                        SizedBox(height: sizeBox),
+
+                        Container(
+                          height: height*0.06,
+                          width: width*0.5,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.shade900,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.lightBlue,
+                                  blurRadius: 5.0, // soften the shadow
+                                  spreadRadius: 3.0, //extend the shadow
+                                  offset: Offset(
+                                    0.0, // Move to right 5  horizontally
+                                    0.0, // Move to bottom 5 Vertically
+                                  ),
+                                )
+                              ]),
 
 
-                            child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
-                                color: AppColor.textColor,
-                                fontWeight: FontWeight.bold
-                            ),)),
-                          ),
+                          child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
+                              color: AppColor.textColor,
+                              fontWeight: FontWeight.bold
+                          ),)),
+                        ),
 
 
-                        ],
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -267,8 +331,9 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
 
 
-
 }
+
+
 
   Widget _buildList(TaskSheetViewModel model) {
     return NotificationListener<ScrollNotification>(
@@ -331,6 +396,9 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
       ),
     );
   }
+
+
+
 
 
 

@@ -68,7 +68,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       void navigateToScreenAtIndex(int index) {
         if (index >= 0 && index < screenNames.length) {
           currentScreenIndex = index;
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             PageRouteBuilder(
               transitionDuration: const Duration(milliseconds: 200),
@@ -111,7 +111,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
     void navigateToScreenAtIndexGrid(int index) {
       if (index >= 0 && index < screenNamesGrid.length) {
         currentScreenIndex = index;
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 200),
@@ -185,74 +185,71 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                     color: Colors.white
                   ),),
                 ),
-                Expanded(
-
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 25,left: 10,right: 10),
-                      child: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: MediaQuery.of(context).size.width /
-                                (MediaQuery.of(context).size.height /1.7),
-                            mainAxisSpacing: 8.0,
-                            crossAxisSpacing: 7.0,
-                          ),
-                          itemCount: myProducts.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: (){
-                                  navigateToScreenAtIndexGrid(index);
-                                },
-                                child: Container(
-                                  width:40 ,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.black),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(25.0),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black45,
-                                          blurRadius: 3.0, // soften the shadow
-                                          spreadRadius: 1.0, //extend the shadow
-                                          offset: Offset(
-                                            1.0, // Move to right 5  horizontally
-                                            3.0, // Move to bottom 5 Vertically
-                                          ),
-                                        )
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: Image.asset(
-                                          myProducts[index],
-                                          height: 40,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text(
-                                          myProductsText[index].toString(),
-                                          textAlign: TextAlign.center,
-                                          style: theme.displaySmall,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5,left: 10,right: 10),
+                    child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: MediaQuery.of(context).size.width /
+                              (MediaQuery.of(context).size.height /2),
+                          mainAxisSpacing: 4.0,
+                          crossAxisSpacing: 7.0,
+                        ),
+                        itemCount: myProducts.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: (){
+                                navigateToScreenAtIndexGrid(index);
+                              },
+                              child: Container(
+                                width:40 ,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(25.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black45,
+                                        blurRadius: 3.0, // soften the shadow
+                                        spreadRadius: 1.0, //extend the shadow
+                                        offset: Offset(
+                                          1.0, // Move to right 5  horizontally
+                                          3.0, // Move to bottom 5 Vertically
                                         ),
                                       )
-                                    ],
-                                  ),
+                                    ]),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        myProducts[index],
+                                        height: 36,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Text(
+                                        myProductsText[index].toString(),
+                                        textAlign: TextAlign.center,
+                                        style: theme.displaySmall,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            );
-                          }),
-                    ),
+                            ),
+                          );
+                        }),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
+                AspectRatio(
+                  aspectRatio:0.9,
                   child: Container(
                     color: Colors.white,
                     child: ListView.builder(
@@ -262,8 +259,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                           children: [
                             ListTile(
                               leading: Container(
-                                  height: 50,
-                                  width: 50,
+                                  height: 40,
+                                  width: 40,
                                   child: Image.asset(tile[index])),
                               title: Container(child: Text(tileText[index],style: theme.titleLarge,)),
                               onTap: () {
