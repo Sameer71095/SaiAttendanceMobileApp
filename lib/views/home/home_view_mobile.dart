@@ -186,6 +186,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   ),),
                 ),
                 Flexible(
+                  flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5,left: 10,right: 10),
                     child: GridView.builder(
@@ -193,8 +194,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                           crossAxisCount: 3,
                           childAspectRatio: MediaQuery.of(context).size.width /
                               (MediaQuery.of(context).size.height /2),
-                          mainAxisSpacing: 4.0,
-                          crossAxisSpacing: 7.0,
+                          mainAxisSpacing:4,
+                          crossAxisSpacing: 7,
                         ),
                         itemCount: myProducts.length,
                         itemBuilder: (BuildContext ctx, index) {
@@ -205,7 +206,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                 navigateToScreenAtIndexGrid(index);
                               },
                               child: Container(
-                                width:40 ,
+                                width:40,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.black),
@@ -229,7 +230,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                     Center(
                                       child: Image.asset(
                                         myProducts[index],
-                                        height: 36,
+                                        height:MediaQuery.of(context).size.height*0.04,
                                       ),
                                     ),
                                     Padding(
@@ -248,8 +249,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                         }),
                   ),
                 ),
-                AspectRatio(
-                  aspectRatio:0.9,
+                Expanded(
+                  flex: 3,
                   child: Container(
                     color: Colors.white,
                     child: ListView.builder(

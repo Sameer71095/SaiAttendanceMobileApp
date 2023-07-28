@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:ClockSpotter/api/restClient.dart';
+import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
-import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart' as AttendanceHistoryResponse;
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart'
+    as AttendanceHistoryResponse;
 import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
 import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
@@ -18,10 +21,40 @@ import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
 import 'package:location/location.dart' as Location;
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:show_update_dialog/show_update_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:dio/dio.dart'; // If not already imported
 
 import '../api/secureCacheManager.dart';
 
 class TaskSheetViewModel extends ChangeNotifier {
+  // List<Data1> _taskTypes = [];
+  // List<Data1> get taskTypes => _taskTypes;
+  //
+  // Future<void> fetchTaskTypes() async {
+  //   final restClient = RestClient(Dio()); // Initialize the RestClient with Dio
+  //   try {
+  //     final taskType = await restClient.gettasktypes();
+  //     print(taskType);
+  //     if (taskType.isSuccess == true && taskType.data != null) {
+  //       _taskTypes = taskType.data!.cast<Data1>();
+  //       print(taskTypes);
+  //     } else {
+  //       // Handle error, show a snackbar, or set an empty list
+  //
+  //       _taskTypes = [];
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     // Handle error, show a snackbar, or set an empty list
+  //     _taskTypes = [];
+  //   }
+  //   notifyListeners();
+  // }
+  final formKey = GlobalKey<FormState>();
+
+  TaskType? selectedTaskType;
+
+
   TimeOfDay? _selectedTimeStart;
   TimeOfDay? get selectedTimeStart => _selectedTimeStart;
 
@@ -31,62 +64,72 @@ class TaskSheetViewModel extends ChangeNotifier {
   DateTime? _selectedDate;
   DateTime? get selectedDate => _selectedDate;
 
-   String get formattedDate =>
-       _selectedDate != null ? DateFormat('yyyy-MM-dd').format(_selectedDate!) : '';
+  String get formattedDate => _selectedDate != null
+      ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
+      : '';
 
-  String get formattedTimeStart => _selectedTimeStart != null ? _selectedTimeStart!.format(context) : '';
+  String get formattedTimeStart =>
+      _selectedTimeStart != null ? _selectedTimeStart!.format(context) : '';
 
-  String get formattedTimeEnd => _selectedTimeEnd != null ? _selectedTimeEnd!.format(context) : '';
+  String get formattedTimeEnd =>
+      _selectedTimeEnd != null ? _selectedTimeEnd!.format(context) : '';
 
   void setSelectedDate(DateTime date) {
     _selectedDate = date;
     notifyListeners();
   }
+
   void setSelectedTimeStart(TimeOfDay time) {
     _selectedTimeStart = time;
     notifyListeners();
   }
+
   void setSelectedTimeEnd(TimeOfDay time) {
     _selectedTimeEnd = time;
     notifyListeners();
   }
 
-
-
-
-
-
-
-
   String title = 'default';
 
   late BuildContext context;
   bool isCheckedIn = false;
-  String employeeName="";
+  String employeeName = "";
   bool isLoading = false;
-  int currentMonth=1;
-  int currentYear=2023;
+  int currentMonth = 1;
+  int currentYear = 2023;
   Future<void> initialise(BuildContext contexts) async {
-    context=contexts;
+    await getTasksNames();
+    context = contexts;
     title = 'initialised';
     DateTime now = DateTime.now();
-    currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
-    currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
+    currentMonth = now
+        .month; // This will give you the current month as an integer (e.g., 4)
+    currentYear = now
+        .year; // This will give you the current year as an integer (e.g., 2023)
 
-    employeeName=constants.loginData.name!;
+    employeeName = constants.loginData.name!;
     // employeeName=  (await  storage.read(key: 'Name'))!;
     notifyListeners();
-    getUpdate();
+    // getUpdate();
 
     verifyVersion();
 
     //  loadData();
+  }
 
+  List<TaskType>? TaskTypes=[];
+  Future<void> getTasksNames() async {
+    var response = await client.getTasksNames();
+    TaskTypes=response.data;
+    notifyListeners();
   }
 
   verifyVersion() async {
     try {
-      final versionCheck = ShowUpdateDialog(iOSId: 'com.rushtech360.clockspotter', androidId: 'com.rushtech360.clockspotter', iOSAppStoreCountry: 'AE');
+      final versionCheck = ShowUpdateDialog(
+          iOSId: 'com.rushtech360.clockspotter',
+          androidId: 'com.rushtech360.clockspotter',
+          iOSAppStoreCountry: 'AE');
 
       final VersionModel vs = await versionCheck.fetchVersionInfo();
 
@@ -197,31 +240,34 @@ class TaskSheetViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
-  int counter = 0;
-  Future<void> getUpdate() async {
 
+  // int counter = 0;
+  Future<void> getUpdate() async {
     try {
-      client.GetUpdateEmployee(constants.loginData.employeeId).then((response) async {
-        if(response.isSuccess==true) {
+      client.GetUpdateEmployee(constants.loginData.employeeId)
+          .then((response) async {
+        if (response.isSuccess == true) {
           await storage.deleteAll(); // Delete all existing keys and values
-          await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
-          await storage.write(key: 'Token', value:response.data!.token.toString());
-          await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
+          await storage.write(
+              key: 'EmployeeId', value: response.data!.employeeId.toString());
+          await storage.write(
+              key: 'Token', value: response.data!.token.toString());
+          await storage.write(
+              key: 'loginResponse', value: jsonEncode(response.data?.toJson()));
 
           await constants.init();
 
           //   showToast("Update Called",duration: 1);
-          if(response.data!.isImagesRegistered==true){
-
-          }else{
-
+          if (response.data!.isImagesRegistered == true) {
+          } else {
             Navigator.pushReplacement(
               context,
               PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 200),
-                pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
-                transitionsBuilder: (context, animation, secondaryAnimation,
-                    child) {
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    RegisterFaceView(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
                   return SlideTransition(
                     position: Tween<Offset>(
                       begin: const Offset(1.0, 0.0),
@@ -233,10 +279,9 @@ class TaskSheetViewModel extends ChangeNotifier {
               ),
             );
           }
-        }else {
+        } else {
           // Display error message
           // showToast("Invalid login credentials. Please try again.");
-
         }
         notifyListeners();
       }).catchError((error) {
@@ -258,7 +303,8 @@ class TaskSheetViewModel extends ChangeNotifier {
   bool button1 = true;
   bool button2 = true;
 
-  AttendanceHistoryResponse.AttendanceHistoryResponse attendanceList=AttendanceHistoryResponse.AttendanceHistoryResponse() ;
+  AttendanceHistoryResponse.AttendanceHistoryResponse attendanceList =
+      AttendanceHistoryResponse.AttendanceHistoryResponse();
   void buildMenu(int index) {
     paddingLeft = index * 150.0;
     if (button1 == true && index == 1) {
@@ -280,23 +326,18 @@ class TaskSheetViewModel extends ChangeNotifier {
           var val = Data.fromJson(
               json.decode(loginDataValue) as Map<String, dynamic>);
           if (val.isLocationBound == true) {
-            helper.isWithinMeters(val.locations).then((
-                iswithin) {
+            helper.isWithinMeters(val.locations).then((iswithin) {
               if (iswithin) {
-
                 takeToCameraPicView();
-
               } else {
                 showToast(
                     'Please come to the allocated location ${val.location}');
               }
             });
-          }else{
-
+          } else {
             takeToCameraPicView();
           }
-        }else{
-
+        } else {
           takeToCameraPicView();
         }
       } else {
@@ -305,8 +346,10 @@ class TaskSheetViewModel extends ChangeNotifier {
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 300),
             //pageBuilder: (context, animation, secondaryAnimation) => CameraPermissionView(),
-            pageBuilder: (context, animation, secondaryAnimation) => CameraPicView(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                CameraPicView(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
               return SlideTransition(
                 position: Tween<Offset>(
                   begin: const Offset(1.0, 0.0),
@@ -318,7 +361,7 @@ class TaskSheetViewModel extends ChangeNotifier {
           ),
         );
       }
-    }  catch (exception, stackTrace) {
+    } catch (exception, stackTrace) {
       await Sentry.captureException(
         exception,
         stackTrace: stackTrace,
@@ -329,11 +372,12 @@ class TaskSheetViewModel extends ChangeNotifier {
   }
 
   Future<void> takeToCameraPicView() async {
-    final result =await Navigator.push(
+    final result = await Navigator.push(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 300),
-        pageBuilder: (context, animation, secondaryAnimation) => CameraPicView(),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            CameraPicView(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -352,13 +396,14 @@ class TaskSheetViewModel extends ChangeNotifier {
     //}
   }
 
-
   Future<void> _refreshData() async {
     // Update the necessary variables here
 
     DateTime now = DateTime.now();
-    currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
-    currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
+    currentMonth = now
+        .month; // This will give you the current month as an integer (e.g., 4)
+    currentYear = now
+        .year; // This will give you the current year as an integer (e.g., 2023)
 
     // You should handle any errors that might occur during data loading
     try {
@@ -377,14 +422,14 @@ class TaskSheetViewModel extends ChangeNotifier {
   }
 
   Future<void> onRefresh() async {
-
     return loadData();
   }
 
   ValueNotifier<bool> dataLoaded = ValueNotifier(false);
   Future<void> loadData() async {
     // Call the API and store the data in attendanceList
-    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(employeeId: constants.loginData.employeeId, monthId: currentMonth));
+    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(
+        employeeId: constants.loginData.employeeId, monthId: currentMonth));
     dataLoaded.value = true; // Indicate that the data has been loaded
     notifyListeners();
   }

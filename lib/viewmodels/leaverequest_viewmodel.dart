@@ -1,10 +1,38 @@
+import 'dart:convert';
+
 import 'package:ClockSpotter/api/dio_client.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:show_update_dialog/show_update_dialog.dart';
 import '../api/secureCacheManager.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
+import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:ClockSpotter/api/dio_client.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
+import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart' as AttendanceHistoryResponse;
+import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
+import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
+import 'package:ClockSpotter/utils/Constants.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/views/camerapermission/camerapermission_view.dart';
+import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
+
+import 'package:location/location.dart' as Location;
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:show_update_dialog/show_update_dialog.dart';
+
+import '../api/secureCacheManager.dart';
 
 class LeaveRequestViewModel extends ChangeNotifier {
   String title = 'default';

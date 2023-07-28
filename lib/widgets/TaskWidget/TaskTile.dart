@@ -52,14 +52,11 @@ class TaskTile extends StatelessWidget {
               flex: 3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: timeEntries.map((entry) {
-
-                  String checkedTime = entry.values.first;
-                  bool isCheckedOut = entry.keys.first!;
-                  return Column(
+                children: [
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (!isCheckedOut)
+
                         InkWell(
                           onTap: (){
                           },
@@ -98,8 +95,8 @@ class TaskTile extends StatelessWidget {
                         //   ),
                         // ),
                     ],
-                  );
-                }).toList(),
+                  )
+                ]
               ),
             ),
           ],

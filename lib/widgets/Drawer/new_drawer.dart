@@ -12,6 +12,7 @@ import 'package:ClockSpotter/views/Task%20Sheet/task_sheet_view.dart';
 import 'package:ClockSpotter/views/Time%20Off/time_of_view.dart';
 import 'package:ClockSpotter/views/Work%20Expense/work_expense_view.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
+import 'package:ClockSpotter/views/leaveRequest/leaverequest_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 
@@ -94,6 +95,39 @@ class _NewDrawerState extends State<NewDrawer> {
                             },
                           ),
                         );
+                      },
+                    ),
+                    Divider(color: Colors.white,)
+                  ],
+                ),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Icons.timelapse_sharp,
+                        color: Colors.white,
+                      ),
+                      title: const Text(
+                        'Leave Request', style: TextStyle(color: Colors.white),),
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondaryAnimation) =>LeaveRequestView(),
+                            transitionsBuilder: (context, animation, secondaryAnimation,
+                                child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+
                       },
                     ),
                     Divider(color: Colors.white,)

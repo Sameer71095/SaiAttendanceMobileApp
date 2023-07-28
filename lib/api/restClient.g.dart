@@ -168,6 +168,30 @@ class _RestClient implements RestClient {
     return value;
   }
 
+  @override
+  Future<TaskTypeResponseEntity> getTasksNames() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TaskTypeResponseEntity>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          '/task/gettasktype',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TaskTypeResponseEntity.fromJson(_result.data!);
+    return value;
+  }
+
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
