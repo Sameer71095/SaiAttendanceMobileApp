@@ -136,12 +136,12 @@ class _NewDrawerState extends State<NewDrawer> {
                 Column(
                   children: [
                     ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.timelapse_sharp,
                         color: Colors.white,
                       ),
                       title: const Text(
-                        'Time Sheets', style: TextStyle(color: Colors.white),),
+                        'Tasks', style: TextStyle(color: Colors.white),),
                       onTap: () {
                         Navigator.pushReplacement(
                           context,

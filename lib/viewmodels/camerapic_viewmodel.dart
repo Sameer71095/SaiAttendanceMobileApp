@@ -68,22 +68,6 @@ class CameraPicViewModel extends ChangeNotifier {
 
     try {
 
-      /*   // Capture a sequence of frames
-      List<XFile> frameSequence = await captureFrameSequence();
-
-      // Analyze the sequence for liveness
-      bool isLive = await analyzeSequenceForLiveness(frameSequence);
-
-      // If the liveness check fails, handle it
-      if (!isLive) {
-        handleFailedLivenessCheck();
-        return;
-      }
-
-      // If the liveness check passes, send the data to the server
-      XFile? image = selectImageFromSequence(frameSequence);*/
-
-
       AttendanceResponseEntity results= AttendanceResponseEntity();
       LocationData _locationData = await location.getLocation();
 

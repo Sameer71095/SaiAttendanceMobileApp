@@ -29,11 +29,6 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
   @override
   Widget build(BuildContext context, TaskSheetViewModel model) {
-    TextEditingController _TimeIn = TextEditingController();
-    TextEditingController _taskDetails= TextEditingController();
-    TextEditingController _startTimeController = TextEditingController();
-    TextEditingController _endTimeController = TextEditingController();
-
     final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
 
 
@@ -105,14 +100,14 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
         body: Stack(
           children: [
 
-        Container(
-        decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            image:AssetImage('assets/images/background/back.jpg')
-        )
-      ),),
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image:AssetImage('assets/images/background/back.jpg')
+                  )
+              ),),
             Column(
               children: [
 
@@ -123,8 +118,6 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                   flexibleSpace: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-
-
                           image: AssetImage('assets/images/background/back.jpg'),
                           fit: BoxFit.cover,
                           alignment: Alignment.topRight
@@ -147,7 +140,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                             children: [
                               TextFormField(
                                 maxLines: 4,
-                                controller:_taskDetails,
+                                controller:model.taskDetails,
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Adjust the padding values
                                   hintText: 'Task details',
@@ -251,7 +244,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                                     child: TextFormField(
                                       readOnly: true,
                                       onTap: () => _selectTimeStart(context, model),
-                                      controller: _startTimeController..text = model.formattedTimeStart,
+                                      controller: model.startTimeController..text = model.formattedTimeStart,
                                       style:theme.displayMedium?.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey.shade600
@@ -278,7 +271,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                                     child: TextFormField(
                                       readOnly: true,
                                       onTap: () => _selectTimeEnd(context, model),
-                                      controller: _endTimeController..text = model.formattedTimeEnd,
+                                      controller: model.endTimeController..text = model.formattedTimeEnd,
                                       style:theme.displayMedium?.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey.shade600
@@ -308,32 +301,34 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
                               SizedBox(height: sizeBox),
 
-                              Container(
-                                height: height*0.06,
-                                width: width*0.5,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue.shade900,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(15.0),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.lightBlue,
-                                        blurRadius: 5.0, // soften the shadow
-                                        spreadRadius: 3.0, //extend the shadow
-                                        offset: Offset(
-                                          0.0, // Move to right 5  horizontally
-                                          0.0, // Move to bottom 5 Vertically
-                                        ),
-                                      )
-                                    ]),
-
-
-                                child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
-                                    color: AppColor.textColor,
-                                    fontWeight: FontWeight.bold
-                                ),)),
+                              InkWell(
+                                onTap: () => model.saveTaskDetails(),
+                                child: Container(
+                                  height: height * 0.06,
+                                  width: width * 0.5,
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue.shade900,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15.0),
+                                      ),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.lightBlue,
+                                          blurRadius: 5.0, // soften the shadow
+                                          spreadRadius: 3.0, //extend the shadow
+                                          offset: Offset(
+                                            0.0, // Move to right 5  horizontally
+                                            0.0, // Move to bottom 5 Vertically
+                                          ),
+                                        )
+                                      ]),
+                                  child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
+                                      color: AppColor.textColor,
+                                      fontWeight: FontWeight.bold
+                                  ),),),
+                                ),
                               ),
+
 
 
                             ],
@@ -344,60 +339,53 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                   ),
                 ),
                 if(!isKeyboard)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: AppColor.ContainerBackground
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          children: [
-
-
-                            Column(
-
-                              children: [
-
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Task History',
-                                      style:theme.displayLarge?.copyWith(
-                                        fontSize: 28
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: AppColor.ContainerBackground
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        'Task History',
+                                        style:theme.displayLarge?.copyWith(
+                                            fontSize: 28
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                              child: _buildList(model),
+                                ],
+                              ),
+                              Expanded(
+                                child: _buildList(model),
 
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
               ],
             ),
 
 
 
-  ] )),
+          ], ),),
     );
-
-
-
-}
+  }
 
 
 
@@ -473,7 +461,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                                 child: index==0? Text(
                                     'Mark as Done!',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
 
                                         fontSize: fontSize)
@@ -536,8 +524,8 @@ class TaskSheetMobileLandscape extends BaseModelWidget<TaskSheetViewModel> {
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => SecondView(
-                    key: new Key("test"),
-                  )));
+                key: new Key("test"),
+              )));
         },
       ),
       body: Row(

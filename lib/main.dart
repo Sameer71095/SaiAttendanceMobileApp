@@ -72,10 +72,10 @@ void main() async {
         options.environment = kReleaseMode ? 'production' : 'debug';
         options.release = 'AttendanceSystem@1.0.0'; // Replace with your app's name and version
       },
-      // appRunner: () => runApp(MyApp()),
-      appRunner: () => runApp(DevicePreview(
+       appRunner: () => runApp(MyApp()),
+     /* appRunner: () => runApp(DevicePreview(
         enabled: true,
-        builder: (context)=>MyApp())),
+        builder: (context)=>MyApp())),*/
 
     );
     // runApp(MyApp());
@@ -109,11 +109,11 @@ class MyApp extends StatelessWidget {
         home: SplashView());
     */
 
-    return ScreenUtilInit(
+   /* return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context , child) {
+      builder: (context , child) {*/
         return MaterialApp(
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
@@ -121,10 +121,10 @@ class MyApp extends StatelessWidget {
           title: 'ClockSpotter',
           // You can use the library anywhere in the app even in theme
           theme: AppTheme.appTheme,
-          home: child,
+          home: SplashView(),
         );
-      },
+     /* },
       child:  SplashView(),
-    );
+    );*/
   }
 }

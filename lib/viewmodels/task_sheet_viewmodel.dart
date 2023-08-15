@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:ClockSpotter/api/restClient.dart';
 import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
+import 'package:ClockSpotter/entities/task_entity/add_task_request.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart'
-    as AttendanceHistoryResponse;
+as AttendanceHistoryResponse;
 import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
 import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
@@ -64,15 +65,22 @@ class TaskSheetViewModel extends ChangeNotifier {
   DateTime? _selectedDate;
   DateTime? get selectedDate => _selectedDate;
 
+  TextEditingController TimeIn = TextEditingController();
+  TextEditingController taskDetails= TextEditingController();
+  TextEditingController startTimeController = TextEditingController();
+  TextEditingController endTimeController = TextEditingController();
+
+
   String get formattedDate => _selectedDate != null
       ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
       : '';
-
   String get formattedTimeStart =>
-      _selectedTimeStart != null ? _selectedTimeStart!.format(context) : '';
-
+      _selectedTimeStart != null ? _selectedTimeStart!.hour.toString().padLeft(2, '0') + ':' +
+          _selectedTimeStart!.minute.toString().padLeft(2, '0') + ':00' : '';
   String get formattedTimeEnd =>
-      _selectedTimeEnd != null ? _selectedTimeEnd!.format(context) : '';
+      _selectedTimeEnd != null ? _selectedTimeEnd!.hour.toString().padLeft(2, '0') + ':' +
+          _selectedTimeEnd!.minute.toString().padLeft(2, '0') + ':00' : '';
+
 
   void setSelectedDate(DateTime date) {
     _selectedDate = date;
@@ -304,7 +312,7 @@ class TaskSheetViewModel extends ChangeNotifier {
   bool button2 = true;
 
   AttendanceHistoryResponse.AttendanceHistoryResponse attendanceList =
-      AttendanceHistoryResponse.AttendanceHistoryResponse();
+  AttendanceHistoryResponse.AttendanceHistoryResponse();
   void buildMenu(int index) {
     paddingLeft = index * 150.0;
     if (button1 == true && index == 1) {
@@ -433,4 +441,28 @@ class TaskSheetViewModel extends ChangeNotifier {
     dataLoaded.value = true; // Indicate that the data has been loaded
     notifyListeners();
   }
+
+
+
+
+
+  // Function to save details from form into the AddTaskRequest object
+  Future<void> saveTaskDetails() async {
+    AddTaskRequest addTaskRequest = AddTaskRequest();
+    if (formKey.currentState!.validate()) {
+      addTaskRequest.taskName = '';
+      addTaskRequest.taskDescription =  taskDetails.text;
+      addTaskRequest.taskTypeId = selectedTaskType?.TaskTypeId;
+      addTaskRequest.taskDate = formattedDate;
+      addTaskRequest.taskStartTime = formattedTimeStart;
+      addTaskRequest.taskEndTime = formattedTimeEnd;
+      addTaskRequest.isTaskCompleted = false;
+      addTaskRequest.employeeId = constants.loginData.employeeId;
+      var response = await client.AddEmployeeTask(addTaskRequest);
+      print(response);
+      notifyListeners();
+    }
+  }
+
+
 }

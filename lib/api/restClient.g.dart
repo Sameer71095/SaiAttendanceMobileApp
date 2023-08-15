@@ -123,29 +123,6 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<DefaultResponseEntity<String>> requestVacation(vacationRequest) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = vacationRequest;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<DefaultResponseEntity<String>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/vacation/requestvacation',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DefaultResponseEntity<String>.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
   Future<VacationTypeResponseEntity> getvacationtypes() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -176,21 +153,68 @@ class _RestClient implements RestClient {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<TaskTypeResponseEntity>(Options(
-          method: 'POST',
-          headers: _headers,
-          extra: _extra,
-        )
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
             .compose(
-          _dio.options,
-          '/task/gettasktype',
-          queryParameters: queryParameters,
-          data: _data,
-        )
+              _dio.options,
+              '/task/gettasktype',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TaskTypeResponseEntity.fromJson(_result.data!);
     return value;
   }
 
+  @override
+  Future<DefaultResponseEntity<String>> AddEmployeeTask(addTaskRequest) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(addTaskRequest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DefaultResponseEntity<String>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/task/addemployeetask',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DefaultResponseEntity<String>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<EmployeeTasksResponse> GetEmployeeTasks(employeeId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<EmployeeTasksResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/task/getemployeetasks',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = EmployeeTasksResponse.fromJson(_result.data!);
+    return value;
+  }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&

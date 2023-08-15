@@ -111,18 +111,15 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                                                 Column(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
-
                                                   children: [
-                                                    Text(
-                                                      'Shift ends at ${constants.loginData.shiftEndTime}',style: theme.displayMedium,
-                                                    ),
-                                                    SizedBox(height: 10,),
                                                     Text(
                                                       "Shift Starts at ${constants.loginData.shiftStartTime}",style: theme.displayMedium,
                                                     ),
-
+                                                    const SizedBox(height: 10,),
+                                                    Text(
+                                                      'Shift ends at ${constants.loginData.shiftEndTime}',style: theme.displayMedium,
+                                                    ),
                                                   ],
-
                                                 ),
 
                                                 InkWell(

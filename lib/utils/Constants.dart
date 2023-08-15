@@ -26,6 +26,7 @@ class Constants {
           InterceptorsWrapper(
             onRequest: (options, handler) {
               options.headers['Authorization'] = 'Bearer ${loginData.token}';
+              options.headers['UserId'] = '${loginData.employeeId}';
               return handler.next(options);
             },
           ),

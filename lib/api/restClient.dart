@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:ClockSpotter/api/MultipartFileWrapper.dart';
 import 'package:ClockSpotter/entities/default_response_entity.dart';
 import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
+import 'package:ClockSpotter/entities/task_entity/add_task_request.dart';
+import 'package:ClockSpotter/entities/task_entity/employee_task_response.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_request_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
 import 'package:dio/dio.dart' hide Headers;
@@ -74,8 +76,8 @@ abstract class RestClient {
   Future<DefaultResponseEntity<String>> requestVacation(@Body() VacationRequestEntity vacationRequest);
 */
 
-  @POST("/vacation/requestvacation")
-  Future<DefaultResponseEntity<String>> requestVacation(@Body() FormData vacationRequest);
+  /*@POST("/vacation/requestvacation")
+  Future<DefaultResponseEntity<String>> requestVacation(@Body() FormData vacationRequest);*/
 /*
   @Headers(<String, String>{"Content-Type": "multipart/form-data"})
   @POST("/vacation/requestvacation")
@@ -99,6 +101,11 @@ abstract class RestClient {
   Future<TaskTypeResponseEntity> getTasksNames();
 
 
+  @POST("/task/addemployeetask")
+  Future<DefaultResponseEntity<String>> AddEmployeeTask(@Body()  AddTaskRequest addTaskRequest);
+
+  @POST("/task/getemployeetasks")
+  Future<EmployeeTasksResponse> GetEmployeeTasks(int? employeeId);
 
 
 
