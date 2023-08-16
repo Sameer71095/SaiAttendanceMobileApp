@@ -24,7 +24,7 @@ class LoginResponseEntity {
 
 class Data {
   int? employeeId;
-  /*int? employerId;*/
+  int? employerId;
   String? name;
   String? email;
   String? token;
@@ -45,7 +45,7 @@ class Data {
 
   Data(
       {this.employeeId,
-      /*  this.employerId,*/
+        this.employerId,
         this.name,
         this.email,
         this.token,
@@ -66,7 +66,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     employeeId = json['employeeId'];
-   /* employerId = json['employerId'];*/
+    employerId = json['employerId'];
     name = json['name'];
     email = json['email'];
     token = json['token'];
@@ -94,7 +94,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['employeeId'] = this.employeeId;
-    /*data['employerId'] = this.employerId;*/
+    data['employerId'] = this.employerId;
     data['name'] = this.name;
     data['email'] = this.email;
     data['token'] = this.token;

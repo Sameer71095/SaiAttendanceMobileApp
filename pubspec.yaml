@@ -53,6 +53,7 @@ dependencies:
   package_info_plus: ^4.0.2
   dio_retry_plus: ^1.0.3
   flutter_staggered_animations: any
+  device_info_plus: ^9.0.3
   show_update_dialog:
     path: ./show_update_dialog-main
 

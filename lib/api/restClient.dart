@@ -55,9 +55,8 @@ abstract class RestClient {
 
 
 /*  @Headers(<String, String>{"Content-Type": "application/json"})*/
-  @POST("/attendance/checkin")
-  @FormUrlEncoded()
-  Future<AttendanceResponseEntity> CheckIn(@Part() AttendanceRequestEntity? attendanceRequestEntity);
+  @POST("/attendance/addattendance")
+  Future<AttendanceResponseEntity> AddAttendance(@Body() AttendanceRequestEntity? attendanceRequestEntity);
 
   @POST("/employee/login")
   Future<LoginResponseEntity> LoginEmployee(@Body()  LoginRequestEntity loginRequestEntity);

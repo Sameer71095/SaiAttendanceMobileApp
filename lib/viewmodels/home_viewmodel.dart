@@ -41,7 +41,7 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
     getUpdate();
 
-    verifyVersion();
+   // verifyVersion();
 
     //  loadData();
 
@@ -170,10 +170,9 @@ class HomeViewModel extends ChangeNotifier {
           await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
           await storage.write(key: 'Token', value:response.data!.token.toString());
           await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
-
           await constants.init();
 
-       //   showToast("Update Called",duration: 1);
+          showToast("Update Called",duration: 3);
           if(response.data!.isImagesRegistered==true){
 
           }else{
