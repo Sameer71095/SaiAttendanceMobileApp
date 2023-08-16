@@ -349,7 +349,8 @@ class HomeViewModel extends ChangeNotifier {
   ValueNotifier<bool> dataLoaded = ValueNotifier(false);
   Future<void> loadData() async {
     // Call the API and store the data in attendanceList
-    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(employeeId: constants.loginData.employeeId, monthId: currentMonth));
+    attendanceList = await client.GetAttendanceHistory(
+        AttendanceHistoryRequest(employeeId: constants.loginData.employeeId, monthId: currentMonth));
     dataLoaded.value = true; // Indicate that the data has been loaded
     notifyListeners();
   }

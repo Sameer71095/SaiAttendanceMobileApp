@@ -2,6 +2,7 @@
 /// portrait and landscape
 
 
+import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/Attendance_viewmodel.dart';
@@ -389,124 +390,181 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
 
 
-  Widget _buildList(TaskSheetViewModel model) {
-    double fontSize=12;
-    List dummy = ['this', 'susu', 'sjhdjs', 'djsks'];
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemCount: dummy.length,
-
-      itemBuilder: (context, index) {
-
-        return InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: Container(
-
-                decoration: BoxDecoration(
-                    color: AppColor.containercolor,
-                    borderRadius: BorderRadius.circular(15)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      'DD/MM/YY',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+  Widget _buildList(TaskSheetViewModel model)  {
 
 
-                                          fontSize: fontSize)
-                                  ),
-                                  SizedBox(height: 5,),
-                                  Text(
-                                      'Task Description: this is dummy data for task description',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
 
-                                          fontSize: fontSize)
-                                  ),
-                                  SizedBox(height: 5,),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification scrollInfo) {
+        if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+          //  model.loadMore(); // Function to load more data when the list reaches the end
+        }
+        return true;
+      },
+      child: RefreshIndicator(
+        onRefresh: model.onRefresh,
+        color:  Colors.blueAccent,
+        child: ValueListenableBuilder<bool>(
+          valueListenable: model.dataLoaded,
+          builder: (BuildContext context, bool dataLoaded, Widget? child) {
+            if (!dataLoaded) {
+              model.loadData();
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: model.employeeTasks?.length,
 
-                                  Text(
-                                      'Task Type: Regular',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                itemBuilder: (context, index) {
+                  final employeeTasks = model.employeeTasks;
+                print(employeeTasks?[index]);
+                  return InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: Container(
 
-                                          fontSize: fontSize)
-                                  ),
+                        decoration: BoxDecoration(
+                            color:AppColor.containercolor,
+                            borderRadius:  BorderRadius.circular(15)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                          child:Column(
+                            children: [
 
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          InkWell(
-                            onTap: (){
-                            },
-                            child: Container(
-                              child: Center(
-                                child: index==0? Text(
-                                    'Mark as Done!',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
+                              Text(employeeTasks?[index].employeeTaskId.toString()??'no employ'),
+                          Text(employeeTasks?[index].taskName.toString()??'no task name '),
+                              Text(employeeTasks?[index].taskDescription.toString()??'no task description '),
+                              Text(employeeTasks?[index].taskStartTime.toString()??'no task start time '),
+                              Text(employeeTasks?[index].taskEndTime.toString()??'no task end time '),
 
-                                        fontSize: fontSize)
-
-                                ): Icon(Icons.check,color: Colors.white,),
-                              ),
-                              height: 35,
-                              width:  index==0?100:50,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.green
-                                ),
-
-                                borderRadius:
-                                BorderRadius.circular(10),
-
-
-                                color: Colors.green.shade500,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-
-                      Align(
-                        alignment:Alignment.topLeft,
-                        child: Text(
-                            'Start Time: 12:00 | End Time :02:00',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-
-                                fontSize: fontSize)
+                            ],
+                          )
                         ),
                       ),
+                    ),
 
-                    ],
-                  ),
-                ),
-              ),
-            )
-
-        );
-      },
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ),
     );
+
+    // double fontSize=12;
+    // return ListView.builder(
+    //   shrinkWrap: true,
+    //   physics: const BouncingScrollPhysics(),
+    //   itemCount: employeeTasks?.length ?? 0,
+    //
+    //   itemBuilder: (context, index) {
+    //     final task = employeeTasks?[index];
+    //       print(task);
+    //     return InkWell(
+    //       onTap: () {},
+    //       child: Padding(
+    //         padding: const EdgeInsets.only(bottom: 15),
+    //         child: Container(
+    //           decoration: BoxDecoration(
+    //             color: AppColor.containercolor,
+    //             borderRadius: BorderRadius.circular(15),
+    //           ),
+    //           child: Padding(
+    //             padding: const EdgeInsets.all(10.0),
+    //             child: Column(
+    //               children: [
+    //                 Row(
+    //                   children: [
+    //                     Expanded(
+    //                       child: Align(
+    //                         alignment: Alignment.topLeft,
+    //                         child: Column(
+    //                           mainAxisAlignment: MainAxisAlignment.start,
+    //                           crossAxisAlignment: CrossAxisAlignment.start,
+    //                           children: [
+    //                             Text(
+    //                               'DD/MM/YY',
+    //                               style: TextStyle(
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontSize: fontSize,
+    //                               ),
+    //                             ),
+    //                             SizedBox(height: 5,),
+    //                             Text(
+    //                               task?.taskDescription.toString() ?? 'hiii',
+    //
+    //                               style: TextStyle(
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontSize: fontSize,
+    //                               ),
+    //                             ),
+    //                             SizedBox(height: 5,),
+    //                             Text(
+    //                               task?.taskName.toString() ?? '',
+    //                               style: TextStyle(
+    //                                 fontWeight: FontWeight.bold,
+    //                                 fontSize: fontSize,
+    //                               ),
+    //                             ),
+    //                           ],
+    //                         ),
+    //                       ),
+    //                     ),
+    //                     SizedBox(width: 10),
+    //                     InkWell(
+    //                       onTap: (){
+    //                         // Handle marking task as done
+    //                       },
+    //                       child: Container(
+    //                         child: Center(
+    //                           child: index == 0
+    //                               ? Text(
+    //                             'Mark as Done!',
+    //                             style: TextStyle(
+    //                               color: Colors.white,
+    //                               fontWeight: FontWeight.bold,
+    //                               fontSize: fontSize,
+    //                             ),
+    //                           )
+    //                               : Icon(Icons.check,color: Colors.white,),
+    //                         ),
+    //                         height: 35,
+    //                         width:  index == 0 ? 100 : 50,
+    //                         decoration: BoxDecoration(
+    //                           border: Border.all(
+    //                             color: Colors.green,
+    //                           ),
+    //                           borderRadius: BorderRadius.circular(10),
+    //                           color: Colors.green.shade500,
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 SizedBox(height: 10,),
+    //                 Align(
+    //                   alignment:Alignment.topLeft,
+    //                   child: Text(
+    //                     'Start Time: 12:00 | End Time :02:00',
+    //                     style: TextStyle(
+    //                       fontWeight: FontWeight.bold,
+    //                       fontSize: fontSize,
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
+
   }
 
 

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:ClockSpotter/api/restClient.dart';
 import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
 import 'package:ClockSpotter/entities/task_entity/add_task_request.dart';
+import 'package:ClockSpotter/entities/task_entity/employee_task_response.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +29,11 @@ import 'package:dio/dio.dart'; // If not already imported
 import '../api/secureCacheManager.dart';
 
 class TaskSheetViewModel extends ChangeNotifier {
+
+  List<EmployeeTask>? _employeeTasks;
+
+  List<EmployeeTask>? get employeeTasks => _employeeTasks;
+
   // List<Data1> _taskTypes = [];
   // List<Data1> get taskTypes => _taskTypes;
   //
@@ -117,8 +123,7 @@ class TaskSheetViewModel extends ChangeNotifier {
 
     employeeName = constants.loginData.name!;
     // employeeName=  (await  storage.read(key: 'Name'))!;
-    notifyListeners();
-    // getUpdate();
+    notifyListeners(); // getUpdate();
 
     verifyVersion();
 
@@ -436,10 +441,17 @@ class TaskSheetViewModel extends ChangeNotifier {
   ValueNotifier<bool> dataLoaded = ValueNotifier(false);
   Future<void> loadData() async {
     // Call the API and store the data in attendanceList
-    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(
-        employeeId: constants.loginData.employeeId, monthId: currentMonth));
-    dataLoaded.value = true; // Indicate that the data has been loaded
-    notifyListeners();
+    try {
+      var response = await client.GetEmployeeTasks(constants.loginData.employeeId);
+      _employeeTasks = response.data;
+      print(_employeeTasks);
+      dataLoaded.value = true;
+      notifyListeners();
+    } catch (error) {
+      throw Exception('Failed to load employee tasks');
+    }
+
+
   }
 
 
@@ -463,6 +475,21 @@ class TaskSheetViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //   List<EmployeeTask>? _employeeTasks;
+  //
+  // List<EmployeeTask>? get employeeTasks => _employeeTasks;
+  //
+  // Future<void> fetchEmployeeTasks() async {
+  //   try {
+  //     final response = await client.GetEmployeeTasks(constants.loginData.employeeId);
+  //     _employeeTasks = response.data;
+  //     print(_employeeTasks);
+  //     notifyListeners();
+  //   } catch (error) {
+  //     throw Exception('Failed to load employee tasks');
+  //   }
+  // }
 
 
 }

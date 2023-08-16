@@ -259,17 +259,21 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                         return Column(
                           children: [
                             ListTile(
-                              leading: Container(
-                                  height: 40,
-                                  width: 40,
-                                  child: Image.asset(tile[index])),
-                              title: Container(child: Text(tileText[index],style: theme.titleLarge,)),
+                              visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+                              leading: SizedBox(
+
+                                  height: height*0.095,
+                                  width:width*0.095 ,
+                                  child: Image.asset(tile[index],)),
+                              title: Text(tileText[index],style: theme.titleLarge?.copyWith(
+                                fontSize: 18
+                              ),),
                               onTap: () {
                                 navigateToScreenAtIndex(index);
 
                               },
                             ),
-                            Divider()
+                            Divider(thickness: 1,)
                           ],
                         );
                       },
