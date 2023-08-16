@@ -73,7 +73,7 @@ class _RestClient implements RestClient {
   @override
   Future<LoginResponseEntity> GetUpdateEmployee(employeeId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'EmployeeId': employeeId};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;

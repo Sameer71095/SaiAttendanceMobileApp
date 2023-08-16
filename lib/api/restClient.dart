@@ -61,8 +61,9 @@ abstract class RestClient {
   @POST("/employee/login")
   Future<LoginResponseEntity> LoginEmployee(@Body()  LoginRequestEntity loginRequestEntity);
 
+
   @POST("/employee/getupdate")
-  Future<LoginResponseEntity> GetUpdateEmployee(int? employeeId);
+  Future<LoginResponseEntity> GetUpdateEmployee(@Query("EmployeeId") int? employeeId);
 
   @POST("/attendance/getAttendanceHistory")
   Future<AttendanceHistoryResponse> GetAttendanceHistory(@Body()  AttendanceHistoryRequest attendanceHistoryRequest);
