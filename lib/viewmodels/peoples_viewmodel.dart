@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
+import 'package:ClockSpotter/widgets/teamMember.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
@@ -20,6 +21,51 @@ import '../api/secureCacheManager.dart';
 
 class PeoplesViewModel extends ChangeNotifier {
 
+
+
+  bool showDetails = false;
+
+  void showDetail(){
+    showDetails=!showDetails;
+    notifyListeners();
+  }
+
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController branchController = TextEditingController();
+  TextEditingController positionController = TextEditingController();
+
+  List<Member> memberList = [
+    Member('rakesh', 'ned', 'flutter'),
+    Member('rakesh2', 'ned2', 'dart'),
+    Member('rakesh3', 'ned3', 'firebase'),
+    Member('rakes4', 'ned4', 'react'),
+    Member('rakes5', 'ned5', 'react2'),
+
+
+
+
+
+
+    // List of member names
+    // Add more members here
+  ];
+
+  List<Member> filteredMemberList = [];
+
+
+  void filterMembers() {
+    String name = nameController.text.toLowerCase();
+    String branch = branchController.text.toLowerCase();
+    String position = positionController.text.toLowerCase();
+
+    filteredMemberList = memberList.where((member) {
+      return member.name!.toLowerCase().contains(name) &&
+          member.branch!.toLowerCase().contains(branch) &&
+          member.position!.toLowerCase().contains(position);
+    }).toList();
+    notifyListeners();
+  }
 
   String title = 'default';
 
@@ -42,6 +88,8 @@ class PeoplesViewModel extends ChangeNotifier {
     getUpdate();
 
     verifyVersion();
+
+    filteredMemberList = memberList;
 
     //  loadData();
 

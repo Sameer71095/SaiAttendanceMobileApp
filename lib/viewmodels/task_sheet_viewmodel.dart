@@ -34,29 +34,6 @@ class TaskSheetViewModel extends ChangeNotifier {
 
   List<EmployeeTask>? get employeeTasks => _employeeTasks;
 
-  // List<Data1> _taskTypes = [];
-  // List<Data1> get taskTypes => _taskTypes;
-  //
-  // Future<void> fetchTaskTypes() async {
-  //   final restClient = RestClient(Dio()); // Initialize the RestClient with Dio
-  //   try {
-  //     final taskType = await restClient.gettasktypes();
-  //     print(taskType);
-  //     if (taskType.isSuccess == true && taskType.data != null) {
-  //       _taskTypes = taskType.data!.cast<Data1>();
-  //       print(taskTypes);
-  //     } else {
-  //       // Handle error, show a snackbar, or set an empty list
-  //
-  //       _taskTypes = [];
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     // Handle error, show a snackbar, or set an empty list
-  //     _taskTypes = [];
-  //   }
-  //   notifyListeners();
-  // }
   final formKey = GlobalKey<FormState>();
 
   TaskType? selectedTaskType;
@@ -135,50 +112,50 @@ class TaskSheetViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  PageController pageController = PageController(viewportFraction: .8);
-  var paddingLeft = 0.0;
+  // PageController pageController = PageController(viewportFraction: .8);
+  // var paddingLeft = 0.0;
+  //
+  // bool button1 = true;
+  // bool button2 = true;
 
-  bool button1 = true;
-  bool button2 = true;
+  // AttendanceHistoryResponse.AttendanceHistoryResponse attendanceList =
+  // AttendanceHistoryResponse.AttendanceHistoryResponse();
+  // void buildMenu(int index) {
+  //   paddingLeft = index * 150.0;
+  //   if (button1 == true && index == 1) {
+  //     button1 = false;
+  //     index = 0;
+  //   } else {
+  //     button1 = true;
+  //     index = 1;
+  //   }
+  //   notifyListeners();
+  // }
 
-  AttendanceHistoryResponse.AttendanceHistoryResponse attendanceList =
-  AttendanceHistoryResponse.AttendanceHistoryResponse();
-  void buildMenu(int index) {
-    paddingLeft = index * 150.0;
-    if (button1 == true && index == 1) {
-      button1 = false;
-      index = 0;
-    } else {
-      button1 = true;
-      index = 1;
-    }
-    notifyListeners();
-  }
-
-  Future<void> _refreshData() async {
-    // Update the necessary variables here
-
-    DateTime now = DateTime.now();
-    currentMonth = now
-        .month; // This will give you the current month as an integer (e.g., 4)
-    currentYear = now
-        .year; // This will give you the current year as an integer (e.g., 2023)
-
-    // You should handle any errors that might occur during data loading
-    try {
-      loadData();
-    } catch (e) {
-      // Handle the error appropriately
-      print('Failed to load data: $e');
-
-      await Sentry.captureException(
-        e,
-        stackTrace: e.toString(),
-      );
-    }
-
-    notifyListeners();
-  }
+  // Future<void> _refreshData() async {
+  //   // Update the necessary variables here
+  //
+  //   DateTime now = DateTime.now();
+  //   currentMonth = now
+  //       .month; // This will give you the current month as an integer (e.g., 4)
+  //   currentYear = now
+  //       .year; // This will give you the current year as an integer (e.g., 2023)
+  //
+  //   // You should handle any errors that might occur during data loading
+  //   try {
+  //     loadData();
+  //   } catch (e) {
+  //     // Handle the error appropriately
+  //     print('Failed to load data: $e');
+  //
+  //     await Sentry.captureException(
+  //       e,
+  //       stackTrace: e.toString(),
+  //     );
+  //   }
+  //
+  //   notifyListeners();
+  // }
 
   Future<void> onRefresh() async {
     return loadData();
@@ -222,20 +199,6 @@ class TaskSheetViewModel extends ChangeNotifier {
     }
   }
 
-  //   List<EmployeeTask>? _employeeTasks;
-  //
-  // List<EmployeeTask>? get employeeTasks => _employeeTasks;
-  //
-  // Future<void> fetchEmployeeTasks() async {
-  //   try {
-  //     final response = await client.GetEmployeeTasks(constants.loginData.employeeId);
-  //     _employeeTasks = response.data;
-  //     print(_employeeTasks);
-  //     notifyListeners();
-  //   } catch (error) {
-  //     throw Exception('Failed to load employee tasks');
-  //   }
-  // }
 
 
 }

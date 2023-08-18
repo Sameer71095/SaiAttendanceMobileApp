@@ -2,6 +2,7 @@
 /// portrait and landscape
 
 import 'dart:io';
+import 'dart:math';
 
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/re_register_viewmodel.dart';
@@ -18,6 +19,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image/image.dart' as img;
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+import 'package:vector_math/vector_math.dart' as vmath;
 
 
 class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewModel> {
@@ -27,7 +30,6 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
   Widget build(BuildContext context, ReRegisterFaceViewModel model) {
     double height = MediaQuery.of(context).size.height;
     var theme = Theme.of(context).textTheme;
-
 
     return Scaffold(
       drawer: NewDrawer(),
@@ -44,11 +46,22 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
           FutureBuilder<void>(
             future: model.initializeControllerFuture,
             builder: (context, snapshot) {
+              double progress = 0.5; // Example progress value
               if (snapshot.connectionState == ConnectionState.done) {
                 return Center(
-                    child:   ClipOval(
-                           child: CameraPreview(model.controller),
-                        ),);
+
+
+
+                   child: ClipOval(
+                         child: CameraPreview(model.controller),
+                      ),
+
+
+
+
+
+
+                );
               } else {
                 return Center(child: CircularProgressIndicator(color: AppColor.iconColor,));
               }
@@ -122,7 +135,7 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
               elevation: 0,
               flexibleSpace: Container(),
               title: Text(
-                'Re-register yout face',
+                'Re-register your face',
                 style: theme.titleLarge?.copyWith(color: Colors.white),
               ),
             ),
@@ -171,3 +184,7 @@ class ReRegisterFaceMobileLandscape extends BaseModelWidget<ReRegisterFaceViewMo
   }
 
 }
+
+
+
+

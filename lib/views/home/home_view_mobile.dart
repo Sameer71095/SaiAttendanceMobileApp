@@ -54,9 +54,9 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
       "Letter requests",
       "People",
       'My Pay',
-      "Work expenses"
+      "Work Expense"
     ];
-    List<String> screenNames = ['AttendanceView', 'Task Sheets','Time Off','Request Letter', 'Peoples','My Pay','Time Sheets'];
+    List<String> screenNames = ['AttendanceView', 'Task Sheets','Time Off','Request Letter', 'Peoples','My Pay','Work Expense'];
 
     int currentScreenIndex = 0;
 
