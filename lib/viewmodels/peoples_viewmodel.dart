@@ -28,20 +28,7 @@ import '../entities/location_entity/location_response.dart';
 
 class PeoplesViewModel extends ChangeNotifier {
 
-  // List<Employee> allEmployees = []; // The complete list of employees
-  // List<Employee> filteredEmployees = []; // The filtered list based on department and branch
-  //
-  // String selectedDepartment = ''; // Store the selected department
-  // String selectedBranch = ''; // Store the selected branch
-  //
-  // void filterEmployees() {
-  //   filteredEmployees = allEmployees.where((employee) {
-  //     bool departmentMatches = selectedDepartment.isEmpty || employee.departmentName == selectedDepartment;
-  //     bool branchMatches = selectedBranch.isEmpty || employee.branchName == selectedBranch;
-  //     return departmentMatches && branchMatches;
-  //   }).toList();
-  //   notifyListeners();
-  // }
+
 
 
 
@@ -75,21 +62,6 @@ class PeoplesViewModel extends ChangeNotifier {
 
 
 
-
-  // List<Department> departments = [];
-  //
-  // Future<void> getDepartments2() async {
-  //   var response = await client.getDepartments();
-  //   departments = (response.data as List)
-  //       .map((departmentData) => Department(
-  //     departmentId: departmentData['departmentId'],
-  //     departmentName: departmentData['departmentName'],
-  //   ))
-  //       .toList();
-  //
-  //   // departmentNames = departments.map((department) => department.departmentName).toList();
-  //   notifyListeners();
-  // }
 
 
   List<String> departmentNames = [];
@@ -139,20 +111,6 @@ class PeoplesViewModel extends ChangeNotifier {
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    dropDownFitler( String? filterName,List<String> item,
    Icon? filterIcon,  void Function(String? selectedValue) onChangedCallback,
        ){
@@ -181,16 +139,16 @@ class PeoplesViewModel extends ChangeNotifier {
           // labelText: "Filter by ${filterName}",
           prefixIcon: filterIcon,
           filled: true,
-          fillColor: Colors.white,
+          fillColor: AppColor.fieldColor,
           hintText: "${filterName} ",
           // labelStyle: TextStyle(color: AppColor.textColorBlack),
-          hintStyle: TextStyle(color: AppColor.textColorBlack,fontSize: 13,fontWeight: FontWeight.bold),
+          hintStyle: TextStyle(color: Colors.grey.shade600,fontSize: 13,fontWeight: FontWeight.bold),
         ),
       ),
       dropdownButtonProps: DropdownButtonProps(
         icon: Icon(
           Icons.keyboard_arrow_down_rounded,
-          color: Colors.white,
+          color: Colors.grey.shade600,
         ),
       ),
       popupProps: PopupProps.menu(
@@ -202,18 +160,21 @@ class PeoplesViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  int? expandedIndex; // Keep track of the currently expanded index
 
-
-  bool showDetails = false;
-  int? expanded;
-
-  void showDetail(){
-
-      showDetails = !showDetails;
-      notifyListeners();
+  void toggleDetail(int index) {
+    if (expandedIndex == index) {
+      expandedIndex = null; // Collapse the card if it's already expanded
+    } else {
+      expandedIndex = index; // Expand the clicked card
+    }
+    notifyListeners();
   }
 
 
+
+
+//This code is deliberately leaved  for such scenario when there is the need to apply filter when button is pressed
   // TextEditingController nameController = TextEditingController();
   // TextEditingController branchController = TextEditingController();
   // TextEditingController positionController = TextEditingController();
@@ -224,12 +185,6 @@ class PeoplesViewModel extends ChangeNotifier {
   //   Member('rakesh3', 'ned3', 'firebase'),
   //   Member('rakes4', 'ned4', 'react'),
   //   Member('rakes5', 'ned5', 'react2'),
-
-
-
-
-
-
     // List of member names
   //   // Add more members here
   // ];
@@ -269,15 +224,11 @@ class PeoplesViewModel extends ChangeNotifier {
     currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
 
     employeeName=constants.loginData.name!;
-    // employeeName=  (await  storage.read(key: 'Name'))!;
     notifyListeners();
     getUpdate();
 
     verifyVersion();
 
-    // filteredMemberList = memberList;
-
-    //  loadData();
 
   }
 

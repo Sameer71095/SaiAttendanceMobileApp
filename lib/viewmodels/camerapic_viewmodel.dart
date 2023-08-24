@@ -2,9 +2,10 @@
 
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
 import 'package:camera/camera.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
@@ -36,16 +37,33 @@ class CameraPicViewModel extends ChangeNotifier {
 
   int currentCameraIndex = 0;
 
+
+  final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
+  String deviceName="";
+  String deviceId="";
+
   late BuildContext context;
-  void initialise(BuildContext contexts) {
-    context=contexts;
-    currentCameraIndex = cameras.indexWhere((camera) => camera.lensDirection == CameraLensDirection.front);
-    if (currentCameraIndex == -1) {
-      currentCameraIndex = 0; // Default to the first camera if a front camera is not available
+    Future<void> initialise(BuildContext contexts) async {
+      context=contexts;
+      currentCameraIndex = cameras.indexWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+      if (currentCameraIndex == -1) {
+        currentCameraIndex = 0; // Default to the first camera if a front camera is not available
+      }
+      initializeCamera(currentCameraIndex);
+      notifyListeners();
+
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+        deviceName = "${androidInfo.manufacturer} ${androidInfo.model}";
+        deviceId = androidInfo.id; // Considered unique but may change upon factory reset
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
+        deviceName = iosInfo.name; // This is the device's name
+        deviceId = iosInfo.identifierForVendor!; // Unique identifier
+      }
+
     }
-    initializeCamera(currentCameraIndex);
-    notifyListeners();
-  }
 
   void initializeCamera(int cameraIndex) {
 
@@ -64,45 +82,64 @@ class CameraPicViewModel extends ChangeNotifier {
   }
 
   void onCaptureClick(File? image) async {
-    capturedImage = image;
+    if (image == null) return;  // Return early if image is null to prevent further processing
 
     try {
+      // Convert the File image to a base64 encoded string
+      final List<int> imageBytes = await image.readAsBytes();
+      final String base64Image = base64Encode(imageBytes);
 
-      AttendanceResponseEntity results= AttendanceResponseEntity();
       LocationData _locationData = await location.getLocation();
-
       String? loginDataValue = await storage.read(key: 'loginResponse');
-      if (loginDataValue != null) {
-        var val = Login.Data.fromJson(
-            json.decode(loginDataValue) as Map<String, dynamic>);
-        if (val.isLocationBound!) {
-          helper.isWithinMeters(val.locations).then((iswithin) async {
-            if (iswithin) {
-              results = await clientPython.CheckInCheckOut(
-                  _locationData.latitude!, _locationData.longitude!, image);
-              await     afterClickedUIUpdate(results);
-            } else {
-              showToast(
-                  'Please come to the allocated location ${val.location}');
+      if (loginDataValue == null) {
+        showToast('Login data not found.', duration: 3);
+        return;
+      }
 
+      var val = Login.Data.fromJson(
+          json.decode(loginDataValue) as Map<String, dynamic>);
+
+
+
+
+          if (val.isLocationBound!) {
+            bool isWithin = await helper.isWithinMeters(val.locations);
+            if (!isWithin) {
+              showToast('Please come to the allocated location ${val.location}');
               isLoading = false;
+              return;
             }
-          });
-        }else{
-          results = await clientPython.CheckInCheckOut(
-              _locationData.latitude!, _locationData.longitude!, image);
+          }
+
+          // Populate the AttendanceRequestEntity object
+          AttendanceRequestEntity attendanceEntity = AttendanceRequestEntity(
+              checkedTime: DateTime.now(),
+              checkedDate: DateTime.now(),
+              latitude: _locationData.latitude,
+              longitude: _locationData.longitude,
+              checkedImage: base64Image,
+              isCheckedOut: false,
+              isLate: false,
+              deviceName: deviceName,
+              deviceId: deviceId,
+              employerId: val.employerId,
+              loggedEmployeeId: val.employeeId,
+              isExcused: false,
+              location: val.location,
+              reason: ""
+          );
+
+
+          AttendanceResponseEntity results = await client.AddAttendance(attendanceEntity);
           await afterClickedUIUpdate(results);
           isLoading = false;
-        }
-      }
-    } catch (e) {
+
+        } catch (e) {
       isLoading = false;
       showToast('Unable to detect $e', duration: 3);
     }
-
     notifyListeners();
   }
-
   Future<void> afterClickedUIUpdate(AttendanceResponseEntity results) async {
     try {
       List<String> checkedInEmployees = [];

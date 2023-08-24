@@ -45,7 +45,7 @@ class Data {
 
   Data(
       {this.employeeId,
-       this.employerId,
+        this.employerId,
         this.name,
         this.email,
         this.token,

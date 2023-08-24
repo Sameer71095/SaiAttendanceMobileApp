@@ -21,26 +21,23 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<AttendanceResponseEntity> CheckIn(attendanceRequestEntity) async {
+  Future<AttendanceResponseEntity> AddAttendance(
+      attendanceRequestEntity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'attendanceRequestEntity',
-      jsonEncode(attendanceRequestEntity ?? <String, dynamic>{}),
-    ));
+    final _data = <String, dynamic>{};
+    _data.addAll(attendanceRequestEntity?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AttendanceResponseEntity>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
     )
             .compose(
               _dio.options,
-              '/attendance/checkin',
+              '/attendance/addattendance',
               queryParameters: queryParameters,
               data: _data,
             )

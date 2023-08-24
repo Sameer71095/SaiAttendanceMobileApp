@@ -3,39 +3,72 @@
 import 'dart:io';
 
 class AttendanceRequestEntity {
-  int? employeeId;
+  DateTime? checkedTime;
+  DateTime? checkedDate;
   double? latitude;
   double? longitude;
-  /*String? location;*/
-/*  String? checkedImage;
-  File? image;*/
+  String? location;
+  String? checkedImage;
+  bool? isCheckedOut;
+  bool? isLate;
+  String? reason;
+  bool? isExcused;
+  String? deviceName;
+  String? deviceId;
+  int? loggedEmployeeId;
+  int? employerId;
 
-  AttendanceRequestEntity(
-      {this.employeeId,
-        this.latitude,
-        this.longitude,
-     /*   this.location,
-        this.checkedImage,
-        this.image*/
-      });
+
+  AttendanceRequestEntity({
+    this.checkedTime,
+    this.checkedDate,
+    this.latitude,
+    this.longitude,
+    this.location,
+    this.checkedImage,
+    this.isCheckedOut,
+    this.isLate,
+    this.reason,
+    this.isExcused,
+    this.deviceName,
+    this.deviceId,
+    this.loggedEmployeeId,
+    this.employerId,
+  });
 
   AttendanceRequestEntity.fromJson(Map<String, dynamic> json) {
-    employeeId = json['employee_id'];
+    checkedTime = DateTime.tryParse(json['checked_time'] ?? '');
+    checkedDate = DateTime.tryParse(json['checked_date'] ?? '');
     latitude = json['latitude'];
     longitude = json['longitude'];
-  /*  location = json['location'];
-    checkedImage = json['checked_image'];
-    image = json['image'];*/
+    location = json['location'];
+    isCheckedOut = json['is_checkedout'];
+    isLate = json['is_late'];
+    reason = json['reason'];
+    isExcused = json['is_excused'];
+    deviceName = json['device_name'];
+    deviceId = json['device_id'];
+    loggedEmployeeId = json['logged_employee_id'];
+    employerId = json['employer_id'];
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['employee_id'] = this.employeeId;
+    data['checked_time'] = this.checkedTime?.toIso8601String();
+    data['checked_date'] = this.checkedDate?.toIso8601String();
+    data['location'] = this.location;
+    data['is_checkedout'] = this.isCheckedOut;
+    data['is_late'] = this.isLate;
+    data['reason'] = this.reason;
+    data['is_excused'] = this.isExcused;
+    data['device_name'] = this.deviceName;
+    data['device_id'] = this.deviceId;
+    data['logged_employee_id'] = this.loggedEmployeeId;
+    data['employer_id'] = this.employerId;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
-  /*  data['location'] = this.location;
-    data['checked_image'] = this.checkedImage;
-    data['image'] = this.image;*/
+
     return data;
   }
 }
