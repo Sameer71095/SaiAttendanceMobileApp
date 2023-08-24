@@ -1,7 +1,13 @@
 import 'dart:convert';
 
+import 'package:ClockSpotter/entities/departments/DepartmentsResponseEntity.dart';
+import 'package:ClockSpotter/entities/location_entity/location_response.dart';
+import 'package:ClockSpotter/entities/location_entity/location_response.dart';
+import 'package:ClockSpotter/entities/task_entity/get_all_team_response.dart';
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:ClockSpotter/widgets/teamMember.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
@@ -18,29 +24,206 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:show_update_dialog/show_update_dialog.dart';
 
 import '../api/secureCacheManager.dart';
+import '../entities/location_entity/location_response.dart';
 
 class PeoplesViewModel extends ChangeNotifier {
 
+  // List<Employee> allEmployees = []; // The complete list of employees
+  // List<Employee> filteredEmployees = []; // The filtered list based on department and branch
+  //
+  // String selectedDepartment = ''; // Store the selected department
+  // String selectedBranch = ''; // Store the selected branch
+  //
+  // void filterEmployees() {
+  //   filteredEmployees = allEmployees.where((employee) {
+  //     bool departmentMatches = selectedDepartment.isEmpty || employee.departmentName == selectedDepartment;
+  //     bool branchMatches = selectedBranch.isEmpty || employee.branchName == selectedBranch;
+  //     return departmentMatches && branchMatches;
+  //   }).toList();
+  //   notifyListeners();
+  // }
 
 
-  bool showDetails = false;
 
-  void showDetail(){
-    showDetails=!showDetails;
+  String? _selectedDepartment;
+  String? _selectedBranch;
+
+  void updateSelectedDepartment(String? department) {
+    _selectedDepartment = department;
+    notifyListeners();
+  }
+
+  void updateSelectedBranch(String? branch) {
+    _selectedBranch = branch;
+    notifyListeners();
+  }
+
+  List<Employee> get filteredTeam {
+    if (_selectedDepartment == null && _selectedBranch == null) {
+      return getAllTeam ?? [];
+    }
+    return (getAllTeam ?? []).where((employee) {
+      final departmentCondition =
+          _selectedDepartment == null || employee.departmentName == _selectedDepartment;
+      final branchCondition =
+          _selectedBranch == null || employee.branchName == _selectedBranch;
+
+      return departmentCondition && branchCondition;
+    }).toList();
+  }
+
+
+
+
+
+  // List<Department> departments = [];
+  //
+  // Future<void> getDepartments2() async {
+  //   var response = await client.getDepartments();
+  //   departments = (response.data as List)
+  //       .map((departmentData) => Department(
+  //     departmentId: departmentData['departmentId'],
+  //     departmentName: departmentData['departmentName'],
+  //   ))
+  //       .toList();
+  //
+  //   // departmentNames = departments.map((department) => department.departmentName).toList();
+  //   notifyListeners();
+  // }
+
+
+  List<String> departmentNames = [];
+  List<Department> Departments=[];
+  Future<void> getDepartments() async {
+    var response = await client.getDepartments();
+    Departments=response.data;
+    departmentNames = Departments.map((department) => department.departmentName).toList();
+
     notifyListeners();
   }
 
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController branchController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
+  List<String> locationNames = [];
+  List<LocationNew> Locations=[];
+  Future<void> GetLocations() async {
+    var response = await client.GetLocations(2);
+    Locations=response.data;
+    locationNames = Locations.map((location) => location.name).toList();
 
-  List<Member> memberList = [
-    Member('rakesh', 'ned', 'flutter'),
-    Member('rakesh2', 'ned2', 'dart'),
-    Member('rakesh3', 'ned3', 'firebase'),
-    Member('rakes4', 'ned4', 'react'),
-    Member('rakes5', 'ned5', 'react2'),
+    notifyListeners();
+  }
+
+
+
+  List<Employee>? _getAllTeam;
+
+  List<Employee>? get getAllTeam => _getAllTeam;
+
+  Future<void> onRefresh() async {
+    return loadData();
+  }
+
+  ValueNotifier<bool> dataLoaded = ValueNotifier(false);
+  Future<void> loadData() async {
+
+    // Call the API and store the data in attendanceList
+    try {
+      var response = await client.GetAllTeam(2);
+      _getAllTeam = response.data;
+      dataLoaded.value = true;
+      notifyListeners();
+    } catch (error) {
+      throw Exception('Failed to load All Team');
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   dropDownFitler( String? filterName,List<String> item,
+   Icon? filterIcon,  void Function(String? selectedValue) onChangedCallback,
+       ){
+    return DropdownSearch<String>(
+      clearButtonProps: ClearButtonProps(
+
+      ),
+
+      items: item,
+
+
+      onChanged: onChangedCallback,
+
+
+      dropdownDecoratorProps: DropDownDecoratorProps(
+
+        dropdownSearchDecoration: InputDecoration(
+
+          contentPadding: EdgeInsets.all(10),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          // labelText: "Filter by ${filterName}",
+          prefixIcon: filterIcon,
+          filled: true,
+          fillColor: Colors.white,
+          hintText: "${filterName} ",
+          // labelStyle: TextStyle(color: AppColor.textColorBlack),
+          hintStyle: TextStyle(color: AppColor.textColorBlack,fontSize: 13,fontWeight: FontWeight.bold),
+        ),
+      ),
+      dropdownButtonProps: DropdownButtonProps(
+        icon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: Colors.white,
+        ),
+      ),
+      popupProps: PopupProps.menu(
+        showSearchBox: true,
+      ),
+
+    );
+
+    notifyListeners();
+  }
+
+
+
+  bool showDetails = false;
+  int? expanded;
+
+  void showDetail(){
+
+      showDetails = !showDetails;
+      notifyListeners();
+  }
+
+
+  // TextEditingController nameController = TextEditingController();
+  // TextEditingController branchController = TextEditingController();
+  // TextEditingController positionController = TextEditingController();
+  //
+  // List<Member> memberList = [
+  //   Member('rakesh', 'ned', 'flutter'),
+  //   Member('rakesh2', 'ned2', 'dart'),
+  //   Member('rakesh3', 'ned3', 'firebase'),
+  //   Member('rakes4', 'ned4', 'react'),
+  //   Member('rakes5', 'ned5', 'react2'),
 
 
 
@@ -48,24 +231,24 @@ class PeoplesViewModel extends ChangeNotifier {
 
 
     // List of member names
-    // Add more members here
-  ];
-
-  List<Member> filteredMemberList = [];
-
-
-  void filterMembers() {
-    String name = nameController.text.toLowerCase();
-    String branch = branchController.text.toLowerCase();
-    String position = positionController.text.toLowerCase();
-
-    filteredMemberList = memberList.where((member) {
-      return member.name!.toLowerCase().contains(name) &&
-          member.branch!.toLowerCase().contains(branch) &&
-          member.position!.toLowerCase().contains(position);
-    }).toList();
-    notifyListeners();
-  }
+  //   // Add more members here
+  // ];
+  //
+  // List<Member> filteredMemberList = [];
+  //
+  //
+  // void filterMembers() {
+  //   String name = nameController.text.toLowerCase();
+  //   String branch = branchController.text.toLowerCase();
+  //   String position = positionController.text.toLowerCase();
+  //
+  //   filteredMemberList = memberList.where((member) {
+  //     return member.name!.toLowerCase().contains(name) &&
+  //         member.branch!.toLowerCase().contains(branch) &&
+  //         member.position!.toLowerCase().contains(position);
+  //   }).toList();
+  //   notifyListeners();
+  // }
 
   String title = 'default';
 
@@ -76,6 +259,9 @@ class PeoplesViewModel extends ChangeNotifier {
   int currentMonth=1;
   int currentYear=2023;
   Future<void> initialise(BuildContext contexts) async {
+    await getDepartments();
+    await GetLocations();
+
     context=contexts;
     title = 'initialised';
     DateTime now = DateTime.now();
@@ -89,7 +275,7 @@ class PeoplesViewModel extends ChangeNotifier {
 
     verifyVersion();
 
-    filteredMemberList = memberList;
+    // filteredMemberList = memberList;
 
     //  loadData();
 
@@ -282,121 +468,8 @@ class PeoplesViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onCheckInClicked() async {
-    try {
-      PermissionStatus cameraPermissionStatus = await Permission.camera.status;
-      if (cameraPermissionStatus == PermissionStatus.granted) {
-        String? loginDataValue = await storage.read(key: 'loginResponse');
-        if (loginDataValue != null) {
-          var val = Data.fromJson(
-              json.decode(loginDataValue) as Map<String, dynamic>);
-          if (val.isLocationBound == true) {
-            helper.isWithinMeters(val.locations).then((
-                iswithin) {
-              if (iswithin) {
-
-                takeToCameraPicView();
-
-              } else {
-                showToast(
-                    'Please come to the allocated location ${val.location}');
-              }
-            });
-          }else{
-
-            takeToCameraPicView();
-          }
-        }else{
-
-          takeToCameraPicView();
-        }
-      } else {
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 300),
-            //pageBuilder: (context, animation, secondaryAnimation) => CameraPermissionView(),
-            pageBuilder: (context, animation, secondaryAnimation) => CameraPicView(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(1.0, 0.0),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child,
-              );
-            },
-          ),
-        );
-      }
-    }  catch (exception, stackTrace) {
-      await Sentry.captureException(
-        exception,
-        stackTrace: stackTrace,
-      );
-      takeToCameraPicView();
-    }
-    notifyListeners();
-  }
-
-  Future<void> takeToCameraPicView() async {
-    final result =await Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 300),
-        pageBuilder: (context, animation, secondaryAnimation) => CameraPicView(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(1.0, 0.0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-
-    // if (result != null) {
-    // Refresh your data here
-    _refreshData();
-    //}
-  }
 
 
-  Future<void> _refreshData() async {
-    // Update the necessary variables here
 
-    DateTime now = DateTime.now();
-    currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
-    currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
 
-    // You should handle any errors that might occur during data loading
-    try {
-      loadData();
-    } catch (e) {
-      // Handle the error appropriately
-      print('Failed to load data: $e');
-
-      await Sentry.captureException(
-        e,
-        stackTrace: e.toString(),
-      );
-    }
-
-    notifyListeners();
-  }
-
-  Future<void> onRefresh() async {
-
-    return loadData();
-  }
-
-  ValueNotifier<bool> dataLoaded = ValueNotifier(false);
-  Future<void> loadData() async {
-    // Call the API and store the data in attendanceList
-    attendanceList = await client.GetAttendanceHistory(AttendanceHistoryRequest(employeeId: constants.loginData.employeeId, monthId: currentMonth));
-    dataLoaded.value = true; // Indicate that the data has been loaded
-    notifyListeners();
-  }
 }

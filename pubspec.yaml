@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
   simple_circular_progress_bar:
+  dropdown_search: ^5.0.6
   flutter_keyboard_visibility:
   device_preview:
   provider: ^6.0.5

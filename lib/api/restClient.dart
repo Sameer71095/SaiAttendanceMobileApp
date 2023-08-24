@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:ClockSpotter/api/MultipartFileWrapper.dart';
 import 'package:ClockSpotter/entities/default_response_entity.dart';
+import 'package:ClockSpotter/entities/departments/DepartmentsResponseEntity.dart';
+import 'package:ClockSpotter/entities/location_entity/location_response.dart';
 import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
 import 'package:ClockSpotter/entities/task_entity/add_task_request.dart';
+import 'package:ClockSpotter/entities/task_entity/get_all_team_response.dart';
 import 'package:ClockSpotter/entities/task_entity/employee_task_response.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_request_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
@@ -107,6 +110,19 @@ abstract class RestClient {
 
   @POST("/task/getemployeetasks")
   Future<EmployeeTasksResponse> GetEmployeeTasks(@Query("EmployeeId") int? employeeId);
+
+  @POST("/employee/getallteam")
+  Future<GetAllTeamResponse> GetAllTeam(@Query("employerId") int? employerId);
+
+
+
+
+  @POST("/department/getdepartments")
+  Future<DepartmentResponse> getDepartments();
+
+
+  @POST("/location/getlocationsbyemployerid")
+  Future<LocationResponse> GetLocations(@Query("employerId") int? employerId);
 
 
 

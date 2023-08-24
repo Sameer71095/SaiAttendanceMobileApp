@@ -27,13 +27,13 @@ class PeoplesView extends StatelessWidget {
   }
 }
 
-class SecondView extends StatelessWidget {
-  const SecondView({required Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-    );
-  }
-}
+// class SecondView extends StatelessWidget {
+//   const SecondView({required Key key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: Colors.red,
+//     );
+//   }
+// }
