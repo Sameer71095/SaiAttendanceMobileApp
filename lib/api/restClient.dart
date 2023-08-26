@@ -5,6 +5,7 @@ import 'package:ClockSpotter/entities/default_response_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_request_entity.dart';
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
 import 'package:dio/dio.dart' hide Headers;
+import 'package:dio/io.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart';
@@ -12,7 +13,9 @@ import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entit
 import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
 import 'package:ClockSpotter/entities/login_entity/login_request_entity.dart';
 import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
+import 'dart:io';
 part 'restClient.g.dart';
+
 
 //@RestApi(baseUrl: 'http://10.39.1.117:8020/api')
 @RestApi(baseUrl: 'https://api.clockspotter.com/api')
@@ -21,6 +24,11 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String? baseUrl}) {
     dio
       ..options = BaseOptions(receiveTimeout: Duration(seconds: 30000), connectTimeout: Duration(seconds: 30000))
+      ..httpClientAdapter = (DefaultHttpClientAdapter()
+        ..onHttpClientCreate = (client) {
+          client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+          return client;
+        })
       ..interceptors.addAll([
         InterceptorsWrapper(
           onRequest: (options, handler) {

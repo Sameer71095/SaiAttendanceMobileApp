@@ -7,7 +7,7 @@ class AttendanceResponseEntity {
 
   AttendanceResponseEntity.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
-    errorMessage = json['errorMessage'];
+    errorMessage = json['message'];  // Change here
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
@@ -19,14 +19,13 @@ class AttendanceResponseEntity {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['isSuccess'] = this.isSuccess;
-    data['errorMessage'] = this.errorMessage;
+    data['message'] = this.errorMessage;  // Change here
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
-
 
 class Data {
   int? employeeID;
@@ -37,18 +36,18 @@ class Data {
   Data({this.employeeID, this.name, this.email, this.isCheckedOut});
 
   Data.fromJson(Map<String, dynamic> json) {
-    employeeID = json['EmployeeID'];
-    name = json['Name'];
-    email = json['Email'];
-    isCheckedOut = json['IsCheckedOut'];
+    employeeID = json['employeeID'];  // Change here
+    name = json['name'];              // Change here
+    email = json['email'];            // Change here
+    isCheckedOut = json['isCheckedOut']; // Change here
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['EmployeeID'] = this.employeeID;
-    data['Name'] = this.name;
-    data['Email'] = this.email;
-    data['IsCheckedOut'] = this.isCheckedOut;
+    data['employeeID'] = this.employeeID; // Change here
+    data['name'] = this.name;             // Change here
+    data['email'] = this.email;           // Change here
+    data['isCheckedOut'] = this.isCheckedOut; // Change here
     return data;
   }
 }

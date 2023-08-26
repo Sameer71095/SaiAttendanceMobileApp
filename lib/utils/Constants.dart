@@ -63,6 +63,12 @@ class Constants {
      }
 
      _locationData = await location.getLocation();
+
+// Check if location is mocked
+     if (_locationData.isMock!) {
+       showToast('Invalid location.', duration: 3);
+       return false;
+     }
      for (SiteLocations targetLocation in locations!) {
        double distance = calculateDistance(
            _locationData.latitude!, _locationData.longitude!, targetLocation.latitude!, targetLocation.longitude!);
