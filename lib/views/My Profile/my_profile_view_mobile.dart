@@ -6,6 +6,7 @@ import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/my_profile_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -30,24 +31,27 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
     double width = MediaQuery.of(context).size.width;
 
     var theme = Theme.of(context).textTheme;
-    double fontSize = 20;
+    double fontSize = 18;
 
     return SafeArea(
       child: Scaffold(
-        drawer: NewDrawer(),
+        drawer: DrawerView(),
         body: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      image: AssetImage('assets/images/background/back.jpg'))),
+                color: AppColor.backgroundColor
+                  // image: DecorationImage(
+                  //     fit: BoxFit.cover,
+                  //     alignment: Alignment.center,
+                  //     image: AssetImage('assets/images/background/back.jpg'))
+              ),
             ),
             SingleChildScrollView(
               child: Column(
                 children: [
                   AppBar(
+                    iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
                     centerTitle: true,
                     backgroundColor: Colors.transparent,
                     elevation: 0,

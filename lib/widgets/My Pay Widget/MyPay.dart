@@ -5,16 +5,12 @@ import 'package:intl/intl.dart';
 
 class MyPayTile extends StatelessWidget {
   final String name;
-  final String date;
-  final String totalHours;
-  final List<Map<bool?, String>> timeEntries;
+   final String date;
 
-  const MyPayTile({
+   MyPayTile({
     Key? key,
-    required this.name,
-    required this.date,
-    required this.totalHours,
-    required this.timeEntries,
+      required this.name,
+     required this.date,
   }) : super(key: key);
 
   @override
@@ -22,72 +18,90 @@ class MyPayTile extends StatelessWidget {
     double height=MediaQuery.of(context).size.height;
     var theme = Theme.of(context).textTheme;
 
-    return Container(
-      padding: EdgeInsets.all(5),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 10,
-              child: Column(
+    return  Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(
+                0.5), // shadow color
+            spreadRadius:
+            2, // how spread out the shadow is
+            blurRadius:
+            5, // how blurry the shadow is
+            offset: Offset(
+                0, 1), // offset of the shadow
+          ),
+        ],
+        color: AppColor.backgroundContainerSmall,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      padding: EdgeInsets.symmetric(
+          horizontal: 10, vertical: 10),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
+          ),
+          SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+
                 children: [
-                  Text(date, style:TextStyle(fontSize: 16, fontWeight: FontWeight.bold) ),
-                  SizedBox(height: height*0.02,),
                   Container(
+                    constraints:  BoxConstraints(maxWidth: 150),
                     child: Text(
-                      'Name :Sameer',style: theme.displayMedium,
+                      'Name :Sameer Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
                     ),
                   ),
                   SizedBox(height: 10,),
                   Container(
+                    constraints:  BoxConstraints(maxWidth: 150),
                     child: Text(
                       "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
                     ),
                   ),
 
                 ],
+
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: (){
-                  },
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                          'Paid!',
-                          style: theme.headlineSmall?.copyWith(
-                              color: Colors.white
-                          )
-                      ),
-                    ),
-                    height: 30,
-                    width: 70,
-                    decoration: BoxDecoration(
 
-                      borderRadius:
-                      BorderRadius.circular(10),
-
-
-                      color: AppColor.tapColor,
+              InkWell(
+                onTap: (){
+                },
+                child: Container(
+                  child: Center(
+                    child: Text(
+                        'Paid',
+                        style: theme.headlineSmall?.copyWith(
+                            color: Colors.white
+                        )
                     ),
                   ),
+                  height: 30,
+                  width: 90,
+                  decoration: BoxDecoration(
+
+                    borderRadius:
+                    BorderRadius.circular(10),
+
+
+                    color: AppColor.tapColor,
+                  ),
                 ),
-              ],
-              ),
-            ),
-          ],
-        ),
+              )
+            ],
+          ),
+
+
+
+        ],
       ),
     );
+
   }
 }

@@ -73,9 +73,9 @@ void main() async {
         options.release = 'AttendanceSystem@1.0.0'; // Replace with your app's name and version
       },
        appRunner: () => runApp(MyApp()),
-     /* appRunner: () => runApp(DevicePreview(
-        enabled: true,
-        builder: (context)=>MyApp())),*/
+      // appRunner: () => runApp(DevicePreview(
+      //   enabled: true,
+      //   builder: (context)=>MyApp())),
 
     );
     // runApp(MyApp());

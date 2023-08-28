@@ -6,6 +6,7 @@ import 'dart:math';
 
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/re_register_viewmodel.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -31,117 +32,122 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
     double height = MediaQuery.of(context).size.height;
     var theme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      drawer: NewDrawer(),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    image: AssetImage('assets/images/background/back.jpg'))),
-          ),
-
-          FutureBuilder<void>(
-            future: model.initializeControllerFuture,
-            builder: (context, snapshot) {
-              double progress = 0.5; // Example progress value
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Center(
-
-
-
-                   child: ClipOval(
-                         child: CameraPreview(model.controller),
-                      ),
-
-
-
-
-
-
-                );
-              } else {
-                return Center(child: CircularProgressIndicator(color: AppColor.iconColor,));
-              }
-            },
-          ),
-          // Positioned(
-          //   top: (height * 0.3) / 2,
-          //   left: (height * 0.05) / 2,
-          //   child: SafeArea(
-          //     child: Container(
-          //       decoration: BoxDecoration(
-          //         shape: BoxShape.circle,
-          //         color: Colors.brown,
-          //       ),
-          //       child: IconButton(
-          //         icon: Icon(Icons.arrow_back, color: Colors.white),
-          //         onPressed: () {
-          //           Navigator.pop(context);
-          //         },
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-          Positioned(
-            bottom: height * 0.05,
-            left: 0,
-            right: 0,
-            child:  model.isLoading? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () async {
-                  },
-                  backgroundColor: Colors.brown,
-                  child: const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  ),
-                ),
-              ],
-            ):Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () async {
-
-                    try {
-
-                      model.isLoading = true;
-                      model.notifyListeners();
-                      await model.initializeControllerFuture;
-                      final image = await model.controller.takePicture();
-                      File imageFile = await model.GenerateOptimizedFile(image);
-                      // model.onCaptureClick(imageFile);
-                      // print('Image saved at: ${imageFile.path}');
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                  child: Icon(Icons.camera, size: 30, color:AppColor.iconColor ),
-                  backgroundColor:AppColor.primaryColor
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-
-            child: AppBar(
-              centerTitle: true,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              flexibleSpace: Container(),
-              title: Text(
-                'Re-register your face',
-                style: theme.titleLarge?.copyWith(color: Colors.white),
+    return SafeArea(
+      child: Scaffold(
+        drawer: DrawerView(),
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: AppColor.backgroundColor
+                  // image: DecorationImage(
+                  //     fit: BoxFit.cover,
+                  //     alignment: Alignment.center,
+                  //     image: AssetImage('assets/images/background/back.jpg'))
               ),
             ),
-          ),
 
-        ],
+            FutureBuilder<void>(
+              future: model.initializeControllerFuture,
+              builder: (context, snapshot) {
+                double progress = 0.5; // Example progress value
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+
+
+
+                     child: ClipOval(
+                           child: CameraPreview(model.controller),
+                        ),
+
+
+
+
+
+
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator(color: AppColor.iconColor,));
+                }
+              },
+            ),
+            // Positioned(
+            //   top: (height * 0.3) / 2,
+            //   left: (height * 0.05) / 2,
+            //   child: SafeArea(
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //         shape: BoxShape.circle,
+            //         color: Colors.brown,
+            //       ),
+            //       child: IconButton(
+            //         icon: Icon(Icons.arrow_back, color: Colors.white),
+            //         onPressed: () {
+            //           Navigator.pop(context);
+            //         },
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+            Positioned(
+              bottom: height * 0.05,
+              left: 0,
+              right: 0,
+              child:  model.isLoading? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () async {
+                    },
+                    backgroundColor: Colors.brown,
+                    child: const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ):Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () async {
+
+                      try {
+
+                        model.isLoading = true;
+                        model.notifyListeners();
+                        await model.initializeControllerFuture;
+                        final image = await model.controller.takePicture();
+                        File imageFile = await model.GenerateOptimizedFile(image);
+                        // model.onCaptureClick(imageFile);
+                        // print('Image saved at: ${imageFile.path}');
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    child: Icon(Icons.camera, size: 30, color:AppColor.iconColor ),
+                    backgroundColor:AppColor.primaryColor
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+
+              child: AppBar(
+                iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                centerTitle: true,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                flexibleSpace: Container(),
+                title: Text(
+                  'Re-register your face',
+                  style: theme.titleLarge?.copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

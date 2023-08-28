@@ -4,6 +4,7 @@
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/request_letter_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:ClockSpotter/widgets/LetterWidget/LetterTile.dart';
 import 'package:flutter/material.dart';
@@ -25,25 +26,28 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
     double height =MediaQuery.of(context).size.height;
     double width =MediaQuery.of(context).size.width;
 
+    final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
 
 
     return  SafeArea(
       child: Scaffold(
-        drawer: NewDrawer(),
+        drawer: DrawerView(),
         body: Stack(
           children: [
 
         Container(
         decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            image:AssetImage('assets/images/background/back.jpg')
-        )
+          color: AppColor.backgroundColor
+        // image: DecorationImage(
+        //     fit: BoxFit.cover,
+        //     alignment: Alignment.center,
+        //     image:AssetImage('assets/images/background/back.jpg')
+        // )
       ),),
             Column(
               children: [
                 AppBar(
+                  iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
@@ -180,43 +184,47 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
 
                         SizedBox(height: 15.0),
                         Container(
-                          height: height*0.05,
-                          width: width*0.4,
+                          height: height * 0.05,
+                          width: width * 0.4,
                           decoration: BoxDecoration(
-                              color: Colors.blue.shade900,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
+                            color: AppColor.backgroundContainerSmall,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.0),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(
+                                    0.5), // shadow color
+                                spreadRadius:
+                                2, // how spread out the shadow is
+                                blurRadius:
+                                5, // how blurry the shadow is
+                                offset: Offset(
+                                    0, 2), // offset of the shadow
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.lightBlue,
-                                  blurRadius: 5.0, // soften the shadow
-                                  spreadRadius: 3.0, //extend the shadow
-                                  offset: Offset(
-                                    0.0, // Move to right 5  horizontally
-                                    0.0, // Move to bottom 5 Vertically
-                                  ),
-                                )
-                              ]),
+                            ],),
 
 
-                          child: Center(child: Text('Submit',style: theme.displayMedium?.copyWith(
-                              color: AppColor.textColor,
-                              fontWeight: FontWeight.bold
-                          ),)),
+                          child: Center(
+                              child: Text('Submit request', style: theme
+                                  .displayMedium?.copyWith(
+                                  color: AppColor.textColorBlack,
+                                  fontWeight: FontWeight.bold
+                              ),)),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Expanded(
+                if(!isKeyboard)
+                  Expanded(
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
-                          color: AppColor.ContainerBackground
+                          color: AppColor.backgroundContainer
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -268,6 +276,10 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
 }
 
   Widget _buildList(RequestLetterViewModel model) {
+    double fontSize=12;
+
+    List dummy = ['this', 'susu', 'sjhdjs', 'djsks'];
+
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
@@ -277,7 +289,7 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
       },
       child: RefreshIndicator(
         onRefresh: model.onRefresh,
-        color:  Colors.blueAccent,
+        color:  AppColor.backgroundColor,
         child: ValueListenableBuilder<bool>(
           valueListenable: model.dataLoaded,
           builder: (BuildContext context, bool dataLoaded, Widget? child) {
@@ -288,33 +300,142 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: model.attendanceList.data!.length,
+                itemCount: dummy.length,
 
                 itemBuilder: (context, index) {
-                  final attendance = model.attendanceList.data![index];
+
                   return InkWell(
                       onTap: () {},
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.only(bottom: 15,left: 10,right: 10),
                         child: Container(
 
                           decoration: BoxDecoration(
-                              color:AppColor.containercolor,
-                              borderRadius:  BorderRadius.circular(15)
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(
+                                      0.5), // shadow color
+                                  spreadRadius:
+                                  2, // how spread out the shadow is
+                                  blurRadius:
+                                  5, // how blurry the shadow is
+                                  offset: Offset(
+                                      0, 3), // offset of the shadow
+                                ),
+                              ],
+                              color: AppColor.backgroundContainerSmall,
+                              borderRadius: BorderRadius.circular(15)
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                            child: LetterTile(
-                              name: attendance.employeeName!,
-                              date: attendance.checkedDate!,
-                              totalHours: attendance.totalHours!, // Update this value based on your data calculation
-                              timeEntries: attendance.checked
-                              !.map((e) => {
-                                e.isCheckedout: e.checkedTime!,
-                                /*   'out': e.isCheckedout ? 'checked out' : null,*/
-                              })
-                                  .toList(), index: index,
-                            ) ,
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            'DD/MM/YY',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+
+
+                                                fontSize: fontSize)
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Text(
+                                            'Leave Type: Sick',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+
+                                                fontSize: fontSize)
+                                        ),
+                                        SizedBox(height: 5,),
+
+                                        Text(
+                                            'From: DD/MM/YY',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+
+                                                fontSize: fontSize)
+                                        ),
+                                        SizedBox(height: 5,),
+
+                                        Text(
+                                            'To: DD/MM/YY',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+
+                                                fontSize: fontSize)
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Text(
+                                            'Reason : Because i was ill',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+
+                                                fontSize: fontSize)
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: index == 0 ? Container(
+                                      child: Center(
+                                          child: Text(
+                                              'Approved',
+                                              style: TextStyle(color: Colors.white,
+                                                  fontSize: 14)
+                                          )
+                                      ),
+                                      height: 35,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColor.approvedColor,
+                                        ),
+
+                                        borderRadius:
+                                        BorderRadius.circular(6),
+
+
+                                        color: AppColor.approvedColor,
+                                      ),
+                                    ) : Container(
+                                      child: Center(
+                                          child: Text(
+                                              'Peding',
+                                              style: TextStyle(color: AppColor.textColorWhite,
+                                                  fontSize: 15)
+                                          )
+                                      ),
+                                      height: 35,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color:AppColor.pendingColor
+
+                                          ),
+
+                                          borderRadius:
+                                          BorderRadius.circular(6),
+
+
+                                          color: AppColor.pendingColor
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       )

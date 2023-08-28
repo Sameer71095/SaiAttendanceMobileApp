@@ -178,7 +178,7 @@ class HomeViewModel extends ChangeNotifier {
           await constants.init();
 
        //   showToast("Update Called",duration: 1);
-          showToast("Update Called",duration: 3);
+       //    showToast("Update Called",duration: 3);
           if(response.data!.isImagesRegistered==true){
 
           }else{

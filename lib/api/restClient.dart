@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:dio/io.dart';
+import 'dart:io';
 import 'package:ClockSpotter/api/MultipartFileWrapper.dart';
 import 'package:ClockSpotter/entities/default_response_entity.dart';
 import 'package:ClockSpotter/entities/departments/DepartmentsResponseEntity.dart';
@@ -27,6 +28,11 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String? baseUrl}) {
     dio
       ..options = BaseOptions(receiveTimeout: Duration(seconds: 30000), connectTimeout: Duration(seconds: 30000))
+      ..httpClientAdapter = (DefaultHttpClientAdapter()
+        ..onHttpClientCreate = (client) {
+          client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+          return client;
+        })
       ..interceptors.addAll([
         InterceptorsWrapper(
           onRequest: (options, handler) {

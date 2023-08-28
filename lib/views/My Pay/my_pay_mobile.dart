@@ -5,6 +5,7 @@ import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/Attendance_viewmodel.dart';
 import 'package:ClockSpotter/viewmodels/my_pay_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:ClockSpotter/widgets/My%20Pay%20Widget/MyPay.dart';
 import 'package:flutter/material.dart';
@@ -25,167 +26,181 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
   Widget build(BuildContext context, MyPayViewModel model) {
     var theme = Theme.of(context).textTheme;
 
-    List myProductonTap = [];
 
     return Builder(
       builder: (BuildContext context) {
 
-        final MediaQueryData mediaQuery = MediaQuery.of(context);
 
-        return Scaffold(
-
-
-          drawer: NewDrawer(),
-          body: Stack(
-            children: [
-
-              Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      image:AssetImage('assets/images/background/back.jpg')
-                  )
-              ),),
-
-              Column(
-                children: [
-                  AppBar(
-                    centerTitle: true,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    flexibleSpace: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
+        return SafeArea(
+          child: Scaffold(
 
 
-                            image: AssetImage('assets/images/background/back.jpg'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topRight
+            drawer: DrawerView(),
+            body: Stack(
+              children: [
+
+                Container(
+                decoration: BoxDecoration(
+                  color: AppColor.backgroundColor
+                    // image: DecorationImage(
+                    //     fit: BoxFit.cover,
+                    //     alignment: Alignment.center,
+                    //     image:AssetImage('assets/images/background/back.jpg')
+                    // )
+                ),),
+
+                Column(
+                  children: [
+                    AppBar(
+                      iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                      centerTitle: true,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      flexibleSpace: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+
+
+                              image: AssetImage('assets/images/background/back.jpg'),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topRight
+                          ),
                         ),
                       ),
+                      title: Text('My Pay',style: theme.titleLarge?.copyWith(color: Colors.white),),
                     ),
-                    title: Text('My Pay',style: theme.titleLarge?.copyWith(color: Colors.white),),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: AppColor.ContainerBackground
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                          child: Column(
-                            children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: AppColor.backgroundContainer
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                            child: Column(
+                              children: [
 
-                              ///
+                                ///
 
-                              Column(
+                                Column(
 
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: AppColor.containercolor,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
-                                        ),
-                                        SizedBox(height: 10,),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(
+                                                0.5), // shadow color
+                                            spreadRadius:
+                                            2, // how spread out the shadow is
+                                            blurRadius:
+                                            5, // how blurry the shadow is
+                                            offset: Offset(
+                                                0, 1), // offset of the shadow
+                                          ),
+                                        ],
+                                        color: AppColor.backgroundContainerSmall,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
+                                          ),
+                                          SizedBox(height: 10,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
 
-                                              children: [
-                                                Container(
-                                                  constraints:  BoxConstraints(maxWidth: 150),
-                                                  child: Text(
-                                                    'Name :Sameer Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
+                                                children: [
+                                                  Container(
+                                                    constraints:  BoxConstraints(maxWidth: 150),
+                                                    child: Text(
+                                                      'Name :Sameer Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
+                                                    ),
                                                   ),
-                                                ),
-                                                SizedBox(height: 10,),
-                                                Container(
-                                                  constraints:  BoxConstraints(maxWidth: 150),
-                                                  child: Text(
-                                                    "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
+                                                  SizedBox(height: 10,),
+                                                  Container(
+                                                    constraints:  BoxConstraints(maxWidth: 150),
+                                                    child: Text(
+                                                      "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
+                                                    ),
                                                   ),
-                                                ),
 
-                                              ],
+                                                ],
 
-                                            ),
-
-                                            InkWell(
-                                              onTap: (){
-                                              },
-                                              child: Container(
-                                                child: Center(
-                                                  child: Text(
-                                                      'Pending',
-                                                      style: theme.headlineSmall?.copyWith(
-                                                        color: Colors.white
-                                                      )
-                                                  ),
-                                                ),
-                                                height: 30,
-                                                width: 90,
-                                                decoration: BoxDecoration(
-
-                                                  borderRadius:
-                                                  BorderRadius.circular(10),
-
-
-                                                  color: AppColor.tapColor,
-                                                ),
                                               ),
-                                            )
-                                          ],
-                                        ),
+
+                                              InkWell(
+                                                onTap: (){
+                                                },
+                                                child: Container(
+                                                  child: Center(
+                                                    child: Text(
+                                                        'Pending',
+                                                        style: theme.headlineSmall?.copyWith(
+                                                          color: Colors.white
+                                                        )
+                                                    ),
+                                                  ),
+                                                  height: 30,
+                                                  width: 90,
+                                                  decoration: BoxDecoration(
+
+                                                    borderRadius:
+                                                    BorderRadius.circular(10),
+
+
+                                                    color: AppColor.pendingColor,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
 
 
 
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(top: 10),
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'History',
-                                        style:theme.displayLarge,
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: _buildList(model),
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(top: 10),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'History',
+                                          style:theme.displayLarge,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: _buildList(model),
 
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
 
 
-            ],
+              ],
 
+            ),
           ),
         );
       },
@@ -223,66 +238,25 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
     );
   }
   Widget _buildList(MyPayViewModel model) {
-    return NotificationListener<ScrollNotification>(
-      onNotification: (ScrollNotification scrollInfo) {
-        if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-          //  model.loadMore(); // Function to load more data when the list reaches the end
-        }
-        return true;
-      },
-      child: RefreshIndicator(
-        onRefresh: model.onRefresh,
-        color:  Colors.blueAccent,
-        child: ValueListenableBuilder<bool>(
-          valueListenable: model.dataLoaded,
-          builder: (BuildContext context, bool dataLoaded, Widget? child) {
-            if (!dataLoaded) {
-              model.loadData();
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: model.attendanceList.data!.length,
 
-                itemBuilder: (context, index) {
-                  final attendance = model.attendanceList.data![index];
-                  return InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
+    return ListView.builder(
+    shrinkWrap: true,
+    physics: const BouncingScrollPhysics(),
+    itemCount: 5,
 
-                        decoration: BoxDecoration(
-                          color:AppColor.containercolor,
-                          borderRadius:  BorderRadius.circular(15)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                          child: MyPayTile(
-                            name: attendance.employeeName!,
-                            date: attendance.checkedDate!,
-                            totalHours: attendance.totalHours!, // Update this value based on your data calculation
-                            timeEntries: attendance.checked
-                            !.map((e) => {
-                              e.isCheckedout: e.checkedTime!,
-                              /*   'out': e.isCheckedout ? 'checked out' : null,*/
-                            })
-                                .toList(),
+    itemBuilder: (context, index) {
+      return InkWell(
+        onTap: () {},
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+            child: MyPayTile(name: 'Rakesh', date: '23/23/23',
 
-                          )
-                        ),
-                      ),
-                    ),
-
-                  );
-                },
-              );
-            }
-          },
+            )
         ),
-      ),
-    );
+
+      );
+    },
+      );
   }
 
 

@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -27,6 +28,17 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
     return Scaffold(
       body: Stack(
         children: [
+          Container(
+
+            decoration: BoxDecoration(
+              color: AppColor.backgroundColor,
+
+              // image: DecorationImage(
+              //     fit: BoxFit.cover,
+              //     alignment: Alignment.center,
+              //     image:AssetImage('assets/images/background/back.jpg')
+              // )
+            ),),
           FutureBuilder<void>(
             future: model.initializeControllerFuture,
             builder: (context, snapshot) {
@@ -48,7 +60,7 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.brown,
+                  color: AppColor.primaryColor,
                 ),
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -69,7 +81,7 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
                 FloatingActionButton(
                   onPressed: () async {
                   },
-                  backgroundColor: Colors.brown,
+                  backgroundColor: AppColor.primaryColor,
                   child: const Center(
                     child: CircularProgressIndicator(color: Colors.white),
                   ),
@@ -94,7 +106,7 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
                     }
                   },
                   child: Icon(Icons.camera, size: 30, color: Colors.white),
-                  backgroundColor: Colors.brown,
+                  backgroundColor: AppColor.primaryColor,
                 ),
               ],
             ),

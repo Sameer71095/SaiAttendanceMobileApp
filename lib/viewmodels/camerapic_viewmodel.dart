@@ -90,6 +90,11 @@ class CameraPicViewModel extends ChangeNotifier {
       final String base64Image = base64Encode(imageBytes);
 
       LocationData _locationData = await location.getLocation();
+      if (_locationData.isMock!) {
+        showToast('Invalid location.', duration: 3);
+        isLoading = false;
+        return;
+      }
       String? loginDataValue = await storage.read(key: 'loginResponse');
       if (loginDataValue == null) {
         showToast('Login data not found.', duration: 3);
@@ -113,17 +118,17 @@ class CameraPicViewModel extends ChangeNotifier {
 
           // Populate the AttendanceRequestEntity object
           AttendanceRequestEntity attendanceEntity = AttendanceRequestEntity(
-              checkedTime: DateTime.now(),
-              checkedDate: DateTime.now(),
-              latitude: _locationData.latitude,
-              longitude: _locationData.longitude,
               checkedImage: base64Image,
-              isCheckedOut: false,
-              isLate: false,
-              deviceName: deviceName,
-              deviceId: deviceId,
               employerId: val.employerId,
               loggedEmployeeId: val.employeeId,
+              deviceName: deviceName,
+              deviceId: deviceId,
+              latitude: _locationData.latitude,
+              longitude: _locationData.longitude,
+              checkedTime: DateTime.now(),
+              checkedDate: DateTime.now(),
+              isCheckedOut: false,
+              isLate: false,
               isExcused: false,
               location: val.location,
               reason: ""
@@ -217,8 +222,18 @@ class CameraPicViewModel extends ChangeNotifier {
                                         padding: EdgeInsets.all(8.0),
                                         itemCount: checkedInEmployees.length,
                                         itemBuilder: (BuildContext context, int index) {
-                                          return Text(checkedInEmployees[index], style: TextStyle(fontSize: 16));
-                                        },
+
+                                          return Container(
+                                            color: Colors.green, // green background color
+                                            padding: EdgeInsets.all(8.0), // optional: for some padding around the text
+                                            child: Text(
+                                              checkedInEmployees[index],
+                                              style: TextStyle(
+                                                color: Colors.white, // setting text color to white to be prominent against the green background
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          );                                        },
                                         separatorBuilder: (BuildContext context, int index) => const Divider(),
                                       ),
                                     ),
@@ -242,7 +257,17 @@ class CameraPicViewModel extends ChangeNotifier {
                                         padding: EdgeInsets.all(8.0),
                                         itemCount: checkedOutEmployees.length,
                                         itemBuilder: (BuildContext context, int index) {
-                                          return Text(checkedOutEmployees[index], style: TextStyle(fontSize: 16));
+                                          return Container(
+                                            color: Colors.red, // red background color
+                                            padding: EdgeInsets.all(8.0), // optional: for some padding around the text
+                                            child: Text(
+                                              checkedOutEmployees[index],
+                                              style: TextStyle(
+                                                color: Colors.white, // setting text color to white to be prominent against the red background
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         separatorBuilder: (BuildContext context, int index) => const Divider(),
                                       ),

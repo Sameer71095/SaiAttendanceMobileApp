@@ -6,6 +6,7 @@ import 'package:ClockSpotter/viewmodels/Insurance_viewmodel.dart';
 import 'package:ClockSpotter/viewmodels/work_expense_viewmodel.dart';
 
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -35,18 +36,22 @@ class WorkExpenseMobilePortrait extends BaseModelWidget<WorkExpenseViewModel> {
 
     return SafeArea(
       child: Scaffold(
-          drawer: NewDrawer(),
+          drawer: DrawerView(),
           body: Stack(children: [
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      image: AssetImage('assets/images/background/back.jpg'))),
+                color: AppColor.backgroundColor
+                  // image: DecorationImage(
+                  //     fit: BoxFit.cover,
+                  //     alignment: Alignment.center,
+                  //     image: AssetImage('assets/images/background/back.jpg')
+                  // )
+              ),
             ),
             Column(
               children: [
                 AppBar(
+                  iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
                   elevation: 0,

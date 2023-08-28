@@ -10,6 +10,7 @@ import 'package:ClockSpotter/viewmodels/attendance_viewmodel.dart';
 import 'package:ClockSpotter/viewmodels/request_letter_viewmodel.dart';
 import 'package:ClockSpotter/viewmodels/task_sheet_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:ClockSpotter/widgets/TaskWidget/TaskTile.dart';
 import 'package:flutter/material.dart';
@@ -99,22 +100,24 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
     return  SafeArea(
 
       child: Scaffold(
-        drawer: NewDrawer(),
+        drawer: DrawerView(),
         body: Stack(
           children: [
 
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      image:AssetImage('assets/images/background/back.jpg')
-                  )
+                color: AppColor.backgroundColor
+                  // image: DecorationImage(
+                  //     fit: BoxFit.cover,
+                  //     alignment: Alignment.center,
+                  //     image:AssetImage('assets/images/background/back.jpg')
+                  // )
               ),),
             Column(
               children: [
 
                 AppBar(
+                  iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
@@ -310,23 +313,24 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                               height: height * 0.06,
                               width: width * 0.5,
                               decoration: BoxDecoration(
-                                  color: Colors.blue.shade900,
+                                  color: AppColor.backgroundContainerSmall,
                                   borderRadius: const BorderRadius.all(
-                                    Radius.circular(15.0),
+                                    Radius.circular(8.0),
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.lightBlue,
-                                      blurRadius: 5.0, // soften the shadow
-                                      spreadRadius: 3.0, //extend the shadow
-                                      offset: Offset(
-                                        0.0, // Move to right 5  horizontally
-                                        0.0, // Move to bottom 5 Vertically
-                                      ),
-                                    )
-                                  ]),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(
+                                        0.5), // shadow color
+                                    spreadRadius:
+                                    2, // how spread out the shadow is
+                                    blurRadius:
+                                    5, // how blurry the shadow is
+                                    offset: Offset(
+                                        0, 1), // offset of the shadow
+                                  ),
+                                ],),
                               child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
-                                  color: AppColor.textColor,
+                                  color: AppColor.addNewTask,
                                   fontWeight: FontWeight.bold
                               ),),),
                             ),
@@ -345,8 +349,9 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                       padding: const EdgeInsets.all(20.0),
                       child: Container(
                         decoration: BoxDecoration(
+
                             borderRadius: BorderRadius.circular(20.0),
-                            color: AppColor.ContainerBackground
+                            color: AppColor.backgroundContainer
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -418,7 +423,6 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
                 itemBuilder: (context, index) {
                   final employeeTasks = model.employeeTasks;
-                print(employeeTasks?[index]);
                   DateTime dateTime = DateTime.parse(employeeTasks![index].taskDate.toString());
                   DateTime apiTimeStart = DateFormat("HH:mm:ss").parse(employeeTasks[index].taskStartTime.toString());
                   DateTime apiTimeEnd = DateFormat("HH:mm:ss").parse(employeeTasks[index].taskEndTime.toString());
@@ -428,11 +432,23 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
                   String formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
+                    padding: const EdgeInsets.only(bottom: 15,left: 5,right: 5,top: 5),
                     child: Container(
 
                       decoration: BoxDecoration(
-                          color:AppColor.containercolor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(
+                                  0.5), // shadow color
+                              spreadRadius:
+                              2, // how spread out the shadow is
+                              blurRadius:
+                              5, // how blurry the shadow is
+                              offset: Offset(
+                                  0, 3), // offset of the shadow
+                            ),
+                          ],
+                          color:AppColor.backgroundContainerSmall,
                           borderRadius:  BorderRadius.circular(15)
                       ),
                       child: Padding(

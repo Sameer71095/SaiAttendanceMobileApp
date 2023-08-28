@@ -2,6 +2,7 @@
 
 
 import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/views/Insurance/insurance_view.dart';
 import 'package:ClockSpotter/views/My%20Pay/my_pay_view.dart';
 import 'package:ClockSpotter/views/My%20Profile/my_profile_view.dart';
@@ -39,10 +40,12 @@ class _NewDrawerState extends State<NewDrawer> {
           children: [
             Container(
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/images/background/back.jpg')
-                    )
+                  color: AppColor.backgroundColor,
+                    // image: DecorationImage(
+                    //
+                    //     fit: BoxFit.cover,
+                    //     image: AssetImage('assets/images/background/back.jpg')
+                    // )
                 )),
             ListView(
 
@@ -55,7 +58,7 @@ class _NewDrawerState extends State<NewDrawer> {
                       ListTile(
                         trailing: Icon(
                           Icons.menu_outlined,
-                          color: Colors.white,
+                          color: AppColor.menuIconColor,
                           size: 30,
                         ),
                         title: const Text('Menu',

@@ -6,6 +6,7 @@ import 'package:ClockSpotter/entities/task_entity/get_all_team_response.dart';
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/peoples_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
+import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 
 import 'package:flutter/material.dart';
@@ -32,19 +33,23 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
 
     return SafeArea(
       child: Scaffold(
-        drawer: NewDrawer(),
+        drawer: DrawerView(),
         body: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      image: AssetImage('assets/images/background/back.jpg'))),
+                color: AppColor.backgroundColor
+                  // image: DecorationImage(
+                  //     fit: BoxFit.cover,
+                  //     alignment: Alignment.center,
+                  //     image: AssetImage('assets/images/background/back.jpg')
+                  // )
+              ),
             ),
             Column(
               children: [
                 AppBar(
+                  iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
@@ -70,95 +75,93 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                   height: 13,
                 ),
                 Expanded(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              // Expanded(
-                              //   child: Container(
-                              //     child: model.dropDownFitler(
-                              //         'Name',
-                              //         model.departmentNames,
-                              //
-                              //         Icon(Icons.person,
-                              //             color: AppColor.iconColorBlack)),
-                              //   ),
-                              // ),
-                              SizedBox(
-                                width: width * 0.011,
-                              ),
-                              // Expanded(
-                              //   child: Container(
-                              //       child:  model.dropDownFitler('Position',model.departmentNames,Icon(Icons.assignment_ind,color: AppColor.iconColorBlack,)),
-                              //
-                              //       ),
-                              // )
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            // Expanded(
+                            //   child: Container(
+                            //     child: model.dropDownFitler(
+                            //         'Name',
+                            //         model.departmentNames,
+                            //
+                            //         Icon(Icons.person,
+                            //             color: AppColor.iconColorBlack)),
+                            //   ),
+                            // ),
+                            SizedBox(
+                              width: width * 0.011,
+                            ),
+                            // Expanded(
+                            //   child: Container(
+                            //       child:  model.dropDownFitler('Position',model.departmentNames,Icon(Icons.assignment_ind,color: AppColor.iconColorBlack,)),
+                            //
+                            //       ),
+                            // )
 
-                            ],
-                          ),
-                          SizedBox(
-                            height: height * 0.014,
-                          ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: height * 0.014,
+                        ),
 
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                    child:  model.dropDownFitler('Branch',model.locationNames,Icon(Icons.location_city,color: Colors.grey.shade600),  (selectedBranch) {
-                                      model.updateSelectedBranch(selectedBranch);
-                                    },),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                  child:  model.dropDownFitler('Branch',model.locationNames,Icon(Icons.location_city,color: Colors.grey.shade700),  (selectedBranch) {
+                                    model.updateSelectedBranch(selectedBranch);
+                                  },),
 
-                                    ),
-                              ),
-                              SizedBox(
-                                width: width * 0.011,
-                              ),
-                              Expanded(
-                                child: Container(
-                                    child:   model.dropDownFitler('Department',model.departmentNames,Icon(Icons.business,color: Colors.grey.shade600,),(selectedDepartment) {
-                                      model.updateSelectedDepartment(selectedDepartment);
-                                    },),
+                                  ),
+                            ),
+                            SizedBox(
+                              width: width * 0.011,
+                            ),
+                            Expanded(
+                              child: Container(
+                                  child:   model.dropDownFitler('Department',model.departmentNames,Icon(Icons.business,color: Colors.grey.shade700,),(selectedDepartment) {
+                                    model.updateSelectedDepartment(selectedDepartment);
+                                  },),
 
-                                    ),
-                              )
-                            ],
-                          ),
-                          //Implementation of filter when button is pressed
-                          // Search filters
-                          // TextField(
-                          //   controller: model.nameController,
-                          //   decoration: InputDecoration(labelText: 'Name'),
-                          // ),
-                          // TextField(
-                          //   controller: model.branchController,
-                          //   decoration: InputDecoration(labelText: 'Branch'),
-                          // ),
-                          // TextField(
-                          //   controller: model.positionController,
-                          //   decoration: InputDecoration(labelText: 'Position'),
-                          // ),
-                          // ElevatedButton(
-                          //   onPressed: (){
-                          //     model.filterMembers();
-                          //   },
-                          //   child: Text('Apply Filters'),
-                          // ),
+                                  ),
+                            )
+                          ],
+                        ),
+                        //Implementation of filter when button is pressed
+                        // Search filters
+                        // TextField(
+                        //   controller: model.nameController,
+                        //   decoration: InputDecoration(labelText: 'Name'),
+                        // ),
+                        // TextField(
+                        //   controller: model.branchController,
+                        //   decoration: InputDecoration(labelText: 'Branch'),
+                        // ),
+                        // TextField(
+                        //   controller: model.positionController,
+                        //   decoration: InputDecoration(labelText: 'Position'),
+                        // ),
+                        // ElevatedButton(
+                        //   onPressed: (){
+                        //     model.filterMembers();
+                        //   },
+                        //   child: Text('Apply Filters'),
+                        // ),
 
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Expanded(
-                            child: _buildList(model, context),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                          child: _buildList(model, context),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
 
-                        ],
-                      ),
+                      ],
                     ),
                   ),
                 )
@@ -204,17 +207,19 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 13),
                         child: Card(
+
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          elevation: 50,
-                          shadowColor: Colors.black,
-                          color: AppColor.ContainerBackground,
+                          elevation: 10,
+                          shadowColor: Colors.grey,
+                          color: AppColor.backgroundContainer,
+
                           child: SizedBox(
                             width: double.infinity,
                             height: model.expandedIndex == index
                                 ? height * 0.65
-                                : height * 0.38,
+                                : height * 0.36,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 20),
@@ -229,17 +234,17 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                       radius: 55,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
+                                   SizedBox(
+                                    height: height*0.03
                                   ),
-                                  Expanded(
+                                  Flexible(
                                     child: Text(
                                       team.name.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
 
                                         fontSize: 20,
-                                        color: AppColor.primaryColor,
+                                        color: AppColor.backgroundColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -248,7 +253,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                     height: 10,
                                   ),
                                   SizedBox(
-                                    width: 110,
+                                    width: width*0.3,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         model.toggleDetail(index);
@@ -256,7 +261,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all(
-                                                AppColor.primaryColor),
+                                                AppColor.backgroundColor),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
@@ -277,7 +282,19 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                       height: height * 0.30,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                          color: AppColor.containercolor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(
+                                                  0.5), // shadow color
+                                              spreadRadius:
+                                              2, // how spread out the shadow is
+                                              blurRadius:
+                                              5, // how blurry the shadow is
+                                              offset: Offset(
+                                                  0, 1), // offset of the shadow
+                                            ),
+                                          ],
+                                          color: AppColor.backgroundContainerSmall,
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                       child: Padding(
