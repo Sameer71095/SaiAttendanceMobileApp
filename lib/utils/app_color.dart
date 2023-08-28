@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 class AppColor{
+  static  Color listViewColor = Colors.white; //main screen background
   static  Color addNewTask = Color(0xFF1F1C46); //main screen background
   static  Color rejectedColor = Color(0xFFDA0000); //main screen background
   static  Color approvedColor = Color(0xFF14670C); //main screen background

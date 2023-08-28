@@ -194,7 +194,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                       // ),
                     ),
                   ),
-                  title: Text('Work',style: theme.titleLarge?.copyWith(
+                  title: Text('Home',style: theme.titleLarge?.copyWith(
                     color: Colors.white
                   ),),
                 ),
@@ -268,7 +268,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                     itemCount: tile.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        color: AppColor.homeScreenIconColor,
+                        color: AppColor.listViewColor,
                         child: Column(
                           children: [
                             ListTile(
@@ -286,8 +286,9 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                 navigateToScreenAtIndex(index);
                               },
                             ),
-                            Divider(
-                              thickness: 1,
+                            if(index!=tile.length-1)
+                                Divider(
+                                  thickness: 1,
                             ),
                           ],
                         ),
