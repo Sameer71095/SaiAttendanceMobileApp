@@ -60,10 +60,10 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.primaryColor,
+                  color: AppColor.menuIconColor,
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  icon: Icon(Icons.arrow_back, color: AppColor.textColorBlack),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -81,9 +81,9 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
                 FloatingActionButton(
                   onPressed: () async {
                   },
-                  backgroundColor: AppColor.primaryColor,
-                  child: const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
+                  backgroundColor: AppColor.backgroundContainer,
+                  child:  Center(
+                    child: CircularProgressIndicator(color: AppColor.backgroundColor),
                   ),
                 ),
               ],
@@ -105,8 +105,8 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
                       print(e);
                     }
                   },
-                  child: Icon(Icons.camera, size: 30, color: Colors.white),
-                  backgroundColor: AppColor.primaryColor,
+                  child: Icon(Icons.camera, size: 30, color: AppColor.backgroundColor),
+                  backgroundColor: AppColor.backgroundContainer,
                 ),
               ],
             ),

@@ -100,9 +100,9 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
                   FloatingActionButton(
                     onPressed: () async {
                     },
-                    backgroundColor: Colors.brown,
-                    child: const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
+                    backgroundColor: AppColor.backgroundContainer,
+                    child:  Center(
+                      child: CircularProgressIndicator(color: AppColor.backgroundColor),
                     ),
                   ),
                 ],
@@ -125,8 +125,8 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
                         print(e);
                       }
                     },
-                    child: Icon(Icons.camera, size: 30, color:AppColor.iconColor ),
-                    backgroundColor:AppColor.primaryColor
+                    child: Icon(Icons.camera, size: 30, color:AppColor.backgroundColor ),
+                    backgroundColor:AppColor.backgroundContainer
                   ),
                 ],
               ),
