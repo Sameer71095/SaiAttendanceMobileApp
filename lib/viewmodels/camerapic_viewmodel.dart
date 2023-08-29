@@ -55,12 +55,12 @@ class CameraPicViewModel extends ChangeNotifier {
 
       if (Platform.isAndroid) {
         AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-        deviceName = "${androidInfo.manufacturer} ${androidInfo.model}";
-        deviceId = androidInfo.id; // Considered unique but may change upon factory reset
+        deviceName = "${androidInfo.manufacturer} ${androidInfo.model} ${androidInfo.version}";
+        deviceId = "${androidInfo.id} ${androidInfo.serialNumber} "; // Considered unique but may change upon factory reset
       } else if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
-        deviceName = iosInfo.name; // This is the device's name
-        deviceId = iosInfo.identifierForVendor!; // Unique identifier
+        deviceName = "${iosInfo.name} ${iosInfo.model} ${iosInfo.localizedModel} ${iosInfo.systemName}"; // This is the device's name
+        deviceId = "${iosInfo.systemVersion} ${iosInfo.utsname} ${iosInfo.identifierForVendor}"; // Unique identifier
       }
 
     }
