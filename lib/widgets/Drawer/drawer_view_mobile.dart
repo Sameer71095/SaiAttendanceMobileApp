@@ -1,6 +1,7 @@
 /// Contains the widgets that will be used for Mobile layout of home,
 /// portrait and landscape
 
+import 'package:ClockSpotter/api/secureCacheManager.dart';
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/drawer_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
@@ -218,7 +219,10 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
 
                                   ),),
 
-                                  onTap: () {
+                                  onTap: () async{
+                                    if(index==tile.length-1)
+                                      await storage
+                                        .deleteAll();
                                     model.toggleTileColor(index);
 
                                     navigateToScreenAtIndex(index);

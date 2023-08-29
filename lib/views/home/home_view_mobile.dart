@@ -171,7 +171,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   // )
               ),),
             Positioned(
-              top: height*0.377,
+              top: height*0.382,
               child: Image.asset('assets/images/background/backRect.png',fit: BoxFit.cover,width: width,),
 
             ),

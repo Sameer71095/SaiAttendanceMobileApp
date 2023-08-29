@@ -1,3 +1,4 @@
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
@@ -14,156 +15,183 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
-
+    var theme = Theme.of(context).textTheme;
 
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
-            if(!isKeyboard)
+            // if(!isKeyboard)
               Container(
-              height: height * 0.49,
+              // height: height * 0.49,
               decoration: BoxDecoration(
-                color: Colors.blue.shade700,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  bottomRight: Radius.circular(60),
-                ),
+                color: AppColor.loginBackground,
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: Radius.circular(60),
+                //   bottomRight: Radius.circular(60),
+                // ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Stack(
-                children: [
-                  if(!isKeyboard)
-                    Positioned(
-                    top: height * 0.11,
-                    left: width * 0.059,
-                    child: Container(
-                      child: Image.asset(
-                        'assets/images/login/loginElement.png',
-                        width: width * 0.83,
-                        height: height * 0.47,
+
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // if(!isKeyboard)
+
+                    // if(!isKeyboard)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          child: Image.asset(
+                            'assets/images/login/loginElement.png',
+                            height: height*0.14
+
+
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  if(!isKeyboard)
-                    Positioned(
-                    top: height * 0.06,
-                    left: width * 0.2,
-                    child: Text(
-                      'Welcome Back',
+                    SizedBox(height: height*0.02,),
+                    Text(
+                      'Login',
                       style: TextStyle(
+                        fontFamily: 'Iceland',
                         color: Colors.white,
-                        fontSize: width * 0.08,
+                        fontSize: width * 0.15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  CustomScrollView(
-                    scrollDirection: Axis.vertical,
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child:  Padding(
-                          padding: EdgeInsets.all(10),
+                    SizedBox(height: height*0.02,),
+                    Stack(
+                      children: [
+                        Image.asset('assets/images/login/loginRect.png',fit: BoxFit.cover,width: width,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
-
-                            mainAxisAlignment: !isKeyboard? MainAxisAlignment.end:MainAxisAlignment.start,
-
-                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              if(isKeyboard)
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    child: Image.asset(
-                                      'assets/images/login/loginElement.png',
-                                      width: width * 0.4,
+                              SizedBox(height: height*0.06,),
+
+                              Column(
+
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Email',
+                                      style: TextStyle(
+                                        color: AppColor.backgroundColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              TextField(
-                                controller: model.emailController,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: height * 0.015,
-                                    horizontal: width * 0.04,
+                                  SizedBox(height: height*0.01,),
+                                  TextField(
+                                    controller: model.emailController,
+                                    decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.015,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: AppColor.backgroundContainer,
+                                      // hintText: 'Username',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.person,
+                                        color: AppColor.backgroundColor,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
                                   ),
-                                  filled: true,
-                                  fillColor: Colors.grey.shade300,
-                                  hintText: 'Username',
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
+                                ],
+                              ),
+                              SizedBox(height: height * 0.03  ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Password',
+                                      style: TextStyle(
+                                        color: AppColor.backgroundColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                  prefixIcon: Icon(
-                                    Icons.person,
-                                    color: Colors.grey,
+                                  SizedBox(height: height*0.01,),
+                                  TextField(
+                                    obscureText: model.passwordVisible,
+                                    controller: model.passwordController,
+                                    decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: height * 0.015,
+                                        horizontal: width * 0.04,
+                                      ),
+                                      filled: true,
+                                      fillColor: AppColor.backgroundContainer,
+                                      // hintText: 'Password',
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.lock,
+                                        color: AppColor.backgroundColor,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        color: AppColor.backgroundColor,
+                                        icon: Icon(
+                                          model.passwordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                        ),
+                                        onPressed: () {
+                                          model.onPasswordVisibility();
+                                        },
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
                                   ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
+                                ],
                               ),
                               SizedBox(height: height * 0.015),
-                              TextField(
-                                obscureText: model.passwordVisible,
-                                controller: model.passwordController,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: height * 0.015,
-                                    horizontal: width * 0.04,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.grey.shade300,
-                                  hintText: 'Password',
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  ),
-                                  prefixIcon: Icon(
-                                    Icons.lock,
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    color: Colors.grey,
-                                    icon: Icon(
-                                      model.passwordVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                    ),
-                                    onPressed: () {
-                                      model.onPasswordVisibility();
-                                    },
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                              ),
+
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: model.rememberpassword,
-                                        onChanged: (bool? value1) {
-                                          model.onCheckBox(value1!);
-                                        },
-                                        activeColor: Colors.blue,
-                                      ),
-                                      Text(
-                                        'Remember Password',
-                                        style: TextStyle(
-                                          fontSize: width * 0.032,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(width: width * 0.02),
                                   InkWell(
                                     onTap: () {
                                       model.forgotClicked();
@@ -171,74 +199,86 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                                     child: Text(
                                       'Forgot Password',
                                       style: TextStyle(
-                                        fontSize: width * 0.032,
-                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: width * 0.04,
+                                        color: AppColor.backgroundColor,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: height * 0.015),
+                              SizedBox(height: height * 0.024),
                               GestureDetector(
                                 onTap: () {
                                   model.loginClicked();
                                   // Perform login action
                                 },
                                 child: Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.symmetric(vertical: height * 0.024),
+                                  height: height * 0.06,
+                                  width: width * 0.35,
                                   decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: width * 0.043,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    color: AppColor.backgroundContainerSmall,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(8.0),
                                     ),
-                                  ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColor.backgroundColor.withOpacity(
+                                            0.5), // shadow color
+                                        spreadRadius:
+                                        2, // how spread out the shadow is
+                                        blurRadius:
+                                        5, // how blurry the shadow is
+                                        offset: Offset(
+                                            0, 1), // offset of the shadow
+                                      ),
+                                    ],),
+                                  child: Center(child: Text('Login',style: theme.displayMedium?.copyWith(
+
+                                      color: AppColor.backgroundColor,
+                                      fontWeight: FontWeight.bold
+                                  ),),),
                                 ),
                               ),
-                              SizedBox(height: height * 0.015),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Don't have an account? ",
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: width * 0.043,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      model.RegisterClicked();
-                                    },
-                                    child: Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: width * 0.053,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+
                             ],
                           ),
                         )
+                      ],
+                    ),
+
+                    Padding(
+                      padding:  EdgeInsets.only(top: height*0.02,left: height*0.02),
+                      child: Row(
+                        children: [
+                          Text(
+                            "New Here? ",
+                            style: TextStyle(
+                              color: AppColor.textColorWhite,
+                              fontSize: width * 0.044,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              model.RegisterClicked();
+                            },
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                color: AppColor.textColorWhite,
+                                fontSize: width * 0.054,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
 
 
-                ],
+                  ],
+                ),
               ),
             )
           ],
