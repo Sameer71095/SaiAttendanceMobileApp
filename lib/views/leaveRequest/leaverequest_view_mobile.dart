@@ -61,14 +61,14 @@ class LeaveRequestMobilePortrait extends BaseModelWidget<LeaveRequestViewModel> 
                     elevation: 0,
                     flexibleSpace: Container(
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-
-
-                            image: AssetImage(
-                                'assets/images/background/back.jpg'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topRight
-                        ),
+                        // image: DecorationImage(
+                        //
+                        //
+                        //     image: AssetImage(
+                        //         'assets/images/background/back.jpg'),
+                        //     fit: BoxFit.cover,
+                        //     alignment: Alignment.topRight
+                        // ),
                       ),
                     ),
                     title: Text('Leaves',
@@ -587,7 +587,8 @@ class LeaveRequestMobilePortrait extends BaseModelWidget<LeaveRequestViewModel> 
   }
 
   Widget _buildList(LeaveRequestViewModel model) {
-    double fontSize=12;
+    double fontSize=11;
+    double sizeBox=3;
     List dummy = ['this', 'susu', 'sjhdjs', 'djsks'];
     return ListView.builder(
       shrinkWrap: true,
@@ -637,7 +638,7 @@ class LeaveRequestMobilePortrait extends BaseModelWidget<LeaveRequestViewModel> 
 
                                       fontSize: fontSize)
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(height: sizeBox,),
                               Text(
                                 'Leave Type: Sick',
                                   style: TextStyle(
@@ -645,7 +646,7 @@ class LeaveRequestMobilePortrait extends BaseModelWidget<LeaveRequestViewModel> 
 
                                       fontSize: fontSize)
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(height: sizeBox,),
 
                               Text(
                                 'From: DD/MM/YY',
@@ -663,7 +664,7 @@ class LeaveRequestMobilePortrait extends BaseModelWidget<LeaveRequestViewModel> 
 
                                       fontSize: fontSize)
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(height: sizeBox,),
                               Text(
                                   'Reason : Because i was ill',
                                   style: TextStyle(

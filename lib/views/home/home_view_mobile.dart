@@ -156,6 +156,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
 
     return SafeArea(
       child: Scaffold(
+
         drawer: DrawerView(),
         body: Stack(
           children: [
@@ -171,7 +172,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   // )
               ),),
             Positioned(
-              top: height*0.382,
+              top: height*0.377,
               child: Image.asset('assets/images/background/backRect.png',fit: BoxFit.cover,width: width,),
 
             ),
@@ -185,13 +186,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                   flexibleSpace: Container(
                     decoration: BoxDecoration(
                       color: AppColor.backgroundColor,
-                      // image: DecorationImage(
-                      //
-                      //
-                      //     image: AssetImage('assets/images/background/back.jpg'),
-                      //     fit: BoxFit.cover,
-                      //     alignment: Alignment.topRight
-                      // ),
+
                     ),
                   ),
                   title: Text('Home',style: theme.titleLarge?.copyWith(
@@ -201,13 +196,13 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                 Flexible(
                   flex: 2,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,left: 10,right: 10),
+                    padding: const EdgeInsets.only(top: 0,left: 10,right: 10),
                     child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           childAspectRatio: MediaQuery.of(context).size.width /
                               (MediaQuery.of(context).size.height /2),
-                          mainAxisSpacing:4,
+                          mainAxisSpacing:2,
                           crossAxisSpacing: 7,
                         ),
                         itemCount: myProducts.length,
@@ -224,7 +219,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                     color: AppColor.homeScreenIconColor,
                                     border: Border.all(color: Colors.black),
                                     borderRadius: BorderRadius.all(
-                                      Radius.circular(25.0),
+                                      Radius.circular(23.0),
                                     ),
                                     boxShadow: [
                                       BoxShadow(
@@ -243,11 +238,11 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                     Center(
                                       child: Image.asset(
                                         myProducts[index],
-                                        height:MediaQuery.of(context).size.height*0.04,
+                                        height:MediaQuery.of(context).size.height*0.043,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(10.0),
+                                      padding:  EdgeInsets.symmetric(horizontal:height*0.01,vertical: height*0.008),
                                       child: Text(
                                         myProductsText[index].toString(),
                                         textAlign: TextAlign.center,

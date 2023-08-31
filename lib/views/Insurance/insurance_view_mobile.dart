@@ -38,13 +38,18 @@ class InsuranceMobilePortrait extends BaseModelWidget<InsuranceViewModel> {
     return SafeArea(
       child: Scaffold(
         appBar:   AppBar(
+
+
           iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
           centerTitle: true,
+
           backgroundColor: AppColor.backgroundColor,
           elevation: 0,
           flexibleSpace: Container(
 
             decoration: BoxDecoration(
+              color: AppColor.backgroundColor,
+
               // image: DecorationImage(
               //     image:
               //         AssetImage('assets/images/background/back.jpg'),
@@ -102,7 +107,7 @@ class InsuranceMobilePortrait extends BaseModelWidget<InsuranceViewModel> {
                                     width: double.infinity,
                                     height: model.expandedIndex == true
                                         ? height * 0.86
-                                        : height * 0.48,
+                                        : height * 0.49,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20, vertical: 20),
@@ -158,7 +163,7 @@ class InsuranceMobilePortrait extends BaseModelWidget<InsuranceViewModel> {
                                           ),
                                           if (model.expandedIndex ==true)
                                             Container(
-                                              height: height * 0.39,
+                                              height: height * 0.386,
                                               width: double.infinity,
                                               decoration: BoxDecoration(
                                                   boxShadow: [

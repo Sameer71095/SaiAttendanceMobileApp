@@ -48,28 +48,23 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                     // if(!isKeyboard)
 
                     // if(!isKeyboard)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0),
-                      child: Container(
-                        child: Image.asset(
-                            'assets/images/login/loginElement.png',
+                    Image.asset(
+                        'assets/images/login/loginElement.png',
 
 
-                        ),
-                      ),
                     ),
-                    SizedBox(height: height*0.01,),
+                    // SizedBox(height: height*0.008,),
                     Text(
                       'Register',
                       style: TextStyle(
                         fontFamily: 'Iceland',
                         color: Colors.white,
-                        fontSize: width * 0.12,
+                        fontSize: width * 0.117,
                       ),
                     ),
                     Stack(
                       children: [
-                        Image.asset('assets/images/register/Register.png',fit: BoxFit.cover,width: width,height: height*0.72,),
+                        Image.asset('assets/images/register/Register.png',fit: BoxFit.cover,width: width,height: height*0.687,),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(

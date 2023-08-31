@@ -226,12 +226,12 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                               child: Column(
                                 children: [
                                   CircleAvatar(
-                                    radius: 55,
-                                    child: const CircleAvatar(
+                                    radius: height*0.07,
+                                    child: CircleAvatar(
                                       backgroundImage: AssetImage(
                                         'assets/images/home/place.png',
                                       ),
-                                      radius: 55,
+                                      radius: height*0.07,
                                     ),
                                   ),
                                    SizedBox(

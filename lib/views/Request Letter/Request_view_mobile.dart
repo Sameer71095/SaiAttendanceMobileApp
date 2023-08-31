@@ -65,7 +65,7 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
                   title: Text('Letter Request',style: theme.titleLarge?.copyWith(color: Colors.white),),
                 ),
 
-                Expanded(
+                SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 0),
                     child: Column(
