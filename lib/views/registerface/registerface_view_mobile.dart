@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,7 +26,16 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
-        children: [
+        children:[
+        Container(
+          decoration: BoxDecoration(
+              color: AppColor.backgroundColor
+            // image: DecorationImage(
+            //     fit: BoxFit.cover,
+            //     alignment: Alignment.center,
+            //     image: AssetImage('assets/images/background/back.jpg'))
+          ),
+        ),
           FutureBuilder<void>(
             future: model.initializeControllerFuture,
             builder: (context, snapshot) {
@@ -47,6 +57,7 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
                 child: Text(
                   'Register Your Face',
                   style: TextStyle(
+                    color: AppColor.textColorWhite,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -63,7 +74,10 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
               Center(
                 child: Text(
                   model.directions[model.currentStep],
-                  style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
+                  style: TextStyle(
+                    color: AppColor.textColorWhite,
+
+                    fontSize: 16,fontWeight: FontWeight.bold,),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -77,10 +91,10 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.brown,
+                  color: AppColor.menuIconColor,
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  icon: Icon(Icons.arrow_back, color: AppColor.textColorBlack),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -98,9 +112,9 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
                 FloatingActionButton(
                   onPressed: () async {
                   },
-                  backgroundColor: Colors.brown,
-                  child: const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
+                  backgroundColor: AppColor.backgroundContainer,
+                  child:  Center(
+                    child: CircularProgressIndicator(color: AppColor.backgroundColor),
                   ),
                 ),
               ],
@@ -121,8 +135,8 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
                       print(e);
                     }
                   },
-                  child: Icon(Icons.camera, size: 30, color: Colors.white),
-                  backgroundColor: Colors.brown,
+                  child: Icon(Icons.camera, size: 30,color: AppColor.backgroundColor ),
+                    backgroundColor:AppColor.backgroundContainer
                 ),
               ],
             ),

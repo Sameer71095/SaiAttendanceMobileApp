@@ -113,13 +113,13 @@ class ReRegisterFaceMobilePortrait extends BaseModelWidget<ReRegisterFaceViewMod
                     onPressed: () async {
 
                       try {
-
-                        model.isLoading = true;
-                        model.notifyListeners();
-                        await model.initializeControllerFuture;
-                        final image = await model.controller.takePicture();
-                        File imageFile = await model.GenerateOptimizedFile(image);
-                        // model.onCaptureClick(imageFile);
+                        //
+                        // model.isLoading = true;
+                        // model.notifyListeners();
+                        // await model.initializeControllerFuture;
+                        // final image = await model.controller.takePicture();
+                        // File imageFile = await model.GenerateOptimizedFile(image);
+                        // // model.onCaptureClick(imageFile);
                         // print('Image saved at: ${imageFile.path}');
                       } catch (e) {
                         print(e);

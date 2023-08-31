@@ -17,6 +17,7 @@ import 'package:ClockSpotter/views/Work%20Expense/work_expense_view.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/leaveRequest/leaverequest_view.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
+import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
       "Leave Request",
       "Tasks",
       "Time off",
+      "Register Face",
       "Re-register Face",
       'Letter Requests',
       "People",
@@ -55,6 +57,7 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
        Icons.timelapse_sharp,
       Icons.time_to_leave,
      Icons.timer,
+      Icons.face,
       Icons.camera,
       Icons.request_page,
       Icons.people_alt_rounded,
@@ -69,7 +72,7 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     var theme = Theme.of(context).textTheme;
-    List<String> screenNamesGrid = ['Home','AttendanceView','Leave Request', 'Task Sheets','Time Off','Re-register','Request Letter', 'Peoples','Insurance','My Pay','Work Expense','Profile','Logout'];
+    List<String> screenNamesGrid = ['Home','AttendanceView','Leave Request', 'Task Sheets','Time Off','RegisterFace','Re-register','Request Letter', 'Peoples','Insurance','My Pay','Work Expense','Profile','Logout'];
     // List<String> screenNamesGrid = ['AttendanceView','Request Letter','Work Expense','Task Sheets','Time Off', 'Insurance'];
 
     void navigateToScreenAtIndex(int index) {
@@ -94,6 +97,9 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
             break;
           case 'Time Off':
             destinationScreen = TimeOffView();
+            break;
+          case 'RegisterFace':
+            destinationScreen = RegisterFaceView();
             break;
           case 'Re-register':
             destinationScreen = ReRegisterFaceView();
@@ -123,7 +129,7 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
             destinationScreen = Container();
         }
 
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 200),

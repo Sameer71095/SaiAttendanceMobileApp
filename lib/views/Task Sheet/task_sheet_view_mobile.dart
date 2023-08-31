@@ -397,6 +397,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
   Widget _buildList(TaskSheetViewModel model)  {
 
+
     double fontSize=12;
 
     return NotificationListener<ScrollNotification>(
@@ -506,7 +507,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                                   },
                                   child: Container(
                                     child: Center(
-                                      child: employeeTasks[index].isTaskCompleted.toString()==true
+                                      child: employeeTasks[index].isTaskCompleted==false
                                           ? Text(
                                         'Mark as Done!',
                                         style: TextStyle(
@@ -518,7 +519,7 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
                                           : Icon(Icons.check,color: Colors.white,),
                                     ),
                                     height: 35,
-                                    width:   employeeTasks[index].isTaskCompleted.toString()==true? 100 : 50,
+                                    width:   employeeTasks[index].isTaskCompleted==false? 100 : 50,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.green,
