@@ -61,7 +61,6 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                         fontFamily: 'Iceland',
                         color: Colors.white,
                         fontSize: width * 0.15,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: height*0.02,),
@@ -256,7 +255,6 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                             style: TextStyle(
                               color: AppColor.textColorWhite,
                               fontSize: width * 0.044,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           InkWell(

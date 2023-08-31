@@ -235,7 +235,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                     ),
                                   ),
                                    SizedBox(
-                                    height: height*0.03
+                                    height: height*0.02
                                   ),
                                   Flexible(
                                     child: Text(
@@ -321,6 +321,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                               ),
                                             ),
                                             SizedBox(height: 10),
+
                                             RichText(
                                               text: TextSpan(
                                                 text: 'Contact Number: ',

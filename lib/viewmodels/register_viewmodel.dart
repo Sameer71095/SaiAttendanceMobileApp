@@ -52,10 +52,7 @@ class RegisterViewModel extends ChangeNotifier {
     return password.length >= 6; // You can add more validation rules if needed
   }
   void alreadyClicked() {
-    /*  if (!_isValidEmail(emailController.text)) {
-      showToast("Please enter a valid email address.");
-      return;
-    }*/
+
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(

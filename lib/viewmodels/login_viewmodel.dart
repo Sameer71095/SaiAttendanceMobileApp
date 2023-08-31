@@ -49,11 +49,23 @@ class LoginViewModel extends ChangeNotifier {
     return password.length >= 6; // You can add more validation rules if needed
   }
   void forgotClicked() {
-    /*  if (!_isValidEmail(emailController.text)) {
-      showToast("Please enter a valid email address.");
-      return;
-    }*/
- Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotView()));
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
 
   }
   void RegisterClicked() {

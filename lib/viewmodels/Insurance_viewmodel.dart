@@ -21,6 +21,13 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 import '../api/secureCacheManager.dart';
 
 class InsuranceViewModel extends ChangeNotifier {
+  bool expandedIndex=false; // Keep track of the currently expanded index
+
+  void toggleDetail() {
+    expandedIndex=!expandedIndex;
+
+    notifyListeners();
+  }
 
 
 

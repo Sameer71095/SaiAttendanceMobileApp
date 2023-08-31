@@ -1,3 +1,4 @@
+import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/register_viewmodel.dart';
 import 'package:ClockSpotter/views/Registeration/register_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
@@ -14,175 +15,319 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
+    var theme = Theme.of(context).textTheme;
+    double fontSize=12;
+    double sizeBoxTextField=height*0.016;
+    double sizeBoxlabel=height*0.007;
+
 
 
     return SafeArea(
-      child: Scaffold(
+      child:  Scaffold(
         body: Stack(
           children: [
-            if(!isKeyboard)
+            // if(!isKeyboard)
             Container(
-              height: height * 0.21,
+              // height: height * 0.49,
               decoration: BoxDecoration(
-                color: Colors.blue.shade700,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  bottomRight: Radius.circular(60),
-                ),
+                color: AppColor.loginBackground,
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: Radius.circular(60),
+                //   bottomRight: Radius.circular(60),
+                // ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Stack(
-                children: [
-                  if(!isKeyboard)
-                  Positioned(
-                    top: height * 0.03,
-                    left: width * 0.05,
 
-                    child: Container(
-                      child: Image.asset(
-                        'assets/images/login/loginElement.png',
-                        width: width * 0.8,
-                        height: height * 0.30,
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // if(!isKeyboard)
+
+                    // if(!isKeyboard)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 0),
+                      child: Container(
+                        child: Image.asset(
+                            'assets/images/login/loginElement.png',
+
+
+                        ),
                       ),
                     ),
-                  ),
-                  CustomScrollView(
-                    scrollDirection: Axis.vertical,
-                    slivers: [
-                      SliverFillRemaining(
-                          hasScrollBody: false,
-                          child:  Padding(
-                            padding: EdgeInsets.all(10),
-                            child:  Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                    SizedBox(height: height*0.01,),
+                    Text(
+                      'Register',
+                      style: TextStyle(
+                        fontFamily: 'Iceland',
+                        color: Colors.white,
+                        fontSize: width * 0.12,
+                      ),
+                    ),
+                    Stack(
+                      children: [
+                        Image.asset('assets/images/register/Register.png',fit: BoxFit.cover,width: width,height: height*0.72,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            children: [
+                              SizedBox(height: height*0.06,),
+                              //username
+                              Column(
 
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                      color: Colors.blue.shade900,
-                                      fontSize: isKeyboard? width*0.07:width * 0.1,
-                                      fontWeight: FontWeight.bold,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Username',
+                                      style: TextStyle(
+                                        color: AppColor.backgroundColor,
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: height * 0.018),
+                                  SizedBox(height: sizeBoxlabel,),
                                   TextField(
                                     decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        vertical: height * 0.014,
+                                        vertical: height * 0.015,
                                         horizontal: width * 0.04,
                                       ),
                                       filled: true,
-                                      fillColor: Colors.grey.shade300,
-                                      hintText: 'Username',
+                                      fillColor: AppColor.backgroundContainer,
+                                      // hintText: 'Username',
                                       hintStyle: TextStyle(
                                         color: Colors.grey,
                                       ),
                                       prefixIcon: Icon(
+
                                         Icons.person,
-                                        color: Colors.grey,
+                                        color: AppColor.backgroundColor,
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: height * 0.014),
+                                ],
+                              ),
+                              SizedBox(height: sizeBoxTextField ),
+                             //email
+                              Column(
+
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Email',
+                                      style: TextStyle(
+                                        color: AppColor.backgroundColor,
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: sizeBoxlabel),
                                   TextField(
+                                    controller: model.emailController,
                                     decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        vertical: height * 0.014,
+                                        vertical: height * 0.015,
                                         horizontal: width * 0.04,
                                       ),
                                       filled: true,
-                                      fillColor: Colors.grey.shade300,
-                                      hintText: 'Email',
+                                      fillColor: AppColor.backgroundContainer,
+                                      // hintText: 'Username',
                                       hintStyle: TextStyle(
                                         color: Colors.grey,
                                       ),
                                       prefixIcon: Icon(
                                         Icons.alternate_email,
-                                        color: Colors.grey,
+                                        color: AppColor.backgroundColor,
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: height * 0.014),
+                                ],
+                              ),
+                              SizedBox(height: sizeBoxTextField  ),
+                              //Mobile Number
+                              Column(
+
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Mobile Number',
+                                      style: TextStyle(
+
+                                        color: AppColor.backgroundColor,
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: sizeBoxlabel,),
                                   TextField(
+                                    keyboardType:TextInputType.number,
                                     decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        vertical: height * 0.014,
+                                        vertical: height * 0.015,
                                         horizontal: width * 0.04,
                                       ),
                                       filled: true,
-                                      fillColor: Colors.grey.shade300,
-                                      hintText: 'Mobile Number',
+                                      fillColor: AppColor.backgroundContainer,
+                                      // hintText: 'Username',
                                       hintStyle: TextStyle(
                                         color: Colors.grey,
                                       ),
                                       prefixIcon: Icon(
                                         Icons.phone,
-                                        color: Colors.grey,
+                                        color: AppColor.backgroundColor,
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: height * 0.014),
+                                ],
+                              ),
+                              SizedBox(height: sizeBoxTextField ),
+                              //Company Name
+                              Column(
+
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Comapany Name',
+                                      style: TextStyle(
+                                        color: AppColor.backgroundColor,
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: sizeBoxlabel),
                                   TextField(
                                     decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        vertical: height * 0.014,
+                                        vertical: height * 0.015,
                                         horizontal: width * 0.04,
                                       ),
                                       filled: true,
-                                      fillColor: Colors.grey.shade300,
-                                      hintText: 'Company Name',
+                                      fillColor: AppColor.backgroundContainer,
                                       hintStyle: TextStyle(
                                         color: Colors.grey,
                                       ),
                                       prefixIcon: Icon(
                                         Icons.work,
-                                        color: Colors.grey,
+                                        color: AppColor.backgroundColor,
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: height * 0.014),
+                                ],
+                              ),
+                              SizedBox(height: sizeBoxTextField ),
+                              //password
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      'Password',
+                                      style: TextStyle(
+                                        color: AppColor.backgroundColor,
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: sizeBoxlabel,),
                                   TextField(
                                     obscureText: model.passwordVisible,
                                     controller: model.passwordController,
                                     decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
+                                      focusedBorder:  OutlineInputBorder(
+                                        borderRadius:  BorderRadius.circular(8.0),
+                                        borderSide:  BorderSide(color: AppColor.backgroundColor ),
+
+                                      ),
                                       contentPadding: EdgeInsets.symmetric(
-                                        vertical: height * 0.014,
+                                        vertical: height * 0.015,
                                         horizontal: width * 0.04,
                                       ),
                                       filled: true,
-                                      fillColor: Colors.grey.shade300,
-                                      hintText: 'Password',
+                                      fillColor: AppColor.backgroundContainer,
+                                      // hintText: 'Password',
                                       hintStyle: TextStyle(
                                         color: Colors.grey,
                                       ),
                                       prefixIcon: Icon(
                                         Icons.lock,
-                                        color: Colors.grey,
+                                        color: AppColor.backgroundColor,
                                       ),
                                       suffixIcon: IconButton(
-                                        color: Colors.grey,
+                                        color: AppColor.backgroundColor,
                                         icon: Icon(
                                           model.passwordVisible
                                               ? Icons.visibility_off
@@ -198,70 +343,81 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: height * 0.014),
-                                  GestureDetector(
-                                    onTap: () {
-                                      model.registerClicked();
-                                      // Perform register action
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: EdgeInsets.symmetric(vertical: height * 0.017),
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Sign Up',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: width * 0.043,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: height * 0.014),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Already have an account? ",
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: width * 0.043,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          model.alreadyClicked();
-                                        },
-                                        child: Text(
-                                          'Sign In',
-                                          style: TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: width * 0.053,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
+
+
+                              SizedBox(height: height * 0.018),
+                              GestureDetector(
+                                onTap: () {
+                                },
+                                child: Container(
+                                  height: height * 0.057,
+                                  width: width * 0.35,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.backgroundContainerSmall,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(8.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColor.backgroundColor.withOpacity(
+                                            0.5), // shadow color
+                                        spreadRadius:
+                                        2, // how spread out the shadow is
+                                        blurRadius:
+                                        5, // how blurry the shadow is
+                                        offset: Offset(
+                                            0, 1), // offset of the shadow
+                                      ),
+                                    ],),
+                                  child: Center(child: Text('Register',style: theme.displayMedium?.copyWith(
+
+                                      color: AppColor.backgroundColor,
+                                      fontWeight: FontWeight.bold
+                                  ),),),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+
+                    Padding(
+                      padding:  EdgeInsets.only(top: height*0.007,left: height*0.02),
+                      child: Row(
+                        children: [
+                          Text(
+                        "Already have an account? ",
+                            style: TextStyle(
+                              color: AppColor.textColorWhite,
+                              fontSize: width * 0.044,
                             ),
-                          )
+                          ),
+                          InkWell(
+                            onTap: () {
+                              model.alreadyClicked();
+                            },
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(
+                                color: AppColor.textColorWhite,
+                                fontSize: width * 0.054,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
 
 
-                ],
+                  ],
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),
