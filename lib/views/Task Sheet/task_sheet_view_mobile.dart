@@ -99,297 +99,303 @@ class TaskSheetMobilePortrait extends BaseModelWidget<TaskSheetViewModel> {
 
     return  SafeArea(
 
-      child: Scaffold(
-        drawer: DrawerView(),
-        body: Stack(
-          children: [
+      child: WillPopScope(
+        onWillPop: ()async{
+         model.willPopScopeNavigation();
+         return true;
+        },
+        child: Scaffold(
+          drawer: DrawerView(),
+          body: Stack(
+            children: [
 
-            Container(
-              decoration: BoxDecoration(
-                color: AppColor.backgroundColor
-                  // image: DecorationImage(
-                  //     fit: BoxFit.cover,
-                  //     alignment: Alignment.center,
-                  //     image:AssetImage('assets/images/background/back.jpg')
-                  // )
-              ),),
-            Column(
-              children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.backgroundColor
+                    // image: DecorationImage(
+                    //     fit: BoxFit.cover,
+                    //     alignment: Alignment.center,
+                    //     image:AssetImage('assets/images/background/back.jpg')
+                    // )
+                ),),
+              Column(
+                children: [
 
-                AppBar(
-                  iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
-                  centerTitle: true,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  flexibleSpace: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/background/back.jpg'),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topRight
-                      ),
-                    ),
-                  ),
-                  title: Text('Task Sheet', style: theme.titleLarge?.copyWith(color: Colors.white),),
-                ),
-
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 22,),
-                    child: Form(
-                      key: model.formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextFormField(
-                            maxLines: 4,
-                            controller:model.taskDetails,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Adjust the padding values
-                              hintText: 'Task details',
-                              hintStyle: theme.displayMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey.shade600
-                              ),
-                              filled: true,
-                              fillColor: AppColor.fieldColor,
-
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(borderRadius),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: sizeBox+5),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: FormBuilderDropdown<TaskType>(
-                                  name: 'TaskType',
-                                  decoration: InputDecoration(
-
-                                    contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
-                                    hintText: 'Task Types',
-                                    hintStyle: theme.displayMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade600
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColor.fieldColor,
-
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(borderRadius),
-                                    ),
-                                  ),
-                                  items: model.TaskTypes == null ? [] : model.TaskTypes!
-                                      .map((e) => DropdownMenuItem(value: e, child: Text('${e.TaskTypeName}')))
-                                      .toList(),
-                                  validator: (TaskType? value) {
-                                    if (value == null) {
-                                      print('Task type validation failed'); // Debugging statement
-                                      return 'Please select a Task type';
-                                    }
-                                    return null;
-                                  },
-                                  onChanged: (TaskType? value) {
-                                    model.selectedTaskType = value;
-                                    model.notifyListeners();
-                                  },
-                                ),
-                              ),
-                              SizedBox(width: sizeBox,),
-
-                              Expanded(
-                                child: TextFormField(
-                                  controller: TextEditingController(
-                                    text: model.formattedDate,
-
-                                  ),
-                                  style:theme.displayMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey.shade600
-                                  ),
-
-                                  readOnly: true,
-
-                                  onTap: () => _selectDate(context, model),
-
-                                  decoration: InputDecoration(
-
-                                    contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
-                                    hintText: 'Date:dd/mm/yyyy',
-                                    hintStyle: theme.displayMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade600
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColor.fieldColor,
-
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(borderRadius),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-
-                            ],
-                          ),
-
-
-
-                          SizedBox(height: sizeBox),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  readOnly: true,
-                                  onTap: () => _selectTimeStart(context, model),
-                                  
-                                  controller: model.startTimeController..text = timeStart,
-                                  // controller: model.startTimeController..text = model.formattedTimeStart,
-                                  style:theme.displayMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey.shade600
-                                  ),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
-                                    hintText: 'Task Start time',
-                                    hintStyle: theme.displayMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade600
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColor.fieldColor,
-
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(borderRadius),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: sizeBox,),
-                              Expanded(
-                                child: TextFormField(
-                                  readOnly: true,
-                                  onTap: () => _selectTimeEnd(context, model),
-                                  controller: model.endTimeController..text =timeEnd,
-                                  // controller: model.endTimeController..text = model.formattedTimeEnd,
-                                  style:theme.displayMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey.shade600
-                                  ),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
-                                    hintText: 'Task end time',
-                                    hintStyle: theme.displayMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade600
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColor.fieldColor,
-
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(borderRadius),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-
-                          SizedBox(height: sizeBox),
-
-                          SizedBox(height: sizeBox),
-
-                          InkWell(
-                            onTap: () => model.saveTaskDetails(),
-                            child: Container(
-                              height: height * 0.06,
-                              width: width * 0.5,
-                              decoration: BoxDecoration(
-                                  color: AppColor.backgroundContainerSmall,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(8.0),
-                                  ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(
-                                        0.5), // shadow color
-                                    spreadRadius:
-                                    2, // how spread out the shadow is
-                                    blurRadius:
-                                    5, // how blurry the shadow is
-                                    offset: Offset(
-                                        0, 1), // offset of the shadow
-                                  ),
-                                ],),
-                              child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
-                                  color: AppColor.addNewTask,
-                                  fontWeight: FontWeight.bold
-                              ),),),
-                            ),
-                          ),
-
-
-
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                if(!isKeyboard)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: AppColor.backgroundContainer
+                  AppBar(
+                    iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                    centerTitle: true,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    flexibleSpace: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/background/back.jpg'),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topRight
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'Task History',
-                                        style:theme.displayLarge?.copyWith(
-                                            fontSize: 28
-                                        ),
+                      ),
+                    ),
+                    title: Text('Task Sheet', style: theme.titleLarge?.copyWith(color: Colors.white),),
+                  ),
+
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22,),
+                      child: Form(
+                        key: model.formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextFormField(
+                              maxLines: 4,
+                              controller:model.taskDetails,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Adjust the padding values
+                                hintText: 'Task details',
+                                hintStyle: theme.displayMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade600
+                                ),
+                                filled: true,
+                                fillColor: AppColor.fieldColor,
+
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(borderRadius),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: sizeBox+5),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: FormBuilderDropdown<TaskType>(
+                                    name: 'TaskType',
+                                    decoration: InputDecoration(
+
+                                      contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
+                                      hintText: 'Task Types',
+                                      hintStyle: theme.displayMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600
+                                      ),
+                                      filled: true,
+                                      fillColor: AppColor.fieldColor,
+
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(borderRadius),
+                                      ),
+                                    ),
+                                    items: model.TaskTypes == null ? [] : model.TaskTypes!
+                                        .map((e) => DropdownMenuItem(value: e, child: Text('${e.TaskTypeName}')))
+                                        .toList(),
+                                    validator: (TaskType? value) {
+                                      if (value == null) {
+                                        print('Task type validation failed'); // Debugging statement
+                                        return 'Please select a Task type';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (TaskType? value) {
+                                      model.selectedTaskType = value;
+                                      model.notifyListeners();
+                                    },
+                                  ),
+                                ),
+                                SizedBox(width: sizeBox,),
+
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: TextEditingController(
+                                      text: model.formattedDate,
+
+                                    ),
+                                    style:theme.displayMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600
+                                    ),
+
+                                    readOnly: true,
+
+                                    onTap: () => _selectDate(context, model),
+
+                                    decoration: InputDecoration(
+
+                                      contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
+                                      hintText: 'Date:dd/mm/yyyy',
+                                      hintStyle: theme.displayMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600
+                                      ),
+                                      filled: true,
+                                      fillColor: AppColor.fieldColor,
+
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(borderRadius),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              Expanded(
-                                child: _buildList(model),
+                                ),
 
+
+                              ],
+                            ),
+
+
+
+                            SizedBox(height: sizeBox),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    onTap: () => _selectTimeStart(context, model),
+
+                                    controller: model.startTimeController..text = timeStart,
+                                    // controller: model.startTimeController..text = model.formattedTimeStart,
+                                    style:theme.displayMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600
+                                    ),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                                      hintText: 'Task Start time',
+                                      hintStyle: theme.displayMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600
+                                      ),
+                                      filled: true,
+                                      fillColor: AppColor.fieldColor,
+
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(borderRadius),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: sizeBox,),
+                                Expanded(
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    onTap: () => _selectTimeEnd(context, model),
+                                    controller: model.endTimeController..text =timeEnd,
+                                    // controller: model.endTimeController..text = model.formattedTimeEnd,
+                                    style:theme.displayMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600
+                                    ),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                                      hintText: 'Task end time',
+                                      hintStyle: theme.displayMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600
+                                      ),
+                                      filled: true,
+                                      fillColor: AppColor.fieldColor,
+
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(borderRadius),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+
+                            SizedBox(height: sizeBox),
+
+                            SizedBox(height: sizeBox),
+
+                            InkWell(
+                              onTap: () => model.saveTaskDetails(),
+                              child: Container(
+                                height: height * 0.06,
+                                width: width * 0.5,
+                                decoration: BoxDecoration(
+                                    color: AppColor.backgroundContainerSmall,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(8.0),
+                                    ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(
+                                          0.5), // shadow color
+                                      spreadRadius:
+                                      2, // how spread out the shadow is
+                                      blurRadius:
+                                      5, // how blurry the shadow is
+                                      offset: Offset(
+                                          0, 1), // offset of the shadow
+                                    ),
+                                  ],),
+                                child: Center(child: Text('Add new Task',style: theme.displayMedium?.copyWith(
+                                    color: AppColor.addNewTask,
+                                    fontWeight: FontWeight.bold
+                                ),),),
                               ),
-                            ],
-                          ),
+                            ),
+
+
+
+                          ],
                         ),
                       ),
                     ),
                   ),
+                  if(!isKeyboard)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          decoration: BoxDecoration(
 
-              ],
-            ),
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: AppColor.backgroundContainer
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
+                              children: [
+                                Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Task History',
+                                          style:theme.displayLarge?.copyWith(
+                                              fontSize: 28
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: _buildList(model),
+
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                ],
+              ),
 
 
 
-          ], ),),
+            ], ),),
+      ),
     );
   }
 

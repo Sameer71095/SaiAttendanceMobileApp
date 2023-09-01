@@ -11,6 +11,32 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:image/image.dart' as img;
 
 class RegisterFaceViewModel extends ChangeNotifier {
+
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+
+
+
+
+
   String title = 'default';
 
   bool isLoading = false;

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,6 +22,26 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 import '../api/secureCacheManager.dart';
 
 class TimeOffViewModel extends ChangeNotifier {
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
 
 
 

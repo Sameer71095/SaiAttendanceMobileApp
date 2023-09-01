@@ -32,143 +32,150 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
     double fontSize = 15;
 
     return SafeArea(
-      child: Scaffold(
-        drawer: DrawerView(),
-        body: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColor.backgroundColor
-                  // image: DecorationImage(
-                  //     fit: BoxFit.cover,
-                  //     alignment: Alignment.center,
-                  //     image: AssetImage('assets/images/background/back.jpg')
-                  // )
+      child: WillPopScope(
+        onWillPop: ()async{
+          model.willPopScopeNavigation();
+          return true;
+
+        },
+        child: Scaffold(
+          drawer: DrawerView(),
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.backgroundColor
+                    // image: DecorationImage(
+                    //     fit: BoxFit.cover,
+                    //     alignment: Alignment.center,
+                    //     image: AssetImage('assets/images/background/back.jpg')
+                    // )
+                ),
               ),
-            ),
-            Column(
-              children: [
-                AppBar(
-                  iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
-                  centerTitle: true,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  flexibleSpace: Container(),
-                  title: Text(
-                    'My Team',
-                    style: theme.titleLarge?.copyWith(color: Colors.white),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Team Members',
-                      textAlign: TextAlign.center,
-                      style: theme.displayLarge
-                          ?.copyWith(fontSize: 25, color: Colors.white),
+              Column(
+                children: [
+                  AppBar(
+                    iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                    centerTitle: true,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    flexibleSpace: Container(),
+                    title: Text(
+                      'My Team',
+                      style: theme.titleLarge?.copyWith(color: Colors.white),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 13,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            // Expanded(
-                            //   child: Container(
-                            //     child: model.dropDownFitler(
-                            //         'Name',
-                            //         model.departmentNames,
-                            //
-                            //         Icon(Icons.person,
-                            //             color: AppColor.iconColorBlack)),
-                            //   ),
-                            // ),
-                            SizedBox(
-                              width: width * 0.011,
-                            ),
-                            // Expanded(
-                            //   child: Container(
-                            //       child:  model.dropDownFitler('Position',model.departmentNames,Icon(Icons.assignment_ind,color: AppColor.iconColorBlack,)),
-                            //
-                            //       ),
-                            // )
-
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.014,
-                        ),
-
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                  child:  model.dropDownFitler('Branch',model.locationNames,Icon(Icons.location_city,color: Colors.grey.shade700),  (selectedBranch) {
-                                    model.updateSelectedBranch(selectedBranch);
-                                  },),
-
-                                  ),
-                            ),
-                            SizedBox(
-                              width: width * 0.011,
-                            ),
-                            Expanded(
-                              child: Container(
-                                  child:   model.dropDownFitler('Department',model.departmentNames,Icon(Icons.business,color: Colors.grey.shade700,),(selectedDepartment) {
-                                    model.updateSelectedDepartment(selectedDepartment);
-                                  },),
-
-                                  ),
-                            )
-                          ],
-                        ),
-                        //Implementation of filter when button is pressed
-                        // Search filters
-                        // TextField(
-                        //   controller: model.nameController,
-                        //   decoration: InputDecoration(labelText: 'Name'),
-                        // ),
-                        // TextField(
-                        //   controller: model.branchController,
-                        //   decoration: InputDecoration(labelText: 'Branch'),
-                        // ),
-                        // TextField(
-                        //   controller: model.positionController,
-                        //   decoration: InputDecoration(labelText: 'Position'),
-                        // ),
-                        // ElevatedButton(
-                        //   onPressed: (){
-                        //     model.filterMembers();
-                        //   },
-                        //   child: Text('Apply Filters'),
-                        // ),
-
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                          child: _buildList(model, context),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 17),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Team Members',
+                        textAlign: TextAlign.center,
+                        style: theme.displayLarge
+                            ?.copyWith(fontSize: 25, color: Colors.white),
+                      ),
                     ),
                   ),
-                )
+                  SizedBox(
+                    height: 13,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              // Expanded(
+                              //   child: Container(
+                              //     child: model.dropDownFitler(
+                              //         'Name',
+                              //         model.departmentNames,
+                              //
+                              //         Icon(Icons.person,
+                              //             color: AppColor.iconColorBlack)),
+                              //   ),
+                              // ),
+                              SizedBox(
+                                width: width * 0.011,
+                              ),
+                              // Expanded(
+                              //   child: Container(
+                              //       child:  model.dropDownFitler('Position',model.departmentNames,Icon(Icons.assignment_ind,color: AppColor.iconColorBlack,)),
+                              //
+                              //       ),
+                              // )
 
-              ],
-            ),
-          ],
+                            ],
+                          ),
+                          SizedBox(
+                            height: height * 0.014,
+                          ),
+
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                    child:  model.dropDownFitler('Branch',model.locationNames, model.selectedBranch==null ? Icon(Icons.location_city,color: Colors.grey.shade700):null,  (selectedBranch) {
+                                      model.updateSelectedBranch(selectedBranch);
+                                    },),
+
+                                    ),
+                              ),
+                              SizedBox(
+                                width: width * 0.011,
+                              ),
+                              Expanded(
+                                child: Container(
+                                    child:   model.dropDownFitler('Department',model.departmentNames,model.selectedDepartment==null?Icon(Icons.business,color: Colors.grey.shade700,):null,(selectedDepartment) {
+                                      model.updateSelectedDepartment(selectedDepartment);
+                                    },),
+
+                                    ),
+                              )
+                            ],
+                          ),
+                          //Implementation of filter when button is pressed
+                          // Search filters
+                          // TextField(
+                          //   controller: model.nameController,
+                          //   decoration: InputDecoration(labelText: 'Name'),
+                          // ),
+                          // TextField(
+                          //   controller: model.branchController,
+                          //   decoration: InputDecoration(labelText: 'Branch'),
+                          // ),
+                          // TextField(
+                          //   controller: model.positionController,
+                          //   decoration: InputDecoration(labelText: 'Position'),
+                          // ),
+                          // ElevatedButton(
+                          //   onPressed: (){
+                          //     model.filterMembers();
+                          //   },
+                          //   child: Text('Apply Filters'),
+                          // ),
+
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Expanded(
+                            child: _buildList(model, context),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -242,6 +249,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                       team.name.toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
 
                                         fontSize: 20,
                                         color: AppColor.backgroundColor,

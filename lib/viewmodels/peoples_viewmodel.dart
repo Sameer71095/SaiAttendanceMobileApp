@@ -5,6 +5,7 @@ import 'package:ClockSpotter/entities/location_entity/location_response.dart';
 import 'package:ClockSpotter/entities/location_entity/location_response.dart';
 import 'package:ClockSpotter/entities/task_entity/get_all_team_response.dart';
 import 'package:ClockSpotter/utils/app_color.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:ClockSpotter/widgets/teamMember.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -13,8 +14,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_response_entity.dart' as AttendanceHistoryResponse;
-import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
-import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
@@ -27,33 +26,53 @@ import '../api/secureCacheManager.dart';
 import '../entities/location_entity/location_response.dart';
 
 class PeoplesViewModel extends ChangeNotifier {
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
 
 
 
 
 
-  String? _selectedDepartment;
-  String? _selectedBranch;
+
+  String? selectedDepartment;
+  String? selectedBranch;
 
   void updateSelectedDepartment(String? department) {
-    _selectedDepartment = department;
+    selectedDepartment = department;
     notifyListeners();
   }
 
   void updateSelectedBranch(String? branch) {
-    _selectedBranch = branch;
+    selectedBranch = branch;
     notifyListeners();
   }
 
   List<Employee> get filteredTeam {
-    if (_selectedDepartment == null && _selectedBranch == null) {
+    if (selectedDepartment == null && selectedBranch == null) {
       return getAllTeam ?? [];
     }
     return (getAllTeam ?? []).where((employee) {
       final departmentCondition =
-          _selectedDepartment == null || employee.departmentName == _selectedDepartment;
+          selectedDepartment == null || employee.departmentName == selectedDepartment;
       final branchCondition =
-          _selectedBranch == null || employee.branchName == _selectedBranch;
+          selectedBranch == null || employee.branchName == selectedBranch;
 
       return departmentCondition && branchCondition;
     }).toList();
@@ -78,7 +97,7 @@ class PeoplesViewModel extends ChangeNotifier {
   List<String> locationNames = [];
   List<LocationNew> Locations=[];
   Future<void> GetLocations() async {
-    var response = await client.GetLocations(constants.loginData.employerId);
+    var response = await client.GetLocations(2);
     Locations=response.data;
     locationNames = Locations.map((location) => location.name).toList();
 
@@ -100,7 +119,7 @@ class PeoplesViewModel extends ChangeNotifier {
 
     // Call the API and store the data in attendanceList
     try {
-      var response = await client.GetAllTeam(constants.loginData.employerId);
+      var response = await client.GetAllTeam(2);
       _getAllTeam = response.data;
       dataLoaded.value = true;
       notifyListeners();
@@ -115,19 +134,33 @@ class PeoplesViewModel extends ChangeNotifier {
    Icon? filterIcon,  void Function(String? selectedValue) onChangedCallback,
        ){
     return DropdownSearch<String>(
+
+
       clearButtonProps: ClearButtonProps(
+        isVisible: true,
+          iconSize: 2,
+        visualDensity: VisualDensity(horizontal: -4, vertical: 0),
+
 
       ),
 
       items: item,
 
 
+
       onChanged: onChangedCallback,
 
 
+
       dropdownDecoratorProps: DropDownDecoratorProps(
+        baseStyle: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.bold
+        ),
 
         dropdownSearchDecoration: InputDecoration(
+
+
 
           contentPadding: EdgeInsets.all(10),
           enabledBorder: OutlineInputBorder(
@@ -137,7 +170,7 @@ class PeoplesViewModel extends ChangeNotifier {
             borderSide: BorderSide(color: Colors.white),
           ),
           // labelText: "Filter by ${filterName}",
-          prefixIcon: filterIcon,
+          prefixIcon:filterIcon,
           filled: true,
           fillColor: AppColor.fieldColor,
           hintText: "${filterName} ",

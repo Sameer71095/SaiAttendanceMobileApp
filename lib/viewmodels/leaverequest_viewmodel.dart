@@ -5,6 +5,7 @@ import 'package:ClockSpotter/entities/attendance_entity/attendance_history_reque
 import 'package:ClockSpotter/entities/vacation_entity/vacation_type_response_entity.dart';
 import 'package:ClockSpotter/utils/Constants.dart';
 import 'package:ClockSpotter/views/camerapic/camerapic_view.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,6 +36,26 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 import '../api/secureCacheManager.dart';
 
 class LeaveRequestViewModel extends ChangeNotifier {
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
   String title = 'default';
   final formKey = GlobalKey<FormState>();
 

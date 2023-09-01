@@ -30,186 +30,194 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
         builder: (BuildContext context) {
           final MediaQueryData mediaQuery = MediaQuery.of(context);
 
-          return Scaffold(
-            drawer: DrawerView(),
-            body: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.backgroundColor,
-                    // image: DecorationImage(
-                    //     fit: BoxFit.cover,
-                    //     alignment: Alignment.center,
-                    //     image:AssetImage('assets/images/background/back.jpg')
-                    // )
-                  ),
-                ),
-                Column(
-                  children: [
-                    AppBar(
-                      centerTitle: true,
-                      backgroundColor: Colors.transparent,
-                      iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
-                      elevation: 0,
-                      flexibleSpace: Container(
-                        decoration: BoxDecoration(
-                            // image: DecorationImage(
-                            //
-                            //
-                            //     image: AssetImage('assets/images/background/back.jpg'),
-                            //     fit: BoxFit.cover,
-                            //     alignment: Alignment.topRight
-                            // ),
-                            ),
-                      ),
-                      title: Text('Attendance'),
+          return WillPopScope(
+            onWillPop: () async {
+              model.willPopScopeNavigation();
+              return true;
+
+
+            },
+            child: Scaffold(
+              drawer: DrawerView(),
+              body: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColor.backgroundColor,
+                      // image: DecorationImage(
+                      //     fit: BoxFit.cover,
+                      //     alignment: Alignment.center,
+                      //     image:AssetImage('assets/images/background/back.jpg')
+                      // )
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
+                  ),
+                  Column(
+                    children: [
+                      AppBar(
+                        centerTitle: true,
+                        backgroundColor: Colors.transparent,
+                        iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                        elevation: 0,
+                        flexibleSpace: Container(
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: AppColor.backgroundContainer),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              children: [
-                                ///
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0, right: 10.0),
-                                    child: _customAppBar(model),
+                              // image: DecorationImage(
+                              //
+                              //
+                              //     image: AssetImage('assets/images/background/back.jpg'),
+                              //     fit: BoxFit.cover,
+                              //     alignment: Alignment.topRight
+                              // ),
+                              ),
+                        ),
+                        title: Text('Attendance'),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: AppColor.backgroundContainer),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                children: [
+                                  ///
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10.0, left: 10.0, right: 10.0),
+                                      child: _customAppBar(model),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              AppColor.backgroundContainerSmall,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(
-                                                  0.5), // shadow color
-                                              spreadRadius:
-                                                  2, // how spread out the shadow is
-                                              blurRadius:
-                                                  5, // how blurry the shadow is
-                                              offset: Offset(
-                                                  0, 3), // offset of the shadow
-                                            ),
-                                          ],
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        child: Column(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                DateFormat('dd MMM yyyy')
-                                                    .format(DateTime.now()),
-                                                style: theme.titleSmall,
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color:
+                                                AppColor.backgroundContainerSmall,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(
+                                                    0.5), // shadow color
+                                                spreadRadius:
+                                                    2, // how spread out the shadow is
+                                                blurRadius:
+                                                    5, // how blurry the shadow is
+                                                offset: Offset(
+                                                    0, 3), // offset of the shadow
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Shift Starts at ${constants.loginData.shiftStartTime}",
-                                                      style:
-                                                          theme.displayMedium,
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text(
-                                                      'Shift ends at ${constants.loginData.shiftEndTime}',
-                                                      style:
-                                                          theme.displayMedium,
-                                                    ),
-                                                  ],
+                                            ],
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
+                                          child: Column(
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  DateFormat('dd MMM yyyy')
+                                                      .format(DateTime.now()),
+                                                  style: theme.titleSmall,
                                                 ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    model.onCheckInClicked();
-                                                  },
-                                                  child: Container(
-                                                    child: Center(
-                                                      child: Text('Tap',
-                                                          style: theme
-                                                              .headlineSmall
-                                                              ?.copyWith(
-                                                                  color: AppColor.textColorBlack)),
-                                                    ),
-                                                    height: 30,
-                                                    width: 90,
-                                                    decoration: BoxDecoration(
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey.withOpacity(0.5), // shadow color
-                                                          spreadRadius: 1, // how spread out the shadow is
-                                                          blurRadius: 3,   // how blurry the shadow is
-                                                          offset: Offset(0, 3), // offset of the shadow
-                                                        ),
-                                                      ],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      color: AppColor.menuIconColor,
-                                                    ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        "Shift Starts at ${constants.loginData.shiftStartTime}",
+                                                        style:
+                                                            theme.displayMedium,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        'Shift ends at ${constants.loginData.shiftEndTime}',
+                                                        style:
+                                                            theme.displayMedium,
+                                                      ),
+                                                    ],
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, bottom: 10),
-                                        child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            'History',
-                                            style: theme.displayLarge,
+                                                  InkWell(
+                                                    onTap: () {
+                                                      model.onCheckInClicked();
+                                                    },
+                                                    child: Container(
+                                                      child: Center(
+                                                        child: Text('Tap',
+                                                            style: theme
+                                                                .headlineSmall
+                                                                ?.copyWith(
+                                                                    color: AppColor.textColorBlack)),
+                                                      ),
+                                                      height: 30,
+                                                      width: 90,
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.grey.withOpacity(0.5), // shadow color
+                                                            spreadRadius: 1, // how spread out the shadow is
+                                                            blurRadius: 3,   // how blurry the shadow is
+                                                            offset: Offset(0, 3), // offset of the shadow
+                                                          ),
+                                                        ],
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                10),
+                                                        color: AppColor.menuIconColor,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              'History',
+                                              style: theme.displayLarge,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: _buildList(model),
-                                ),
-                              ],
+                                  Expanded(
+                                    child: _buildList(model),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         },

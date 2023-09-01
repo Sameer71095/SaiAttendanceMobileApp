@@ -32,174 +32,181 @@ class MyPayMobilePortrait extends BaseModelWidget<MyPayViewModel> {
 
 
         return SafeArea(
-          child: Scaffold(
+          child: WillPopScope(
+            onWillPop: ()async{
+              model.willPopScopeNavigation();
+              return true;
+
+            },
+            child: Scaffold(
 
 
-            drawer: DrawerView(),
-            body: Stack(
-              children: [
+              drawer: DrawerView(),
+              body: Stack(
+                children: [
 
-                Container(
-                decoration: BoxDecoration(
-                  color: AppColor.backgroundColor
-                    // image: DecorationImage(
-                    //     fit: BoxFit.cover,
-                    //     alignment: Alignment.center,
-                    //     image:AssetImage('assets/images/background/back.jpg')
-                    // )
-                ),),
+                  Container(
+                  decoration: BoxDecoration(
+                    color: AppColor.backgroundColor
+                      // image: DecorationImage(
+                      //     fit: BoxFit.cover,
+                      //     alignment: Alignment.center,
+                      //     image:AssetImage('assets/images/background/back.jpg')
+                      // )
+                  ),),
 
-                Column(
-                  children: [
-                    AppBar(
-                      iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
-                      centerTitle: true,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      flexibleSpace: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
+                  Column(
+                    children: [
+                      AppBar(
+                        iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                        centerTitle: true,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        flexibleSpace: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
 
 
-                              image: AssetImage('assets/images/background/back.jpg'),
-                              fit: BoxFit.cover,
-                              alignment: Alignment.topRight
+                                image: AssetImage('assets/images/background/back.jpg'),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.topRight
+                            ),
                           ),
                         ),
+                        title: Text('My Pay',style: theme.titleLarge?.copyWith(color: Colors.white),),
                       ),
-                      title: Text('My Pay',style: theme.titleLarge?.copyWith(color: Colors.white),),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: AppColor.backgroundContainer
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                            child: Column(
-                              children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: AppColor.backgroundContainer
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                              child: Column(
+                                children: [
 
-                                ///
+                                  ///
 
-                                Column(
+                                  Column(
 
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(
-                                                0.5), // shadow color
-                                            spreadRadius:
-                                            2, // how spread out the shadow is
-                                            blurRadius:
-                                            5, // how blurry the shadow is
-                                            offset: Offset(
-                                                0, 1), // offset of the shadow
-                                          ),
-                                        ],
-                                        color: AppColor.backgroundContainerSmall,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
-                                          ),
-                                          SizedBox(height: 10,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(
+                                                  0.5), // shadow color
+                                              spreadRadius:
+                                              2, // how spread out the shadow is
+                                              blurRadius:
+                                              5, // how blurry the shadow is
+                                              offset: Offset(
+                                                  0, 1), // offset of the shadow
+                                            ),
+                                          ],
+                                          color: AppColor.backgroundContainerSmall,
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text( DateFormat('dd MMM yyyy').format(DateTime.now()),style: theme.titleSmall,),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                                                children: [
-                                                  Container(
-                                                    constraints:  BoxConstraints(maxWidth: 150),
-                                                    child: Text(
-                                                      'Name :Sameer Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
+                                                  children: [
+                                                    Container(
+                                                      constraints:  BoxConstraints(maxWidth: 150),
+                                                      child: Text(
+                                                        'Name :Sameer Masood',overflow:TextOverflow.ellipsis, style: theme.displayMedium,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10,),
-                                                  Container(
-                                                    constraints:  BoxConstraints(maxWidth: 150),
-                                                    child: Text(
-                                                      "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
+                                                    SizedBox(height: 10,),
+                                                    Container(
+                                                      constraints:  BoxConstraints(maxWidth: 150),
+                                                      child: Text(
+                                                        "salary : 50,000",overflow:TextOverflow.ellipsis,style: theme.displayMedium,
+                                                      ),
                                                     ),
-                                                  ),
 
-                                                ],
+                                                  ],
 
-                                              ),
-
-                                              InkWell(
-                                                onTap: (){
-                                                },
-                                                child: Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                        'Pending',
-                                                        style: theme.headlineSmall?.copyWith(
-                                                          color: Colors.white
-                                                        )
-                                                    ),
-                                                  ),
-                                                  height: 30,
-                                                  width: 90,
-                                                  decoration: BoxDecoration(
-
-                                                    borderRadius:
-                                                    BorderRadius.circular(10),
-
-
-                                                    color: AppColor.pendingColor,
-                                                  ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
+
+                                                InkWell(
+                                                  onTap: (){
+                                                  },
+                                                  child: Container(
+                                                    child: Center(
+                                                      child: Text(
+                                                          'Pending',
+                                                          style: theme.headlineSmall?.copyWith(
+                                                            color: Colors.white
+                                                          )
+                                                      ),
+                                                    ),
+                                                    height: 30,
+                                                    width: 90,
+                                                    decoration: BoxDecoration(
+
+                                                      borderRadius:
+                                                      BorderRadius.circular(10),
+
+
+                                                      color: AppColor.pendingColor,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
 
 
 
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          'History',
-                                          style:theme.displayLarge,
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: _buildList(model),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(top: 10),
+                                        child: Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            'History',
+                                            style:theme.displayLarge,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: _buildList(model),
 
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
 
-              ],
+                ],
 
+              ),
             ),
           ),
         );

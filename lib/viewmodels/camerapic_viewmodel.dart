@@ -23,7 +23,27 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import '../api/dio_client.dart';
 import '../entities/login_entity/login_response_entity.dart' as Login;
 
-class CameraPicViewModel extends ChangeNotifier {
+class CameraPicViewModel extends ChangeNotifier{
+void willPopScopeNavigation(){
+  Navigator.pushReplacement(
+    context,
+    PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+      transitionsBuilder: (context, animation, secondaryAnimation,
+          child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+      },
+    ),
+  );
+}
+
 
   File? capturedImage;
   String title = 'default';

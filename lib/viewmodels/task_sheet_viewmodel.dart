@@ -5,6 +5,7 @@ import 'package:ClockSpotter/api/restClient.dart';
 import 'package:ClockSpotter/entities/task_entity/TaskType.dart';
 import 'package:ClockSpotter/entities/task_entity/add_task_request.dart';
 import 'package:ClockSpotter/entities/task_entity/employee_task_response.dart';
+import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,32 @@ import 'package:dio/dio.dart'; // If not already imported
 import '../api/secureCacheManager.dart';
 
 class TaskSheetViewModel extends ChangeNotifier {
+
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+
+
+
+
+
 
   List<EmployeeTask>? _employeeTasks;
 

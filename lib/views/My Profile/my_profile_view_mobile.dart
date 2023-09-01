@@ -34,198 +34,205 @@ class MyProfileMobilePortrait extends BaseModelWidget<MyProfileViewModel> {
     double fontSize = 18;
 
     return SafeArea(
-      child: Scaffold(
-        drawer: DrawerView(),
-        body: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColor.backgroundColor
-                  // image: DecorationImage(
-                  //     fit: BoxFit.cover,
-                  //     alignment: Alignment.center,
-                  //     image: AssetImage('assets/images/background/back.jpg'))
+      child: WillPopScope(
+        onWillPop: ()async{
+          model.willPopScopeNavigation();
+          return true;
+
+        },
+        child: Scaffold(
+          drawer: DrawerView(),
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.backgroundColor
+                    // image: DecorationImage(
+                    //     fit: BoxFit.cover,
+                    //     alignment: Alignment.center,
+                    //     image: AssetImage('assets/images/background/back.jpg'))
+                ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  AppBar(
-                    iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
-                    centerTitle: true,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    flexibleSpace: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/background/back.jpg'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topRight),
-                      ),
-                    ),
-                    title: Text(
-                      'My Profile',
-                      style: theme.titleLarge?.copyWith(color: Colors.white),
-                    ),
-                  ),
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Container(
-                        height: height * 0.6,
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    AppBar(
+                      iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
+                      centerTitle: true,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      flexibleSpace: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        margin: EdgeInsets.only(top: 100),
-                        child: Padding(
-                          padding: EdgeInsets.all(22.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Name: ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      constants.loginData.name.toString(),
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.05,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Company Name: ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      ' ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.05,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Designation: ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      '',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.05,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Nationality: ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      ' ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.05,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Location: ',
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      constants.loginData.location.toString(),
-                                      style: theme.displayLarge?.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/background/back.jpg'),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topRight),
                         ),
                       ),
-                      Positioned(
-                          top: height * 0.00009,
-                          child: Container(
-                            width: width * 0.45,
-                            height: height * 0.25,
-                            decoration: BoxDecoration(
-
-                              shape: BoxShape.circle,
-                              color: Colors.blue.shade900,
+                      title: Text(
+                        'My Profile',
+                        style: theme.titleLarge?.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Container(
+                          height: height * 0.6,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
+                          margin: EdgeInsets.only(top: 100),
+                          child: Padding(
+                            padding: EdgeInsets.all(22.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Name: ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        constants.loginData.name.toString(),
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: height * 0.05,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Company Name: ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        ' ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: height * 0.05,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Designation: ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: height * 0.05,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Nationality: ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        ' ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: height * 0.05,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Location: ',
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        constants.loginData.location.toString(),
+                                        style: theme.displayLarge?.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                            child: Center(
-                              child: Container(
-                                width: width * 0.35,
-                                height: height * 0.62,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
+                          ),
+                        ),
+                        Positioned(
+                            top: height * 0.00009,
+                            child: Container(
+                              width: width * 0.45,
+                              height: height * 0.25,
+                              decoration: BoxDecoration(
+
+                                shape: BoxShape.circle,
+                                color: Colors.blue.shade900,
+                              ),
+                              child: Center(
+                                child: Container(
+                                  width: width * 0.35,
+                                  height: height * 0.62,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )),
-                    ],
-                  ),
-                ],
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

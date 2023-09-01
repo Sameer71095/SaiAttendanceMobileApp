@@ -25,94 +25,100 @@ class CameraPicMobilePortrait extends BaseModelWidget<CameraPicViewModel> {
   Widget build(BuildContext context, CameraPicViewModel model) {
     double height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
+    return WillPopScope(
+      onWillPop: ()async{
+        model.willPopScopeNavigation();
+        return true;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
 
-            decoration: BoxDecoration(
-              color: AppColor.backgroundColor,
+              decoration: BoxDecoration(
+                color: AppColor.backgroundColor,
 
-              // image: DecorationImage(
-              //     fit: BoxFit.cover,
-              //     alignment: Alignment.center,
-              //     image:AssetImage('assets/images/background/back.jpg')
-              // )
-            ),),
-          FutureBuilder<void>(
-            future: model.initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Center(
-                    child:   ClipOval(
-                           child: CameraPreview(model.controller),
-                        ),);
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+                // image: DecorationImage(
+                //     fit: BoxFit.cover,
+                //     alignment: Alignment.center,
+                //     image:AssetImage('assets/images/background/back.jpg')
+                // )
+              ),),
+            FutureBuilder<void>(
+              future: model.initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+                      child:   ClipOval(
+                             child: CameraPreview(model.controller),
+                          ),);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
 
-          Positioned(
-            top: (height * 0.05) / 2,
-            left: (height * 0.05) / 2,
-            child: SafeArea(
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColor.menuIconColor,
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: AppColor.textColorBlack),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+            Positioned(
+              top: (height * 0.05) / 2,
+              left: (height * 0.05) / 2,
+              child: SafeArea(
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.menuIconColor,
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: AppColor.textColorBlack),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: height * 0.05,
-            left: 0,
-            right: 0,
-            child:  model.isLoading? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () async {
-                  },
-                  backgroundColor: AppColor.backgroundContainer,
-                  child:  Center(
-                    child: CircularProgressIndicator(color: AppColor.backgroundColor),
+            Positioned(
+              bottom: height * 0.05,
+              left: 0,
+              right: 0,
+              child:  model.isLoading? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () async {
+                    },
+                    backgroundColor: AppColor.backgroundContainer,
+                    child:  Center(
+                      child: CircularProgressIndicator(color: AppColor.backgroundColor),
+                    ),
                   ),
-                ),
-              ],
-            ):Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () async {
-                    try {
+                ],
+              ):Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () async {
+                      try {
 
-                      model.isLoading = true;
-                      model.notifyListeners();
-                      await model.initializeControllerFuture;
-                      final image = await model.controller.takePicture();
-                      File imageFile = await model.GenerateOptimizedFile(image);
-                      model.onCaptureClick(imageFile);
-                      print('Image saved at: ${imageFile.path}');
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                  child: Icon(Icons.camera, size: 30, color: AppColor.backgroundColor),
-                  backgroundColor: AppColor.backgroundContainer,
-                ),
-              ],
+                        model.isLoading = true;
+                        model.notifyListeners();
+                        await model.initializeControllerFuture;
+                        final image = await model.controller.takePicture();
+                        File imageFile = await model.GenerateOptimizedFile(image);
+                        model.onCaptureClick(imageFile);
+                        print('Image saved at: ${imageFile.path}');
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    child: Icon(Icons.camera, size: 30, color: AppColor.backgroundColor),
+                    backgroundColor: AppColor.backgroundContainer,
+                  ),
+                ],
+              ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

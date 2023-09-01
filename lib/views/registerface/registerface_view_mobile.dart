@@ -24,125 +24,132 @@ class RegisterFaceMobilePortrait extends BaseModelWidget<RegisterFaceViewModel> 
   @override
   Widget build(BuildContext context, RegisterFaceViewModel model) {
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Stack(
-        children:[
-        Container(
-          decoration: BoxDecoration(
-              color: AppColor.backgroundColor
-            // image: DecorationImage(
-            //     fit: BoxFit.cover,
-            //     alignment: Alignment.center,
-            //     image: AssetImage('assets/images/background/back.jpg'))
+    return WillPopScope(
+      onWillPop: ()async{
+        model.willPopScopeNavigation();
+        return true;
+
+      },
+      child: Scaffold(
+        body: Stack(
+          children:[
+          Container(
+            decoration: BoxDecoration(
+                color: AppColor.backgroundColor
+              // image: DecorationImage(
+              //     fit: BoxFit.cover,
+              //     alignment: Alignment.center,
+              //     image: AssetImage('assets/images/background/back.jpg'))
+            ),
           ),
+            FutureBuilder<void>(
+              future: model.initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+                    child:   ClipOval(
+                      child: CameraPreview(model.controller),
+                    ),);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+            // Add the following Column widget
+            Column(
+              children: [
+                SizedBox(height:  (height * 0.05) * 1.3),
+                Center(
+                  child: Text(
+                    'Register Your Face',
+                    style: TextStyle(
+                      color: AppColor.textColorWhite,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              /*  SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    'We need 4 images to register your face:',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),*/
+                SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    model.directions[model.currentStep],
+                    style: TextStyle(
+                      color: AppColor.textColorWhite,
+
+                      fontSize: 16,fontWeight: FontWeight.bold,),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+
+            Positioned(
+              top: (height * 0.05) / 2,
+              left: (height * 0.05) / 2,
+              child: SafeArea(
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.menuIconColor,
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: AppColor.textColorBlack),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: height * 0.05,
+              left: 0,
+              right: 0,
+              child:  model.isLoading? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () async {
+                    },
+                    backgroundColor: AppColor.backgroundContainer,
+                    child:  Center(
+                      child: CircularProgressIndicator(color: AppColor.backgroundColor),
+                    ),
+                  ),
+                ],
+              ):Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () async {
+                      try {
+                        model.isLoading = true;
+                        model.notifyListeners();
+                        await model.initializeControllerFuture;
+                        final image = await model.controller.takePicture();
+                        File imageFile = await model.GenerateOptimizedFile(image);
+                        model.onCaptureClick(imageFile);
+                        print('Image saved at: ${imageFile.path}');
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    child: Icon(Icons.camera, size: 30,color: AppColor.backgroundColor ),
+                      backgroundColor:AppColor.backgroundContainer
+                  ),
+                ],
+              ),
+            ),
+
+          ],
         ),
-          FutureBuilder<void>(
-            future: model.initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Center(
-                  child:   ClipOval(
-                    child: CameraPreview(model.controller),
-                  ),);
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-          // Add the following Column widget
-          Column(
-            children: [
-              SizedBox(height:  (height * 0.05) * 1.3),
-              Center(
-                child: Text(
-                  'Register Your Face',
-                  style: TextStyle(
-                    color: AppColor.textColorWhite,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            /*  SizedBox(height: 8),
-              Center(
-                child: Text(
-                  'We need 4 images to register your face:',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),*/
-              SizedBox(height: 8),
-              Center(
-                child: Text(
-                  model.directions[model.currentStep],
-                  style: TextStyle(
-                    color: AppColor.textColorWhite,
-
-                    fontSize: 16,fontWeight: FontWeight.bold,),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-
-          Positioned(
-            top: (height * 0.05) / 2,
-            left: (height * 0.05) / 2,
-            child: SafeArea(
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColor.menuIconColor,
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: AppColor.textColorBlack),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: height * 0.05,
-            left: 0,
-            right: 0,
-            child:  model.isLoading? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () async {
-                  },
-                  backgroundColor: AppColor.backgroundContainer,
-                  child:  Center(
-                    child: CircularProgressIndicator(color: AppColor.backgroundColor),
-                  ),
-                ),
-              ],
-            ):Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () async {
-                    try {
-                      model.isLoading = true;
-                      model.notifyListeners();
-                      await model.initializeControllerFuture;
-                      final image = await model.controller.takePicture();
-                      File imageFile = await model.GenerateOptimizedFile(image);
-                      model.onCaptureClick(imageFile);
-                      print('Image saved at: ${imageFile.path}');
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                  child: Icon(Icons.camera, size: 30,color: AppColor.backgroundColor ),
-                    backgroundColor:AppColor.backgroundContainer
-                ),
-              ],
-            ),
-          ),
-
-        ],
       ),
     );
   }

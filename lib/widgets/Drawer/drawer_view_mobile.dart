@@ -129,7 +129,7 @@ class DrawerMobilePotrait extends BaseModelWidget<DrawerViewModel> {
             destinationScreen = Container();
         }
 
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 200),
