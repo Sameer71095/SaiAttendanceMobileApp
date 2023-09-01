@@ -345,6 +345,8 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                               SizedBox(height: height * 0.018),
                               GestureDetector(
                                 onTap: () {
+                                  model.searchedClicked();
+
                                 },
                                 child: Container(
                                   height: height * 0.057,

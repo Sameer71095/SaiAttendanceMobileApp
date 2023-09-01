@@ -1,5 +1,6 @@
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
+import 'package:ClockSpotter/viewmodels/otp_viewmodel.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,15 @@ import 'package:ClockSpotter/viewmodels/forgot_viewmodel.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
-class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
+class OTPMobilePortrait extends BaseModelWidget<OTPViewModel>
     with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  Widget build(BuildContext context, ForgotViewModel model) {
+  Widget build(BuildContext context, OTPViewModel model) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -62,7 +64,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                         ),
                         SizedBox(height: height*0.02,),
                         Text(
-                          'Find Your Account',
+                          'Verification Code',
                           style: TextStyle(
                             fontFamily: 'Iceland',
                             color: Colors.white,
@@ -72,7 +74,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                         SizedBox(height: height*0.02,),
                         Stack(
                           children: [
-                            Image.asset('assets/images/login/loginRect.png',fit: BoxFit.cover,width: width,),
+                            Image.asset('assets/images/login/OTPRect.png',fit: BoxFit.cover,width: width,),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10),
                               child: Column(
@@ -81,7 +83,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
-                                      'Please enter your email address or mobile number to search for your account.'
+                                      'We have sent OTP on your WhatsApp  '
                                         ,style: theme.displayMedium?.copyWith(
 
 
@@ -90,94 +92,125 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                     ),
                                     ),
                                   ),
-                                  SizedBox(height: height*0.04,),
+                                  SizedBox(height: height*0.02,),
 
                                   Column(
 
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          'Email / Mobile No.',
-                                          style: TextStyle(
-                                            color: AppColor.backgroundColor,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(left: 10),
+                                      //   child: Text(
+                                      //     'Email / Mobile No.',
+                                      //     style: TextStyle(
+                                      //       color: AppColor.backgroundColor,
+                                      //       fontSize: 15,
+                                      //       fontWeight: FontWeight.bold,
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       SizedBox(height: height*0.01,),
-                                      TextField(
-                                        controller: model.emailController,
-                                        decoration: InputDecoration(
-                                          enabledBorder:  OutlineInputBorder(
-                                            borderRadius:  BorderRadius.circular(8.0),
-                                            borderSide:  BorderSide(color: AppColor.backgroundColor ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                                        child: PinCodeTextField(
+                                          obscuringCharacter:'*' ,
+                                          appContext: context,
+                                            cursorColor: Colors.black,
+                                          length: 4,
+                                          obscureText: false,
+                                          animationType: AnimationType.fade,
+                                          pinTheme: PinTheme(
+                                            inactiveColor: AppColor.backgroundColor,
+                                            activeColor: AppColor.backgroundColor,
+                                            inactiveFillColor: Colors.white,
+                                            activeFillColor: Colors.white,
 
+                                            shape: PinCodeFieldShape.box,
+                                            borderRadius: BorderRadius.circular(5),
+                                            fieldHeight: 40,
+                                            fieldWidth: 40,
                                           ),
-                                          focusedBorder:  OutlineInputBorder(
-                                            borderRadius:  BorderRadius.circular(8.0),
-                                            borderSide:  BorderSide(color: AppColor.backgroundColor ),
+                                          animationDuration: Duration(milliseconds: 300),
+                                            boxShadows: [
+                                              BoxShadow(
+                                                color: Colors.orange.withOpacity(
+                                                    0.5), // shadow color
+                                                spreadRadius:
+                                                2, // how spread out the shadow is
+                                                blurRadius:
+                                                5, // how blurry the shadow is
+                                                offset: Offset(
+                                                    0, 1), // offset of the shadow
+                                              ),
+                                            ],
+                                          // enableActiveFill: true,
+                                          // errorAnimationController: errorController,
+                                          // controller: textEditingController,
+                                          onCompleted: (v) {
+                                            print("Completed");
+                                          },
+                                          onChanged: (value) {
 
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                            vertical: height * 0.015,
-                                            horizontal: width * 0.04,
-                                          ),
-                                          filled: true,
-                                          fillColor: AppColor.backgroundContainer,
-                                           hintText: 'Email Address or Mobile Number',
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                          prefixIcon: Icon(
-                                            Icons.search,
-                                            color: AppColor.backgroundColor,
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(8),
-                                          ),
+                                          },
+                                          beforeTextPaste: (text) {
+                                            print("Allowing to paste $text");
+                                            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                                            //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                                            return true;
+                                          }
                                         ),
-                                      ),
+                                      )                                      // TextField(
+                                      //   controller: model.emailController,
+                                      //   decoration: InputDecoration(
+                                      //     enabledBorder:  OutlineInputBorder(
+                                      //       borderRadius:  BorderRadius.circular(8.0),
+                                      //       borderSide:  BorderSide(color: AppColor.backgroundColor ),
+                                      //
+                                      //     ),
+                                      //     focusedBorder:  OutlineInputBorder(
+                                      //       borderRadius:  BorderRadius.circular(8.0),
+                                      //       borderSide:  BorderSide(color: AppColor.backgroundColor ),
+                                      //
+                                      //     ),
+                                      //     contentPadding: EdgeInsets.symmetric(
+                                      //       vertical: height * 0.015,
+                                      //       horizontal: width * 0.04,
+                                      //     ),
+                                      //     filled: true,
+                                      //     fillColor: AppColor.backgroundContainer,
+                                      //      hintText: 'Email Address or Mobile Number',
+                                      //     hintStyle: TextStyle(
+                                      //       color: Colors.grey,
+                                      //     ),
+                                      //     prefixIcon: Icon(
+                                      //       Icons.search,
+                                      //       color: AppColor.backgroundColor,
+                                      //     ),
+                                      //     border: OutlineInputBorder(
+                                      //       borderRadius: BorderRadius.circular(8),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
-                                  SizedBox(height: height * 0.03  ),
-
-                                  SizedBox(height: height * 0.024),
-                                  GestureDetector(
-                                    onTap: () {
-
-                                    },
-                                    child: Container(
-                                      height: height * 0.06,
-                                      width: width * 0.35,
-                                      decoration: BoxDecoration(
-                                        color: AppColor.backgroundContainerSmall,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(8.0),
+                                  SizedBox(height: height * 0.02  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: ' Didn’t receive an OTP ? ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: Colors.black
+                                      ),
+                                      children:  <TextSpan>[
+                                        TextSpan(text: 'Resend OTP', style: TextStyle( color:Colors.blue,fontWeight: FontWeight.bold)
                                         ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: AppColor.backgroundColor.withOpacity(
-                                                0.5), // shadow color
-                                            spreadRadius:
-                                            2, // how spread out the shadow is
-                                            blurRadius:
-                                            5, // how blurry the shadow is
-                                            offset: Offset(
-                                                0, 1), // offset of the shadow
-                                          ),
-                                        ],),
-                                      child: Center(child: Text('Search',style: theme.displayMedium?.copyWith(
 
-                                          color: AppColor.backgroundColor,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                      ),
-                                      ),
+                                      ],
                                     ),
                                   ),
+
+                                  SizedBox(height: height * 0.024),
 
                                 ],
                               ),
@@ -190,7 +223,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                           child: Row(
                             children: [
                               Text(
-                                "Remembered the password? Switch to ",
+                                "Incorrect mobile number? ",
                                 style: TextStyle(
                                   color: AppColor.textColorWhite,
                                   fontSize: width * 0.04,
@@ -201,7 +234,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                   model.rememberedPassword();
                                 },
                                 child: Text(
-                                  'Login',
+                                  'go to Register',
                                   style: TextStyle(
                                     color: AppColor.textColorWhite,
                                     fontSize: width * 0.048,
@@ -406,9 +439,9 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
 //   }
 // }
 
-class ForgotMobileLandscape extends BaseModelWidget<ForgotViewModel> {
+class OTPMobileLandscape extends BaseModelWidget<OTPViewModel> {
   @override
-  Widget build(BuildContext context, ForgotViewModel model) {
+  Widget build(BuildContext context, OTPViewModel model) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ClockSpotter/api/secureCacheManager.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
+import 'package:ClockSpotter/views/OTP%20Verification/otp_verification.dart';
 import 'package:ClockSpotter/views/Registeration/register_view.dart';
 import 'package:ClockSpotter/views/forgot%20password/forgot_password.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
@@ -16,6 +17,12 @@ import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import '../api/dio_client.dart';
 
 class ForgotViewModel extends ChangeNotifier {
+
+
+
+
+
+
   String title = 'default';
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

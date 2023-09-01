@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:ClockSpotter/api/secureCacheManager.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/OTP%20Verification/otp_verification.dart';
-import 'package:ClockSpotter/views/Registeration/register_view_mobile.dart';
+import 'package:ClockSpotter/views/Registeration/register_view.dart';
+import 'package:ClockSpotter/views/forgot%20password/forgot_password.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -15,16 +16,29 @@ import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 
 import '../api/dio_client.dart';
 
-class RegisterViewModel extends ChangeNotifier {
+class OTPViewModel extends ChangeNotifier {
 
 
-  void searchedClicked() {
+  String title = 'default';
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  late BuildContext context;
+
+  bool passwordVisible = false;
+  bool rememberpassword=false;
+
+
+
+
+  // Create storage
+  void rememberedPassword() {
 
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (context, animation, secondaryAnimation) => OTPView(),
+        pageBuilder: (context, animation, secondaryAnimation) => RegisterView(),
         transitionsBuilder: (context, animation, secondaryAnimation,
             child) {
           return SlideTransition(
@@ -40,31 +54,18 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String title = 'default';
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController contactController = TextEditingController();
-  final TextEditingController companyNameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  late BuildContext context;
-
-  bool passwordVisible = false;
-  bool rememberpassword=false;
-
-// Create storage
 
   void initialise(BuildContext contexts) {
     context=contexts;
     notifyListeners();
   }
+  void onCheckBox(bool value) {
+    rememberpassword=value ?? false;
+    notifyListeners();
+  }
 
   void onPasswordVisibility() {
     passwordVisible=!passwordVisible;
-    notifyListeners();
-  }
-  void onCheckBox(bool value) {
-    rememberpassword=value ?? false;
     notifyListeners();
   }
 
@@ -76,7 +77,12 @@ class RegisterViewModel extends ChangeNotifier {
   bool _isValidPassword(String password) {
     return password.length >= 6; // You can add more validation rules if needed
   }
-  void alreadyClicked() {
+  void backClicked() {
+    /*  if (!_isValidEmail(emailController.text)) {
+      showToast("Please enter a valid email address.");
+      return;
+    }*/
+    Navigator.pop(context);
 
     Navigator.pushReplacement(
       context,
@@ -95,25 +101,58 @@ class RegisterViewModel extends ChangeNotifier {
         },
       ),
     );
-      notifyListeners();
-    }
 
-  // void showDialog(  {required BuildContext context, required Function(BuildContext context) builder}) {
-  //   showDialog(
-  //
-  //     context: context,
-  //     builder:builder
-  //   );
-  //   notifyListeners();
-  // }
-
-
-  void registerClicked() {
+  }
+  void forgotClicked() {
     /*  if (!_isValidEmail(emailController.text)) {
       showToast("Please enter a valid email address.");
       return;
     }*/
-   
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+  void RegisterClicked() {
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => RegisterView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+
+  }
+  void loginClicked() {
+    /*  if (!_isValidEmail(emailController.text)) {
+      showToast("Please enter a valid email address.");
+      return;
+    }*/
 
     if (!_isValidPassword(passwordController.text)) {
       showToast("Please enter a valid password with at least 6 characters.");
@@ -180,4 +219,3 @@ class RegisterViewModel extends ChangeNotifier {
 
   }
 }
-
