@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ClockSpotter/entities/register_entity/register_request_entity.dart';
 import 'package:dio/io.dart';
 import 'dart:io';
 import 'package:ClockSpotter/api/MultipartFileWrapper.dart';
@@ -130,6 +131,7 @@ abstract class RestClient {
   @POST("/location/getlocationsbyemployerid")
   Future<LocationResponse> GetLocations(@Query("employerId") int? employerId);
 
-
+  @POST("/employee/registeremployeefromapp")
+  Future<DefaultResponseEntity<String>> RegisterEmployee(@Body()  RegisterRequestEntity registerRequestEntity);
 
 }

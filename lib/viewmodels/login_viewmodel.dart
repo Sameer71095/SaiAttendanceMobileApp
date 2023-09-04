@@ -14,14 +14,17 @@ import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import '../api/dio_client.dart';
 
 class LoginViewModel extends ChangeNotifier {
+
+
   String title = 'default';
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   late BuildContext context;
 
-  bool passwordVisible = false;
+  bool passwordVisible = true;
   bool rememberpassword=false;
+  bool isLoading = false;
 
 
 // Create storage
@@ -104,6 +107,7 @@ class LoginViewModel extends ChangeNotifier {
      client.LoginEmployee(LoginRequestEntity(email:emailController.text,password: passwordController.text )).then((response) async {
        // Navigate to home screen
       if(response.isSuccess==true) {
+        isLoading=false;
         await storage.deleteAll(); // Delete all existing keys and values
         await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
         await storage.write(key: 'Token', value:response.data!.token.toString());
@@ -148,6 +152,7 @@ class LoginViewModel extends ChangeNotifier {
           );
         }
       }else {
+        isLoading=false;
         // Display error message
         showToast("Invalid login credentials. Please try again.");
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ClockSpotter/api/secureCacheManager.dart';
+import 'package:ClockSpotter/entities/register_entity/register_request_entity.dart';
 import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/views/OTP%20Verification/otp_verification.dart';
 import 'package:ClockSpotter/views/Registeration/register_view_mobile.dart';
@@ -17,9 +18,11 @@ import '../api/dio_client.dart';
 
 class RegisterViewModel extends ChangeNotifier {
 
+  final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
 
   void searchedClicked() {
-
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -49,22 +52,23 @@ class RegisterViewModel extends ChangeNotifier {
 
   late BuildContext context;
 
-  bool passwordVisible = false;
-  bool rememberpassword=false;
+  bool passwordVisible = true;
+  bool rememberpassword = false;
 
 // Create storage
 
   void initialise(BuildContext contexts) {
-    context=contexts;
+    context = contexts;
     notifyListeners();
   }
 
   void onPasswordVisibility() {
-    passwordVisible=!passwordVisible;
+    passwordVisible = !passwordVisible;
     notifyListeners();
   }
+
   void onCheckBox(bool value) {
-    rememberpassword=value ?? false;
+    rememberpassword = value ?? false;
     notifyListeners();
   }
 
@@ -76,8 +80,17 @@ class RegisterViewModel extends ChangeNotifier {
   bool _isValidPassword(String password) {
     return password.length >= 6; // You can add more validation rules if needed
   }
-  void alreadyClicked() {
+  bool _isValidContact(String contact) {
+    return contact.length == 11; // You can add more validation rules if needed
+  }
+  bool _isValidName(String username) {
+    return username.length >0; // You can add more validation rules if needed
+  }
+  bool _isValidCompanyName(String companyName) {
+    return companyName.length >0; // You can add more validation rules if needed
+  }
 
+  void alreadyClicked() {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -95,47 +108,47 @@ class RegisterViewModel extends ChangeNotifier {
         },
       ),
     );
-      notifyListeners();
+    notifyListeners();
+  }
+
+  void registerClicked() async {
+    if (!_isValidName(nameController.text)) {
+      showToast("Please enter a valid name.");
+      return;
     }
-
-  // void showDialog(  {required BuildContext context, required Function(BuildContext context) builder}) {
-  //   showDialog(
-  //
-  //     context: context,
-  //     builder:builder
-  //   );
-  //   notifyListeners();
-  // }
-
-
-  void registerClicked() {
-    /*  if (!_isValidEmail(emailController.text)) {
+    if (!_isValidEmail(emailController.text)) {
       showToast("Please enter a valid email address.");
       return;
-    }*/
-   
+    }
+    if (!_isValidContact(contactController.text)) {
+      showToast("Please enter a valid mobile number.");
+      return;
+    }
+    if (!_isValidCompanyName(companyNameController.text)) {
+      showToast("Please enter a valid company name.");
+      return;
+    }
 
     if (!_isValidPassword(passwordController.text)) {
       showToast("Please enter a valid password with at least 6 characters.");
       return;
     }
-    // emailController.text='sameer71095@gmail.com';
-    // passwordController.text='123456';
-    client.LoginEmployee(LoginRequestEntity(email:emailController.text,password: passwordController.text )).then((response) async {
-      // Navigate to home screen
-      if(response.isSuccess==true) {
-        await storage.deleteAll(); // Delete all existing keys and values
-        await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
-        await storage.write(key: 'Token', value:response.data!.token.toString());
-        await storage.write(key: 'loginResponse', value:jsonEncode(response.data?.toJson()));
-        await constants.init();
-        if(response.data!.isImagesRegistered==true){
 
+      client.RegisterEmployee(
+          RegisterRequestEntity(email: emailController.text,
+              password: passwordController.text,
+              name: nameController.text,
+              companyName: companyNameController.text,
+              contact: contactController.text)).then((response) async {
+        // Navigate to home screen
+        if (response.isSuccess == true) {
+          isLoading=false;
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
               transitionDuration: const Duration(milliseconds: 200),
-              pageBuilder: (context, animation, secondaryAnimation) => HomeView(),
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  OTPView(),
               transitionsBuilder: (context, animation, secondaryAnimation,
                   child) {
                 return SlideTransition(
@@ -148,36 +161,19 @@ class RegisterViewModel extends ChangeNotifier {
               },
             ),
           );
-        }else{
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              transitionDuration: const Duration(milliseconds: 200),
-              pageBuilder: (context, animation, secondaryAnimation) => RegisterFaceView(),
-              transitionsBuilder: (context, animation, secondaryAnimation,
-                  child) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(1.0, 0.0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              },
-            ),
-          );
+        } else {
+          isLoading=false;
+          // Display error message
+          showToast("Invalid register credentials. Please try again.");
         }
-      }else {
-        // Display error message
-        showToast("Invalid login credentials. Please try again.");
+        notifyListeners();
+      }).catchError((error) {
+        //  showToast("An error occurred. Please try again.");
+        notifyListeners();
+      });
+    }
 
-      }
-      notifyListeners();
-    }).catchError((error) {
-      //  showToast("An error occurred. Please try again.");
-      notifyListeners();
-    });
+
 
   }
-}
 

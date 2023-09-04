@@ -1,4 +1,5 @@
 import 'package:ClockSpotter/utils/app_color.dart';
+import 'package:ClockSpotter/utils/ui_utils.dart';
 import 'package:ClockSpotter/viewmodels/login_viewmodel.dart';
 import 'package:ClockSpotter/viewmodels/otp_viewmodel.dart';
 import 'package:ClockSpotter/views/login/login_view.dart';
@@ -98,22 +99,12 @@ class OTPMobilePortrait extends BaseModelWidget<OTPViewModel>
 
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      // Padding(
-                                      //   padding: const EdgeInsets.only(left: 10),
-                                      //   child: Text(
-                                      //     'Email / Mobile No.',
-                                      //     style: TextStyle(
-                                      //       color: AppColor.backgroundColor,
-                                      //       fontSize: 15,
-                                      //       fontWeight: FontWeight.bold,
-                                      //     ),
-                                      //   ),
-                                      // ),
+
                                       SizedBox(height: height*0.01,),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 40),
-                                        child: PinCodeTextField(
-                                          obscuringCharacter:'*' ,
+                                        child:model.isLoading==true?CircularProgressIndicator(color: AppColor.backgroundColor,): PinCodeTextField(
+                                            // controller: model.textEditingController,
                                           appContext: context,
                                             cursorColor: Colors.black,
                                           length: 4,
@@ -143,12 +134,11 @@ class OTPMobilePortrait extends BaseModelWidget<OTPViewModel>
                                                     0, 1), // offset of the shadow
                                               ),
                                             ],
-                                          // enableActiveFill: true,
-                                          // errorAnimationController: errorController,
-                                          // controller: textEditingController,
+
                                           onCompleted: (v) {
-                                            print("Completed");
+                                            model.handleOTPVerification();
                                           },
+
                                           onChanged: (value) {
 
                                           },
@@ -159,38 +149,7 @@ class OTPMobilePortrait extends BaseModelWidget<OTPViewModel>
                                             return true;
                                           }
                                         ),
-                                      )                                      // TextField(
-                                      //   controller: model.emailController,
-                                      //   decoration: InputDecoration(
-                                      //     enabledBorder:  OutlineInputBorder(
-                                      //       borderRadius:  BorderRadius.circular(8.0),
-                                      //       borderSide:  BorderSide(color: AppColor.backgroundColor ),
-                                      //
-                                      //     ),
-                                      //     focusedBorder:  OutlineInputBorder(
-                                      //       borderRadius:  BorderRadius.circular(8.0),
-                                      //       borderSide:  BorderSide(color: AppColor.backgroundColor ),
-                                      //
-                                      //     ),
-                                      //     contentPadding: EdgeInsets.symmetric(
-                                      //       vertical: height * 0.015,
-                                      //       horizontal: width * 0.04,
-                                      //     ),
-                                      //     filled: true,
-                                      //     fillColor: AppColor.backgroundContainer,
-                                      //      hintText: 'Email Address or Mobile Number',
-                                      //     hintStyle: TextStyle(
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //     prefixIcon: Icon(
-                                      //       Icons.search,
-                                      //       color: AppColor.backgroundColor,
-                                      //     ),
-                                      //     border: OutlineInputBorder(
-                                      //       borderRadius: BorderRadius.circular(8),
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                      )
                                     ],
                                   ),
                                   SizedBox(height: height * 0.02  ),

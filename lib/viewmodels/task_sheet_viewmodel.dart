@@ -139,50 +139,7 @@ class TaskSheetViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // PageController pageController = PageController(viewportFraction: .8);
-  // var paddingLeft = 0.0;
-  //
-  // bool button1 = true;
-  // bool button2 = true;
 
-  // AttendanceHistoryResponse.AttendanceHistoryResponse attendanceList =
-  // AttendanceHistoryResponse.AttendanceHistoryResponse();
-  // void buildMenu(int index) {
-  //   paddingLeft = index * 150.0;
-  //   if (button1 == true && index == 1) {
-  //     button1 = false;
-  //     index = 0;
-  //   } else {
-  //     button1 = true;
-  //     index = 1;
-  //   }
-  //   notifyListeners();
-  // }
-
-  // Future<void> _refreshData() async {
-  //   // Update the necessary variables here
-  //
-  //   DateTime now = DateTime.now();
-  //   currentMonth = now
-  //       .month; // This will give you the current month as an integer (e.g., 4)
-  //   currentYear = now
-  //       .year; // This will give you the current year as an integer (e.g., 2023)
-  //
-  //   // You should handle any errors that might occur during data loading
-  //   try {
-  //     loadData();
-  //   } catch (e) {
-  //     // Handle the error appropriately
-  //     print('Failed to load data: $e');
-  //
-  //     await Sentry.captureException(
-  //       e,
-  //       stackTrace: e.toString(),
-  //     );
-  //   }
-  //
-  //   notifyListeners();
-  // }
 
   Future<void> onRefresh() async {
     return loadData();

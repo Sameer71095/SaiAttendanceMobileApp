@@ -209,7 +209,9 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                               SizedBox(height: height * 0.024),
                               GestureDetector(
                                 onTap: () {
+                                  model.isLoading=true;
                                   model.loginClicked();
+
                                   // Perform login action
                                 },
                                 child: Container(
@@ -232,7 +234,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                                             0, 1), // offset of the shadow
                                       ),
                                     ],),
-                                  child: Center(child: Text('Login',style: theme.displayMedium?.copyWith(
+                                  child: Center(child: model.isLoading==true?CircularProgressIndicator(color: AppColor.backgroundColor,strokeWidth: 3,):Text('Login',style: theme.displayMedium?.copyWith(
 
                                       color: AppColor.backgroundColor,
                                       fontWeight: FontWeight.bold

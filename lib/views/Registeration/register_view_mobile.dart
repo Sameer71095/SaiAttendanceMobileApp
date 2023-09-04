@@ -45,9 +45,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // if(!isKeyboard)
 
-                    // if(!isKeyboard)
                     Image.asset(
                         'assets/images/login/loginElement.png',
 
@@ -78,7 +76,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
-                                      'Username',
+                                      'Name',
                                       style: TextStyle(
                                         color: AppColor.backgroundColor,
                                         fontSize: fontSize,
@@ -88,6 +86,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                   ),
                                   SizedBox(height: sizeBoxlabel,),
                                   TextField(
+                                    controller: model.nameController,
                                     decoration: InputDecoration(
                                       enabledBorder:  OutlineInputBorder(
                                         borderRadius:  BorderRadius.circular(8.0),
@@ -193,6 +192,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                   ),
                                   SizedBox(height: sizeBoxlabel,),
                                   TextField(
+                                    controller: model.contactController,
                                     keyboardType:TextInputType.number,
                                     decoration: InputDecoration(
                                       enabledBorder:  OutlineInputBorder(
@@ -245,6 +245,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                   ),
                                   SizedBox(height: sizeBoxlabel),
                                   TextField(
+                                    controller: model.companyNameController,
                                     decoration: InputDecoration(
                                       enabledBorder:  OutlineInputBorder(
                                         borderRadius:  BorderRadius.circular(8.0),
@@ -294,6 +295,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                   ),
                                   SizedBox(height: sizeBoxlabel,),
                                   TextField(
+
                                     obscureText: model.passwordVisible,
                                     controller: model.passwordController,
                                     decoration: InputDecoration(
@@ -345,7 +347,9 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                               SizedBox(height: height * 0.018),
                               GestureDetector(
                                 onTap: () {
-                                  model.searchedClicked();
+                                  model.isLoading=true;
+                                  // model.searchedClicked();
+                                  model.registerClicked();
 
                                 },
                                 child: Container(
@@ -368,7 +372,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                             0, 1), // offset of the shadow
                                       ),
                                     ],),
-                                  child: Center(child: Text('Register',style: theme.displayMedium?.copyWith(
+                                  child: Center(child: model.isLoading==true?CircularProgressIndicator(color: AppColor.backgroundColor,strokeWidth: 3,):Text('Register',style: theme.displayMedium?.copyWith(
 
                                       color: AppColor.backgroundColor,
                                       fontWeight: FontWeight.bold
