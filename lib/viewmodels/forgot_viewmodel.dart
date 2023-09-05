@@ -17,6 +17,8 @@ import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import '../api/dio_client.dart';
 
 class ForgotViewModel extends ChangeNotifier {
+  bool isLoading = false;
+
 
 
 
@@ -32,6 +34,27 @@ class ForgotViewModel extends ChangeNotifier {
   bool passwordVisible = false;
   bool rememberpassword=false;
 
+  void forgetClicked() async {
+
+
+
+    client.ForgetPassword(emailController.text).then((response) async {
+
+      if (response.isSuccess == true) {
+        isLoading=false;
+        showToast(response.data.toString());
+
+      } else {
+        isLoading=false;
+        // Display error message
+        showToast("Invalid forget credentials. Please try again.");
+      }
+      notifyListeners();
+    }).catchError((error) {
+      //  showToast("An error occurred. Please try again.");
+      notifyListeners();
+    });
+  }
 
 
 
@@ -107,30 +130,30 @@ class ForgotViewModel extends ChangeNotifier {
     );
 
   }
-  void forgotClicked() {
-    /*  if (!_isValidEmail(emailController.text)) {
-      showToast("Please enter a valid email address.");
-      return;
-    }*/
-
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
-        transitionsBuilder: (context, animation, secondaryAnimation,
-            child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(1.0, 0.0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-  }
+  // void forgotClicked() {
+  //   /*  if (!_isValidEmail(emailController.text)) {
+  //     showToast("Please enter a valid email address.");
+  //     return;
+  //   }*/
+  //
+  //   Navigator.pushReplacement(
+  //     context,
+  //     PageRouteBuilder(
+  //       transitionDuration: const Duration(milliseconds: 200),
+  //       pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
+  //       transitionsBuilder: (context, animation, secondaryAnimation,
+  //           child) {
+  //         return SlideTransition(
+  //           position: Tween<Offset>(
+  //             begin: const Offset(1.0, 0.0),
+  //             end: Offset.zero,
+  //           ).animate(animation),
+  //           child: child,
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
   void RegisterClicked() {
 
     Navigator.pushReplacement(

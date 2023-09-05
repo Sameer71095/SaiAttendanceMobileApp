@@ -62,7 +62,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                         ),
                         SizedBox(height: height*0.02,),
                         Text(
-                          'Find Your Account',
+                          'Forgot Account? ',
                           style: TextStyle(
                             fontFamily: 'Iceland',
                             color: Colors.white,
@@ -81,7 +81,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
-                                      'Please enter your email address or mobile number to search for your account.'
+                                      'Please enter your email address or HR Id to search for your account.'
                                         ,style: theme.displayMedium?.copyWith(
 
 
@@ -99,7 +99,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                       Padding(
                                         padding: const EdgeInsets.only(left: 10),
                                         child: Text(
-                                          'Email / Mobile No.',
+                                          'Email / HR Id.',
                                           style: TextStyle(
                                             color: AppColor.backgroundColor,
                                             fontSize: 15,
@@ -127,7 +127,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                           ),
                                           filled: true,
                                           fillColor: AppColor.backgroundContainer,
-                                           hintText: 'Email Address or Mobile Number',
+                                           hintText: 'Email Address or HR Id',
                                           hintStyle: TextStyle(
                                             color: Colors.grey,
                                           ),
@@ -147,11 +147,12 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                   SizedBox(height: height * 0.024),
                                   GestureDetector(
                                     onTap: () {
+                                      model.forgetClicked();
 
                                     },
                                     child: Container(
                                       height: height * 0.06,
-                                      width: width * 0.35,
+                                      width: width * 0.37,
                                       decoration: BoxDecoration(
                                         color: AppColor.backgroundContainerSmall,
                                         borderRadius: const BorderRadius.all(
@@ -169,7 +170,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                                 0, 1), // offset of the shadow
                                           ),
                                         ],),
-                                      child: Center(child: Text('Search',style: theme.displayMedium?.copyWith(
+                                      child: Center(child: Text('Reset Password',style: theme.displayMedium?.copyWith(
 
                                           color: AppColor.backgroundColor,
                                           fontWeight: FontWeight.bold

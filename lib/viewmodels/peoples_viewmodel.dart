@@ -97,7 +97,7 @@ class PeoplesViewModel extends ChangeNotifier {
   List<String> locationNames = [];
   List<LocationNew> Locations=[];
   Future<void> GetLocations() async {
-    var response = await client.GetLocations(2);
+    var response = await client.GetLocations(constants.loginData.employerId);
     Locations=response.data;
     locationNames = Locations.map((location) => location.name).toList();
 
@@ -119,7 +119,7 @@ class PeoplesViewModel extends ChangeNotifier {
 
     // Call the API and store the data in attendanceList
     try {
-      var response = await client.GetAllTeam(2);
+      var response = await client.GetAllTeam(constants.loginData.employerId);
       _getAllTeam = response.data;
       dataLoaded.value = true;
       notifyListeners();

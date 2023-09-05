@@ -134,4 +134,7 @@ abstract class RestClient {
   @POST("/employee/registeremployeefromapp")
   Future<DefaultResponseEntity<String>> RegisterEmployee(@Body()  RegisterRequestEntity registerRequestEntity);
 
+  @POST("/employee/forgetpassword")
+  Future<DefaultResponseEntity> ForgetPassword(@Query("email") String? email);
+
 }
