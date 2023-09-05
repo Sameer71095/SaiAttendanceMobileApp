@@ -19,7 +19,27 @@ import '../api/dio_client.dart';
 class RegisterViewModel extends ChangeNotifier {
 
   final formKey = GlobalKey<FormState>();
-  bool isLoading = false;
+
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
 
 
   void searchedClicked() {
@@ -51,6 +71,9 @@ class RegisterViewModel extends ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
 
   late BuildContext context;
+
+
+  bool isLoading = false;
 
   bool passwordVisible = true;
   bool rememberpassword = false;
@@ -143,6 +166,7 @@ class RegisterViewModel extends ChangeNotifier {
         // Navigate to home screen
         if (response.isSuccess == true) {
           isLoading=false;
+          notifyListeners();
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
@@ -163,11 +187,13 @@ class RegisterViewModel extends ChangeNotifier {
           );
         } else {
           isLoading=false;
+          notifyListeners();
           // Display error message
           showToast("Invalid register credentials. Please try again.");
         }
         notifyListeners();
       }).catchError((error) {
+        isLoading=false;
         //  showToast("An error occurred. Please try again.");
         notifyListeners();
       });

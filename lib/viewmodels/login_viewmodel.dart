@@ -108,6 +108,7 @@ class LoginViewModel extends ChangeNotifier {
        // Navigate to home screen
       if(response.isSuccess==true) {
         isLoading=false;
+        notifyListeners();
         await storage.deleteAll(); // Delete all existing keys and values
         await storage.write(key: 'EmployeeId', value:response.data!.employeeId.toString());
         await storage.write(key: 'Token', value:response.data!.token.toString());
@@ -153,13 +154,16 @@ class LoginViewModel extends ChangeNotifier {
         }
       }else {
         isLoading=false;
+        notifyListeners();
         // Display error message
         showToast("Invalid login credentials. Please try again.");
 
       }
        notifyListeners();
      }).catchError((error) {
-     //  showToast("An error occurred. Please try again.");
+       isLoading=false;
+
+       //  showToast("An error occurred. Please try again.");
        notifyListeners();
      });
 

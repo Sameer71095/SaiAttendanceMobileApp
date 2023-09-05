@@ -18,6 +18,29 @@ import '../api/dio_client.dart';
 
 class OTPViewModel extends ChangeNotifier {
 
+
+
+  void willPopScopeNavigation(){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
+        transitionsBuilder: (context, animation, secondaryAnimation,
+            child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+
   final TextEditingController textEditingController = TextEditingController();
 
   bool isLoading = false;
@@ -126,30 +149,6 @@ class OTPViewModel extends ChangeNotifier {
       ),
     );
 
-  }
-  void forgotClicked() {
-    /*  if (!_isValidEmail(emailController.text)) {
-      showToast("Please enter a valid email address.");
-      return;
-    }*/
-
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (context, animation, secondaryAnimation) => ForgotView(),
-        transitionsBuilder: (context, animation, secondaryAnimation,
-            child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(1.0, 0.0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
   }
   void RegisterClicked() {
 
