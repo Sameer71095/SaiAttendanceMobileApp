@@ -1,12 +1,14 @@
 /// Contains the widgets that will be used for Mobile layout of home,
 /// portrait and landscape
 
+import 'package:ClockSpotter/entities/letter_entity/LetterType.dart';
 import 'package:ClockSpotter/utils/app_color.dart';
 import 'package:ClockSpotter/viewmodels/request_letter_viewmodel.dart';
 import 'package:ClockSpotter/views/Attendace/Attendance_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/drawer_view.dart';
 import 'package:ClockSpotter/widgets/Drawer/new_drawer.dart';
 import 'package:ClockSpotter/widgets/LetterWidget/LetterTile.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:ClockSpotter/widgets/app_drawer/app_drawer.dart';
 import 'package:ClockSpotter/widgets/base_model_widget.dart';
@@ -20,11 +22,38 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
     TextEditingController _letterNameController = TextEditingController();
     TextEditingController _firstNameController = TextEditingController();
     TextEditingController _lastNameController = TextEditingController();
+    Future<void> _selectStartDate(BuildContext context, model) async {
+      DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: model.selectedStartDate?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100),
+      );
+
+      if (picked != null && picked != model.selectedStartDate) {
+        model.setSelectedStartDate(picked);
+      }
+    }
+
+    Future<void> _selectEndDate(BuildContext context, model) async {
+      DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: model.selectedEndDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100),
+      );
+
+      if (picked != null && picked != model.selectedEndDate) {
+        model.setSelectedEndDate(picked);
+      }
+    }
+
 
 
     var theme = Theme.of(context).textTheme;
     double height =MediaQuery.of(context).size.height;
     double width =MediaQuery.of(context).size.width;
+    double borderRadius= 10;
 
     final isKeyboard=MediaQuery.of(context).viewInsets.bottom!=0;
 
@@ -80,19 +109,12 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
-                                child: Text('Letter Type',style: theme.displayMedium?.copyWith(
-                                  color: AppColor.textColor,
-                                  fontWeight: FontWeight.bold,
-                                ),),
-                              ),
-                              TextFormField(
-                                controller: _letterNameController,
+                              FormBuilderDropdown<LetterType>(
+                                name: 'LetterType',
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
 
-                                  hintText: "select a type",
+                                  contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
+                                  hintText: 'Letter Types',
                                   hintStyle: theme.displayMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey.shade600
@@ -102,10 +124,44 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
 
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
+                                items: model.LetterTypes == null ? [] : model.LetterTypes!
+                                    .map((e) => DropdownMenuItem(value: e, child: Text('${e.LetterTypeName}')))
+                                    .toList(),
+                                validator: (LetterType? value) {
+                                  if (value == null) {
+                                    print('Task type validation failed'); // Debugging statement
+                                    return 'Please select a Task type';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (LetterType? value) {
+                                  model.selectedLetterType = value;
+                                  model.notifyListeners();
+                                },
                               ),
+
+                              // TextFormField(
+                              //   controller: _letterNameController,
+                              //   decoration: InputDecoration(
+                              //     contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                              //
+                              //     hintText: "select a type",
+                              //     hintStyle: theme.displayMedium?.copyWith(
+                              //         fontWeight: FontWeight.bold,
+                              //         color: Colors.grey.shade600
+                              //     ),
+                              //     filled: true,
+                              //     fillColor: AppColor.fieldColor,
+                              //
+                              //     border: OutlineInputBorder(
+                              //       borderSide: BorderSide.none,
+                              //       borderRadius: BorderRadius.circular(10.0),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(height: 12.0),
@@ -114,6 +170,9 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
                             children: [
                               Row(
                                 children: [
+
+
+
                                   Expanded(
                                     child: Padding(
                                       padding:  EdgeInsets.only(left: height*0.01,bottom: height*0.01),
@@ -141,11 +200,23 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
                                 children: [
                                   Expanded(
                                     child: TextFormField(
-                                      controller: _firstNameController,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                                      controller: TextEditingController(
+                                        text: model.formattedStartDate,
 
-                                        hintText: 'MM/DD/YY',
+                                      ),
+                                      style:theme.displayMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600
+                                      ),
+
+                                      readOnly: true,
+
+                                      onTap: () => _selectStartDate(context, model),
+
+                                      decoration: InputDecoration(
+
+                                        contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
+                                        hintText: 'DD/MM/YYYY',
                                         hintStyle: theme.displayMedium?.copyWith(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade600
@@ -155,20 +226,32 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
 
                                         border: OutlineInputBorder(
                                           borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderRadius: BorderRadius.circular(borderRadius),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 16.0),
+                                  SizedBox(width: 12.0),
 
                                   Expanded(
                                     child: TextFormField(
-                                      controller: _lastNameController,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                                      controller: TextEditingController(
+                                        text: model.formattedEndDate,
 
-                                        hintText: 'MM/DD/YY',
+                                      ),
+                                      style:theme.displayMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade600
+                                      ),
+
+                                      readOnly: true,
+
+                                      onTap: () => _selectEndDate(context, model),
+
+                                      decoration: InputDecoration(
+
+                                        contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
+                                        hintText: 'DD/MM/YYYY',
                                         hintStyle: theme.displayMedium?.copyWith(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade600
@@ -178,11 +261,54 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
 
                                         border: OutlineInputBorder(
                                           borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderRadius: BorderRadius.circular(borderRadius),
                                         ),
                                       ),
                                     ),
                                   ),
+                                  // Expanded(
+                                  //   child: TextFormField(
+                                  //     controller: _firstNameController,
+                                  //     decoration: InputDecoration(
+                                  //       contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                                  //
+                                  //       hintText: 'MM/DD/YY',
+                                  //       hintStyle: theme.displayMedium?.copyWith(
+                                  //           fontWeight: FontWeight.bold,
+                                  //           color: Colors.grey.shade600
+                                  //       ),
+                                  //       filled: true,
+                                  //       fillColor: AppColor.fieldColor,
+                                  //
+                                  //       border: OutlineInputBorder(
+                                  //         borderSide: BorderSide.none,
+                                  //         borderRadius: BorderRadius.circular(10.0),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  // Expanded(
+                                  //   child: TextFormField(
+                                  //     controller: _lastNameController,
+                                  //     decoration: InputDecoration(
+                                  //       contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0), // Adjust the padding values
+                                  //
+                                  //       hintText: 'MM/DD/YY',
+                                  //       hintStyle: theme.displayMedium?.copyWith(
+                                  //           fontWeight: FontWeight.bold,
+                                  //           color: Colors.grey.shade600
+                                  //       ),
+                                  //       filled: true,
+                                  //       fillColor: AppColor.fieldColor,
+                                  //
+                                  //       border: OutlineInputBorder(
+                                  //         borderSide: BorderSide.none,
+                                  //         borderRadius: BorderRadius.circular(10.0),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ],

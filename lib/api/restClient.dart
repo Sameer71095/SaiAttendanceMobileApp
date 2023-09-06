@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ClockSpotter/entities/letter_entity/LetterType.dart';
 import 'package:ClockSpotter/entities/register_entity/register_request_entity.dart';
 import 'package:dio/io.dart';
 import 'dart:io';
@@ -109,6 +110,9 @@ abstract class RestClient {
 
   @POST("/task/gettasktype")
   Future<TaskTypeResponseEntity> getTasksNames();
+
+  @POST("/lettertype/getlettertype")
+  Future<LetterTypeResponseEntity> getletterNames();
 
 
   @POST("/task/addemployeetask")

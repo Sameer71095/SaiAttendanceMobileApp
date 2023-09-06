@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:ClockSpotter/entities/letter_entity/LetterType.dart';
 import 'package:ClockSpotter/views/home/home_view.dart';
 import 'package:ClockSpotter/views/registerface/registerface_view.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ClockSpotter/api/dio_client.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_history_request_entity.dart';
@@ -22,6 +24,50 @@ import 'package:show_update_dialog/show_update_dialog.dart';
 import '../api/secureCacheManager.dart';
 
 class RequestLetterViewModel extends ChangeNotifier {
+
+  LetterType? selectedLetterType;
+
+
+  void setSelectedStartDate(DateTime date) {
+    _selectedStartDate = date;
+    notifyListeners();
+  }
+  void setSelectedEndDate(DateTime date) {
+    _selectedEndDate = date;
+    notifyListeners();
+  }
+
+
+
+  DateTime? _selectedStartDate;
+  DateTime? get selectedStartDate => _selectedStartDate;
+
+  DateTime? _selectedEndDate;
+  DateTime? get selectedEndDate => _selectedEndDate;
+
+
+  String get formattedStartDate =>_selectedStartDate != null
+      ? DateFormat('yyyy-MM-dd').format(_selectedStartDate!)
+      : '';
+
+  String get formattedEndDate => _selectedEndDate != null
+      ? DateFormat('yyyy-MM-dd').format(_selectedEndDate!)
+      : '';
+
+
+
+  List<LetterType>? LetterTypes=[];
+  Future<void> getLetterNames() async {
+    var response = await client.getletterNames();
+    LetterTypes=response.data;
+    notifyListeners();
+  }
+
+
+
+
+
+
   void willPopScopeNavigation(){
     Navigator.pushReplacement(
       context,
@@ -56,6 +102,7 @@ class RequestLetterViewModel extends ChangeNotifier {
   Future<void> initialise(BuildContext contexts) async {
     context=contexts;
     title = 'initialised';
+    await getLetterNames();
     DateTime now = DateTime.now();
     currentMonth = now.month; // This will give you the current month as an integer (e.g., 4)
     currentYear = now.year; // This will give you the current year as an integer (e.g., 2023)
