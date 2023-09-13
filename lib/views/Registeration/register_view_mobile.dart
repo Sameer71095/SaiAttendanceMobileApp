@@ -32,7 +32,6 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
         child: Scaffold(
           body: Stack(
             children: [
-              // if(!isKeyboard)
               Container(
                 // height: height * 0.49,
                 decoration: BoxDecoration(
@@ -54,10 +53,10 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
 
                       Image.asset(
                           'assets/images/login/loginElement.png',
+                          height: height*0.12
 
 
                       ),
-                      // SizedBox(height: height*0.008,),
                       Text(
                         'Register',
                         style: TextStyle(
@@ -66,18 +65,21 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           fontSize: width * 0.117,
                         ),
                       ),
+                      // SizedBox(height: height*0.008,),
                       Stack(
                         children: [
-                          Image.asset('assets/images/register/Register.png',fit: BoxFit.cover,width: width,height: height*0.687,),
+                          Image.asset('assets/images/register/Register.png',fit: BoxFit.cover,width: width,height: height*0.678,),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
+
                               children: [
-                                SizedBox(height: height*0.06,),
+                                SizedBox(height: height*0.052,),
                                 //username
                                 Column(
 
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                            crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10),
@@ -111,7 +113,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                         filled: true,
                                         fillColor: AppColor.backgroundContainer,
                                         // hintText: 'Username',
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           color: Colors.grey,
                                         ),
                                         prefixIcon: Icon(
@@ -164,7 +166,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                         filled: true,
                                         fillColor: AppColor.backgroundContainer,
                                         // hintText: 'Username',
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           color: Colors.grey,
                                         ),
                                         prefixIcon: Icon(
@@ -218,7 +220,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                         filled: true,
                                         fillColor: AppColor.backgroundContainer,
                                         // hintText: 'Username',
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           color: Colors.grey,
                                         ),
                                         prefixIcon: Icon(
@@ -241,7 +243,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10),
                                       child: Text(
-                                        'Comapany Name',
+                                        'Company Name',
                                         style: TextStyle(
                                           color: AppColor.backgroundColor,
                                           fontSize: fontSize,
@@ -269,7 +271,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                         ),
                                         filled: true,
                                         fillColor: AppColor.backgroundContainer,
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           color: Colors.grey,
                                         ),
                                         prefixIcon: Icon(
@@ -322,7 +324,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                         filled: true,
                                         fillColor: AppColor.backgroundContainer,
                                         // hintText: 'Password',
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           color: Colors.grey,
                                         ),
                                         prefixIcon: Icon(
@@ -353,7 +355,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                                 SizedBox(height: height * 0.017),
                                 GestureDetector(
                                   onTap: () {
-                                    model.isLoading=true;
+                                    model.isLoadinTrue();
                                     // model.searchedClicked();
                                     model.registerClicked();
 
@@ -391,7 +393,7 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                           )
                         ],
                       ),
-
+                  SizedBox(height: height*0.01,),
                       Padding(
                         padding:  EdgeInsets.only(top: height*0.007,left: height*0.02),
                         child: Row(
@@ -424,7 +426,9 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
                     ],
                   ),
                 ),
-              )
+              ),
+              // SizedBox(height: height*0.1,)
+
             ],
           ),
         ),
@@ -434,253 +438,6 @@ class RegisterMobilePortrait extends BaseModelWidget<RegisterViewModel> {
 }
 
 
-// return Scaffold(
-    //     backgroundColor: Colors.white,
-    //     body: SingleChildScrollView(
-    //       child: Column(
-    //         children: <Widget>[
-    //           Container(
-    //             height: 180,
-    //             decoration: const BoxDecoration(
-    //                 image: DecorationImage(
-    //                     image: AssetImage('assets/images/login/bg.png'),
-    //                     fit: BoxFit.fill)),
-    //             child: Container(
-    //               color: Colors.black.withOpacity(0.3),
-    //               child: Stack(
-    //                 children: <Widget>[
-    //                   Positioned(
-    //                     left: 30,
-    //                     width: 80,
-    //                     height: 90,
-    //                     child: Container(
-    //                       decoration: const BoxDecoration(
-    //                           image: DecorationImage(
-    //                               image: AssetImage(
-    //                                   'assets/images/login/light-1.png'))),
-    //                     ),
-    //                   ),
-    //                   Positioned(
-    //                     left: 140,
-    //                     width: 80,
-    //                     height: 60,
-    //                     child: Container(
-    //                       decoration: const BoxDecoration(
-    //                           image: DecorationImage(
-    //                               image: AssetImage(
-    //                                   'assets/images/login/light-2.png'))),
-    //                     ),
-    //                   ),
-    //                   Positioned(
-    //                     right: 40,
-    //                     top: 40,
-    //                     width: 30,
-    //                     height: 50,
-    //                     child: Container(
-    //                       decoration: const BoxDecoration(
-    //                           image: DecorationImage(
-    //                               image: AssetImage(
-    //                                   'assets/images/login/clock.png'))),
-    //                     ),
-    //                   ),
-    //                   Positioned(
-    //                     child: Container(
-    //                       margin: const EdgeInsets.only(top: 80),
-    //                       child: const Center(
-    //                         child: Text(
-    //                           "Register",
-    //                           style: TextStyle(
-    //                               color: Colors.white,
-    //                               fontSize: 40,
-    //                               fontWeight: FontWeight.bold),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   )
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //           Padding(
-    //             padding: const EdgeInsets.all(30.0),
-    //             child: Column(
-    //               children: <Widget>[
-    //                 Container(
-    //                   padding: const EdgeInsets.all(5),
-    //                   decoration: BoxDecoration(
-    //                       color: Colors.white,
-    //                       borderRadius: BorderRadius.circular(10),
-    //                       boxShadow: const [
-    //                         BoxShadow(
-    //                             color: Color.fromRGBO(143, 148, 251, .2),
-    //                             blurRadius: 20.0,
-    //                             offset: Offset(0, 10))
-    //                       ]),
-    //                   child: Column(
-    //                     children: <Widget>[
-    //                       Container(
-    //                         padding: const EdgeInsets.all(8.0),
-    //                         decoration: BoxDecoration(
-    //                             border: Border(
-    //                                 bottom:
-    //                                     BorderSide(color: Colors.grey[100]!))),
-    //                         child: TextField(
-    //                           controller: model.nameController,
-    //                           decoration: InputDecoration(
-    //                               border: InputBorder.none,
-    //                               hintText: "Name",
-    //                               hintStyle:
-    //                                   TextStyle(color: Colors.grey[400])),
-    //                         ),
-    //                       ),
-    //                       Container(
-    //                         padding: const EdgeInsets.all(8.0),
-    //                         decoration: BoxDecoration(
-    //                             border: Border(
-    //                                 bottom:
-    //                                     BorderSide(color: Colors.grey[100]!))),
-    //                         child: TextField(
-    //                           controller: model.emailController,
-    //                           decoration: InputDecoration(
-    //                               border: InputBorder.none,
-    //                               hintText: "Email",
-    //                               hintStyle:
-    //                                   TextStyle(color: Colors.grey[400])),
-    //                         ),
-    //                       ),
-    //                       Container(
-    //                         padding: const EdgeInsets.all(8.0),
-    //                         decoration: BoxDecoration(
-    //                             border: Border(
-    //                                 bottom:
-    //                                     BorderSide(color: Colors.grey[100]!))),
-    //                         child: TextField(
-    //                           controller: model.contactController,
-    //                           decoration: InputDecoration(
-    //                               border: InputBorder.none,
-    //                               hintText: "Contact",
-    //                               hintStyle:
-    //                                   TextStyle(color: Colors.grey[400])),
-    //                         ),
-    //                       ),
-    //                       Container(
-    //                         padding: const EdgeInsets.all(8.0),
-    //                         decoration: BoxDecoration(
-    //                             border: Border(
-    //                                 bottom:
-    //                                     BorderSide(color: Colors.grey[100]!))),
-    //                         child: TextField(
-    //                           controller: model.companyNameController,
-    //                           decoration: InputDecoration(
-    //                               border: InputBorder.none,
-    //                               hintText: "Company Name",
-    //                               hintStyle:
-    //                                   TextStyle(color: Colors.grey[400])),
-    //                         ),
-    //                       ),
-    //                       Container(
-    //                         padding: const EdgeInsets.all(8.0),
-    //                         child: TextField(
-    //                           controller: model.passwordController,
-    //                           obscureText: !model.passwordVisible,
-    //                           decoration: InputDecoration(
-    //                             border: InputBorder.none,
-    //                             hintText: "Password",
-    //                             hintStyle: TextStyle(color: Colors.grey[400]),
-    //                             suffixIcon: IconButton(
-    //                               icon: Icon(
-    //                                 model.passwordVisible
-    //                                     ? Icons.visibility
-    //                                     : Icons.visibility_off,
-    //                               ),
-    //                               onPressed: () {
-    //                                 model.onPasswordVisibility();
-    //                               },
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ),
-    //                 const SizedBox(
-    //                   height: 30,
-    //                 ),
-    //
-    //                 // You can adjust the space between Login and Register button
-    //                 GestureDetector(
-    //                   onTap: () {
-    //                     model.showDialog(context: context, builder: (BuildContext context) => OTPDialogBox());
-    //                     // Navigate to register page or handle container click
-    //                     //     model.registerClicked();
-    //                   },
-    //                   child: Ink(
-    //                     decoration: BoxDecoration(
-    //                       borderRadius: BorderRadius.circular(10.0),
-    //                       border: Border.all(
-    //                           color: HexColor(
-    //                               '484948')), // Let's make the Register button with border only
-    //                     ),
-    //                     child: Container(
-    //                       height: 50,
-    //                       decoration: BoxDecoration(
-    //                         borderRadius: BorderRadius.circular(10),
-    //                         color: Colors
-    //                             .white, // Let's make the Register button with white background
-    //                       ),
-    //                       child: Center(
-    //                         child: Text(
-    //                           "Register",
-    //                           style: TextStyle(
-    //                               color: HexColor('484948'),
-    //                               fontWeight: FontWeight.bold),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //                 const SizedBox(
-    //                   height: 20,
-    //                 ),
-    //                 GestureDetector(
-    //                   onTap: () {
-    //                     // Handle container click
-    //                     model.alreadyClicked();
-    //                   },
-    //                   child: Ink(
-    //                     decoration: BoxDecoration(
-    //                       color: HexColor('#f56624'),
-    //                       borderRadius: BorderRadius.circular(10.0),
-    //                     ),
-    //                     child: Container(
-    //                       height: 50,
-    //                       decoration: BoxDecoration(
-    //                         borderRadius: BorderRadius.circular(10),
-    //                         color: HexColor('484948'),
-    //                       ),
-    //                       child: const Center(
-    //                         child: Text(
-    //                           "Already have an account",
-    //                           style: TextStyle(
-    //                               color: Colors.white,
-    //                               fontWeight: FontWeight.bold),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //                 const SizedBox(
-    //                   height: 70,
-    //                 ),
-    //                 //  const Text("Forgot Password?", style: TextStyle(color: Color.fromRGBO(143, 148, 251, 1)),),
-    //               ],
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ));
-//   }
-// }
 
 
 

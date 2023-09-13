@@ -54,6 +54,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                   Column(
                     children: [
                       AppBar(
+
                         centerTitle: true,
                         backgroundColor: Colors.transparent,
                         iconTheme: IconThemeData(color: AppColor.menuIconColor,size: 28),
@@ -69,7 +70,7 @@ class AttendanceMobilePortrait extends BaseModelWidget<AttendanceViewModel> {
                               // ),
                               ),
                         ),
-                        title: Text('Attendance'),
+                        title: Text('Attendance',style: TextStyle(color:Colors.white),),
                       ),
                       Expanded(
                         child: Padding(

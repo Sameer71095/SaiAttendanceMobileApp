@@ -109,11 +109,13 @@ class RequestLetterMobilePortrait extends BaseModelWidget<RequestLetterViewModel
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+
                               FormBuilderDropdown<LetterType>(
+
                                 name: 'LetterType',
                                 decoration: InputDecoration(
 
-                                  contentPadding: EdgeInsets.symmetric(vertical:8.0, horizontal: 10.0), // Adjust the padding values
+                                  contentPadding: EdgeInsets.symmetric(vertical:0.0, horizontal: 10.0), // Adjust the padding values
                                   hintText: 'Letter Types',
                                   hintStyle: theme.displayMedium?.copyWith(
                                       fontWeight: FontWeight.bold,

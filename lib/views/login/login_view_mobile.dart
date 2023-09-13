@@ -45,13 +45,11 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                     // if(!isKeyboard)
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          child: Image.asset(
-                            'assets/images/login/loginElement.png',
-                            height: height*0.14
+                        child: Image.asset(
+                          'assets/images/login/loginElement.png',
+                          height: height*0.14
 
 
-                          ),
                         ),
                       ),
                     SizedBox(height: height*0.02,),
@@ -66,7 +64,8 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                     SizedBox(height: height*0.02,),
                     Stack(
                       children: [
-                        Image.asset('assets/images/login/loginRect.png',fit: BoxFit.cover,width: width,),
+                        Image.asset('assets/images/login/loginRect.png',fit: BoxFit.cover,width: width,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
@@ -209,7 +208,7 @@ class LoginMobilePortrait extends BaseModelWidget<LoginViewModel> {
                               SizedBox(height: height * 0.024),
                               GestureDetector(
                                 onTap: () {
-                                  model.isLoading=true;
+                                  model.isLoadinTrue();
                                   model.loginClicked();
 
                                   // Perform login action

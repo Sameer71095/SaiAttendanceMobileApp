@@ -214,7 +214,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                                 navigateToScreenAtIndexGrid(index);
                               },
                               child: Container(
-                                width:40,
+                                width:width*0.40,
                                 decoration: BoxDecoration(
                                     color: AppColor.homeScreenIconColor,
                                     border: Border.all(color: Colors.black),
@@ -269,8 +269,8 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
                             ListTile(
                               visualDensity: VisualDensity(horizontal: 0, vertical: -3),
                               leading: SizedBox(
-                                height: height * 0.095,
-                                width: width * 0.095,
+                                height: height * 0.085,
+                                width: width * 0.085,
                                 child: Image.asset(tile[index]),
                               ),
                               title: Text(
@@ -301,22 +301,7 @@ class HomeMobilePortrait extends BaseModelWidget<HomeViewModel> {
 
 
 }
-// class TrapezoidalClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     final path = Path();
-//     path.lineTo(0, size.height * 0.7);
-//     path.lineTo(size.width, size.height * 0.9);
-//     path.lineTo(size.width, 0);
-//     path.close();
-//     return path;
-//   }
-//
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) {
-//     return false;
-//   }
-// }
+
 
 class HomeMobileLandscape extends BaseModelWidget<HomeViewModel> {
   @override

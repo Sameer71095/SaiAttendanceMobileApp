@@ -100,12 +100,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                               SizedBox(
                                 width: width * 0.011,
                               ),
-                              // Expanded(
-                              //   child: Container(
-                              //       child:  model.dropDownFitler('Position',model.departmentNames,Icon(Icons.assignment_ind,color: AppColor.iconColorBlack,)),
-                              //
-                              //       ),
-                              // )
+
 
                             ],
                           ),
@@ -233,8 +228,10 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                               child: Column(
                                 children: [
                                   CircleAvatar(
-                                    radius: height*0.07,
+                                    backgroundColor: AppColor.backgroundColor,
+                                    radius: height*0.071,
                                     child: CircleAvatar(
+                                      backgroundColor: AppColor.backgroundColor,
                                       backgroundImage: AssetImage(
                                         'assets/images/home/place.png',
                                       ),
@@ -261,7 +258,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                     height: 10,
                                   ),
                                   SizedBox(
-                                    width: width*0.3,
+                                    width: width*0.35,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         model.toggleDetail(index);
@@ -271,12 +268,11 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                             MaterialStateProperty.all(
                                                 AppColor.backgroundColor),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4),
+                                      child: Center(
                                         child: Row(
                                           children: [
-                                            Icon(Icons.touch_app),
-                                            Text('Details'),
+                                            Icon(Icons.touch_app,color: AppColor.iconColorWhite,),
+                                            Text('Details',style: TextStyle(color: AppColor.textColorWhite),),
                                           ],
                                         ),
                                       ),

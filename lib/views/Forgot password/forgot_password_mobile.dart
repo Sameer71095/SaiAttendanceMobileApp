@@ -152,7 +152,7 @@ class ForgotMobilePortrait extends BaseModelWidget<ForgotViewModel>
                                     SizedBox(height: height * 0.024),
                                     GestureDetector(
                                       onTap: () {
-                                        model.isLoading=true;
+                                        model.isLoadinTrue();
                                         model.forgetClicked();
 
 

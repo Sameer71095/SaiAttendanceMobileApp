@@ -39,12 +39,24 @@ class ForgotViewModel extends ChangeNotifier {
 
 
 
+  void isLoadinFalse(){
+    isLoading=false;
+    notifyListeners();
 
+  }
+  void isLoadinTrue(){
+    isLoading=true;
+    notifyListeners();
+
+  }
   bool isLoading = false;
 
 
 
-
+  bool _isValidforgot(String controller){
+    final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return  emailRegex.hasMatch(controller);
+  }
 
 
 
@@ -58,6 +70,12 @@ class ForgotViewModel extends ChangeNotifier {
   bool rememberpassword=false;
 
   void forgetClicked() async {
+
+    if (!_isValidforgot(emailController.text)) {
+      isLoading=false;
+      showToast("Please enter a valid forgot credentials.");
+      return;
+    }
 
 
 
@@ -84,7 +102,6 @@ class ForgotViewModel extends ChangeNotifier {
 
 
 
-  // Create storage
   void rememberedPassword() {
 
     Navigator.pushReplacement(
@@ -122,10 +139,7 @@ class ForgotViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _isValidEmail(String email) {
-    final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    return emailRegex.hasMatch(email);
-  }
+
 
   bool _isValidPassword(String password) {
     return password.length >= 6; // You can add more validation rules if needed

@@ -259,11 +259,6 @@ class LeaveRequestMobilePortrait extends BaseModelWidget<LeaveRequestViewModel> 
                                      },
 
                                    ),
-                                   // TextFormField(
-                                   //   maxLines: 3,
-                                   //   controller: _reason,
-                                   //
-                                   // ),
                                  ],
                                ),
                                SizedBox(height: 12,),

@@ -26,6 +26,16 @@ class LoginViewModel extends ChangeNotifier {
   bool rememberpassword=false;
   bool isLoading = false;
 
+  void isLoadinFalse(){
+    isLoading=false;
+    notifyListeners();
+
+  }
+  void isLoadinTrue(){
+    isLoading=true;
+    notifyListeners();
+
+  }
 
 // Create storage
 
@@ -99,6 +109,7 @@ class LoginViewModel extends ChangeNotifier {
     }*/
 
     if (!_isValidPassword(passwordController.text)) {
+      isLoading=false;
       showToast("Please enter a valid password with at least 6 characters.");
       return;
     }

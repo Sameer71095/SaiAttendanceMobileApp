@@ -75,6 +75,17 @@ class RegisterViewModel extends ChangeNotifier {
 
   bool isLoading = false;
 
+  void isLoadinFalse(){
+    isLoading=false;
+    notifyListeners();
+
+  }
+  void isLoadinTrue(){
+    isLoading=true;
+    notifyListeners();
+
+  }
+
   bool passwordVisible = true;
   bool rememberpassword = false;
 
@@ -106,8 +117,8 @@ class RegisterViewModel extends ChangeNotifier {
   bool _isValidContact(String contact) {
     return contact.length == 11; // You can add more validation rules if needed
   }
-  bool _isValidName(String username) {
-    return username.length >0; // You can add more validation rules if needed
+  bool _isValidName(String username){
+  return username.length >0; // You can add more validation rules if needed
   }
   bool _isValidCompanyName(String companyName) {
     return companyName.length >0; // You can add more validation rules if needed
@@ -135,24 +146,29 @@ class RegisterViewModel extends ChangeNotifier {
   }
 
   void registerClicked() async {
-    if (!_isValidName(nameController.text)) {
-      showToast("Please enter a valid name.");
+    if (!_isValidName(nameController.text)){
+      isLoading=false;
+    showToast("Please enter a valid name.");
       return;
     }
     if (!_isValidEmail(emailController.text)) {
+      isLoading=false;
       showToast("Please enter a valid email address.");
       return;
     }
     if (!_isValidContact(contactController.text)) {
+      isLoading=false;
       showToast("Please enter a valid mobile number.");
       return;
     }
     if (!_isValidCompanyName(companyNameController.text)) {
+      isLoading=false;
       showToast("Please enter a valid company name.");
       return;
     }
 
     if (!_isValidPassword(passwordController.text)) {
+      isLoading=false;
       showToast("Please enter a valid password with at least 6 characters.");
       return;
     }
