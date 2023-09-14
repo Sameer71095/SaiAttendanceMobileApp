@@ -258,7 +258,7 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                     height: 10,
                                   ),
                                   SizedBox(
-                                    width: width*0.35,
+                                    width: width*0.33,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         model.toggleDetail(index);
@@ -270,6 +270,8 @@ class PeoplesMobilePortrait extends BaseModelWidget<PeoplesViewModel> {
                                       ),
                                       child: Center(
                                         child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Icon(Icons.touch_app,color: AppColor.iconColorWhite,),
                                             Text('Details',style: TextStyle(color: AppColor.textColorWhite),),
