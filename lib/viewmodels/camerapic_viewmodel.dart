@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:ClockSpotter/entities/attendance_entity/attendance_request_entity.dart';
 import 'package:ClockSpotter/entities/attendance_entity/attendance_response_entity.dart';
+import 'package:ClockSpotter/entities/login_entity/login_response_entity.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -108,7 +109,7 @@ class CameraPicViewModel extends ChangeNotifier {
 
 
       if (val.isLocationBound!) {
-        bool isWithin = await helper.isWithinMeters(val.locations);
+        bool isWithin = await helper.isWithinMeters(val.locations?.cast<SiteLocations>());
         if (!isWithin) {
           showToast('Please come to the allocated location ${val.location}');
           isLoading = false;

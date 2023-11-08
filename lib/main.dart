@@ -1,4 +1,5 @@
 
+import 'package:ClockSpotter/api/secureCacheManager.dart';
 import 'package:ClockSpotter/utils/Custom_Theme.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import 'package:ClockSpotter/views/splash/splash_view.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 List<CameraDescription> cameras=<CameraDescription>[];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +56,10 @@ void main() async {
 
     await constants.init();
 
+    // Clear data on first launch
+    await clearDataOnFirstLaunch(); // Add this line
+
+
     await SentryFlutter.init(
           (options) {
         options.dsn = 'https://5b7267ffa3e34271821e6cd73592a633@o4504977164402688.ingest.sentry.io/4504977170497536';
@@ -79,6 +85,21 @@ void main() async {
       stackTrace: stackTrace,
     );
     print("An error occurred while initializing the app: $exception");
+  }
+}
+
+
+Future<void> clearDataOnFirstLaunch() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+
+  if (isFirstLaunch) {
+    // Clear all the data
+    await storage.deleteAll();
+
+    await prefs.clear();
+    // Set 'isFirstLaunch' to false so this doesn't run again
+    await prefs.setBool('isFirstLaunch', false);
   }
 }
 
@@ -122,4 +143,5 @@ class MyApp extends StatelessWidget {
       child:  SplashView(),
     );
   }
+
 }
