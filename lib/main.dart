@@ -54,10 +54,11 @@ void main() async {
       location.enableBackgroundMode(enable: false);
     }
 
-    await constants.init();
-
     // Clear data on first launch
     await clearDataOnFirstLaunch(); // Add this line
+
+    await constants.init();
+
 
 
     await SentryFlutter.init(
