@@ -80,10 +80,12 @@ class _BaseWidgetState<T extends ChangeNotifier> extends State<BaseWidget<T>> {
               onPressed: runModelReady,
               child: const Text('Retry'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                onPrimary: Colors.white,
-                onSurface: Colors.grey,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                foregroundColor: Colors.white, // Text color
+                backgroundColor: Colors.blue, // Background color
+              //  onSurface: Colors.grey,       // Disabled button color (optional)
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
               ),
             ),
           ],
